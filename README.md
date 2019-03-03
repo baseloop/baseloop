@@ -19,3 +19,12 @@ adhere to well-proven principles of modern web app development such as functiona
 
 ## Architecture (store-view-controller)
 ![architecture](https://github.com/baseloop/baseloop/raw/master/resources/baseloop-architecture.png)
+
+SVC (store-view-controller) is based on reactive programming and thus observable events.
+
+These events are created by views (user interaction such as mouse clicks or key presses) and web APIs 
+(such as ajax responses or WebSocket message events).
+
+Controllers and stores can observe these events. Controllers can also observe store state changes. And in the end,
+views observe controller state changes. SVC is based on *unidirectional data flow*. This means that data always flows
+in one direction. 
