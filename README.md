@@ -1,4 +1,4 @@
-# ⛏ Baseloop &middot; [![Discord](https://img.shields.io/discord/551772477165010959.svg)]
+# Baseloop &middot; ![Discord](https://img.shields.io/discord/551772477165010959.svg)
 
 Baseloop is not a framework, but rather a toolkit with a guide, which shows you how to build modern web applications that 
 adhere to well-proven principles of modern web app development such as functional and reactive programming.
