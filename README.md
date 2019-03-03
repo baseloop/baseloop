@@ -1,7 +1,10 @@
-# Baseloop &middot; ![Discord](https://img.shields.io/discord/551772477165010959.svg)
+# Baseloop &middot; [![Discord](https://img.shields.io/discord/551772477165010959.svg?color=green&label=chat%20on%20Discord)](https://discord.gg/zMyuFwt)
 
 Baseloop is not a framework, but rather a toolkit with a guide, which shows you how to build modern web applications that 
 adhere to well-proven principles of modern web app development such as functional and reactive programming.
+
+![npm-version](https://img.shields.io/npm/v/@baseloop/core.svg?color=green&label=npm%20package)
+![license](https://img.shields.io/npm/l/@baseloop/core.svg?color=green)
 
 ## Running the demo
 
@@ -13,3 +16,6 @@ adhere to well-proven principles of modern web app development such as functiona
   - `npm run watch-client` (for client-side code)
   - `npm run app` (the server app)
 - Go to [http://localhost/](http://localhost/)
+
+## Architecture (store-view-controller)
+![architecture](https://github.com/baseloop/baseloop/raw/master/resources/baseloop-architecture.png)
