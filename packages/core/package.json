@@ -1,6 +1,6 @@
 {
   "name": "@baseloop/core",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "@baseloop/core — A toolkit for writing functional reactive web applications.",
   "main": "src/index.js",
   "keywords": [
