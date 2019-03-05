@@ -23,6 +23,6 @@ app.use((req, res) => {
   res.end()
 })
 
-app.listen(80, 'localhost', () => {
+app.listen(8080, 'localhost', () => {
   console.log('Example app is running at http://localhost/')
 })
