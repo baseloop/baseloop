@@ -15,7 +15,7 @@ adhere to well-proven principles such as functional and reactive programming.
   - `npm run watch-server` (a watcher that builds the server-side code)
   - `npm run watch-client` (for client-side code)
   - `npm run app` (the server app)
-- Go to [http://localhost:8080/](http://localhost:8080/)
+- Go to [http://localhost:1337/](http://localhost:1337/)
 
 ## Architecture (store-view-controller)
 ![architecture](https://github.com/baseloop/baseloop/raw/master/resources/baseloop-architecture.png)
