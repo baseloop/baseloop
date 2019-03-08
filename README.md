@@ -26,5 +26,6 @@ These events are created by views (user interaction such as mouse clicks or key 
 (such as Ajax responses or WebSocket message events).
 
 Controllers and stores can observe these events. Controllers can also observe store state changes. And in the end,
-views observe controller state changes. SVC is based on *unidirectional data flow*. This means that data always flows
-in one direction.
+views observe controller state changes.
+
+SVC is based on *unidirectional data flow*. This means that data always flows in one direction.
