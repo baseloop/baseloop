@@ -1,0 +1,21 @@
+{
+  "name": "@baseloop/ui",
+  "version": "1.0.0",
+  "description": "A UI toolkit for web applications.",
+  "main": "src/index.js",
+  "keywords": [
+    "baseloop",
+    "ui",
+    "web"
+  ],
+  "author": "Kai Sellgren <kaisellgren@gmail.com>",
+  "license": "ISC",
+  "peerDependencies": {
+    "ramda": ">=0.16.0 <1.0.0",
+    "react": ">=16.0.0",
+    "styled-components": "^4.1.3"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
