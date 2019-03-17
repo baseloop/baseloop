@@ -13,13 +13,8 @@ const staticOptions = {
 app.use('/', express.static('dist/client', staticOptions))
 
 app.use((req, res) => {
-  const html = fs.readFileSync('dist/client/index.html')
-    .toString()
-    .replace('index.js', '/index.js')
-    .replace('favicon.png', '/favicon.png')
-
   res.setHeader('Content-Type', 'text/html')
-  res.send(html)
+  res.send(fs.readFileSync('dist/client/index.html'))
   res.end()
 })
 
