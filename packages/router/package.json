@@ -1,8 +1,11 @@
 {
-  "name": "@baseloop/core",
-  "version": "1.0.1",
+  "name": "@baseloop/router",
+  "version": "1.0.0",
   "description": "A toolkit for writing functional reactive web applications.",
   "main": "src/index.js",
+  "scripts": {
+    "test": "jest"
+  },
   "keywords": [
     "baseloop",
     "reactive",
@@ -14,10 +17,16 @@
   ],
   "author": "Kai Sellgren <kaisellgren@gmail.com>",
   "license": "ISC",
+  "dependencies": {
+    "path-to-regexp": "^3.0.0"
+  },
   "peerDependencies": {
     "ramda": ">=0.16.0 <1.0.0",
-    "react": ">=16.0.0",
-    "rxjs": ">=6.0.0 < 7.0.0"
+    "react": ">=16.0.0"
+  },
+  "devDependencies": {
+    "jest": "^24.4.0",
+    "babel-jest": "^24.4.0"
   },
   "publishConfig": {
     "access": "public"
