@@ -9,6 +9,9 @@ test('route matching', () => {
   expect(Route({path: '/docs'}).match('/')).toBe(false)
 
   expect(Route({path: '/encoding/:test'}).match('/encoding/test%2F%20%5E%20%C2%B4%20ersdf')).toBe(true)
+
+  expect(Route({path: '/docs/:page?'}).match('/docs')).toBe(true)
+  expect(Route({path: '/docs/:page?/foo/:foo?'}).match('/docs/5/foo')).toBe(true)
 })
 
 

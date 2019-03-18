@@ -9,6 +9,7 @@ export function Route ({path, name}) {
   })
   const compile = pathToRegexp.compile(path)
   const pathParts = getPathParts(path)
+  const isFinalParameterOptional = pathParts.length > 0 && pathParts[pathParts.length - 1].endsWith('?')
 
   function parse(pathname) {
     const results = regex.exec(pathname)
@@ -27,7 +28,8 @@ export function Route ({path, name}) {
 
   function match(pathname) {
     const pathnameParts = getPathParts(pathname)
-    return regex.test(pathname) && pathParts.length === pathnameParts.length
+    const isExactMatch = pathnameParts.length === pathParts.length || (isFinalParameterOptional && pathnameParts.length === pathParts.length - 1)
+    return regex.test(pathname) && isExactMatch
   }
 
   return {name, match, parse, compile}
