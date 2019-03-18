@@ -3,7 +3,7 @@ import { css } from 'styled-components'
 import Flex from '@baseloop/ui/src/layout/flex'
 import backgroundImage from '../../static/header-background.png'
 import Shield from '../component/shield'
-import { FOOTER_BACKGROUND } from '../styles/colors'
+import { HEADER_BACKGROUND, HEADER_FOREGROUND, FOOTER_BACKGROUND } from '../styles/colors'
 import Icon from '../component/icon'
 
 const contentStyle = css`
@@ -16,24 +16,22 @@ const contentStyle = css`
 `
 
 const headerStyle = css`
-  background: url(${backgroundImage}),linear-gradient(to top right,#2b5f7a,#7fc6e9) repeat;
+  background: ${HEADER_BACKGROUND};
   padding: 32px;
   text-align: center;
   height: 192px;
-  color: #e4f6ff;
-  border-top: 1px solid #b1d5e6;
-  border-bottom: 1px solid #1d333e;
+  color: ${HEADER_FOREGROUND};
   
   h1 {
     font-size: 48px;
     font-family: "Merienda", cursive;
-    text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.3);
+    
   }
   
   p {
-    font-size: 20px;
+    font-size: 24px;
     margin-top: 16px;
-    text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.2);
+    font-weight: 200;
   }
 `
 
