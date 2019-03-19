@@ -21,6 +21,8 @@ const headerStyle = css`
   text-align: center;
   height: 192px;
   color: ${HEADER_FOREGROUND};
+  border-top: 1px solid #7cc4ff;
+  border-bottom: 1px solid #216faf;
   
   h1 {
     font-size: 48px;
