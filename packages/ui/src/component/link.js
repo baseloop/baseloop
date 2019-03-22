@@ -7,15 +7,15 @@ export default class Link extends React.PureComponent {
   }
 
   render () {
-    const {router, routeName, ...props} = this.props
+    const {router, routeName, pathVariables, queryParameters, ...props} = this.props
 
     return (
-      <a href={router.buildUrl(routeName)} onClick={this.onClick} {...props} />
+      <a href={router.buildUrl(routeName, pathVariables, queryParameters)} onClick={this.onClick} {...props} />
     )
   }
 
   onClick (e) {
-    this.props.router.navigate(this.props.routeName)
+    this.props.router.navigate(this.props.routeName, this.props.pathVariables, this.props.queryParameters)
     e.preventDefault()
   }
 }
