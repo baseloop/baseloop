@@ -1,7 +1,7 @@
 import React from 'react'
-import styled from 'styled-components'
+import { css } from 'styled-components'
 
-const StyledFlex = styled.div`
+const style = css`
   display: flex;
   flex: ${props => props.flex};
   flex-direction: ${props => props.direction};
@@ -13,9 +13,9 @@ const StyledFlex = styled.div`
 class Flex extends React.PureComponent {
   render () {
     return (
-      <StyledFlex {...this.props}>
+      <div css={style} {...this.props}>
         {this.props.children}
-      </StyledFlex>
+      </div>
     )
   }
 }
@@ -23,7 +23,6 @@ class Flex extends React.PureComponent {
 Flex.defaultProps = {
   direction: 'row',
   flex: 'initial',
-  fullSize: false,
   alignItems: 'initial',
   justifyContent: 'initial',
   wrap: 'nowrap'
