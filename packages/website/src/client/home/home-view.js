@@ -16,14 +16,13 @@ const contentStyle = css`
 `
 
 const headerStyle = css`
-  background: ${HEADER_BACKGROUND};
+  background: ${HEADER_BACKGROUND},
+    url(${backgroundImage});
   padding: 32px;
   text-align: center;
   height: 192px;
   color: ${HEADER_FOREGROUND};
-  border-top: 1px solid #7cc4ff;
-  border-bottom: 1px solid #216faf;
-  
+
   h1 {
     font-size: 48px;
     font-family: "Merienda", cursive;
