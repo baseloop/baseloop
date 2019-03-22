@@ -68,16 +68,15 @@ export default function Home () {
         <div>
           <h1>Baseloop</h1>
           <p><Icon id="s-wrench" /> A toolkit for writing modern functional reactive web applications in JavaScript.</p>
-        </div>
-      </Flex>
-      <Flex justifyContent="center">
-        <Flex css={contentStyle} direction="column">
           <div css={shieldStyle}>
             <Shield src="https://img.shields.io/npm/v/@baseloop/core.svg?color=green&label=npm%20package" />
             <Shield src="https://img.shields.io/npm/l/@baseloop/core.svg?color=green" />
             <Shield src="https://img.shields.io/discord/551772477165010959.svg?color=green&label=chat%20on%20Discord" href="https://discord.gg/zMyuFwt" />
           </div>
-
+        </div>
+      </Flex>
+      <Flex justifyContent="center">
+        <Flex css={contentStyle} direction="column">
           <Flex css={featuresContainerStyle} direction="row" wrap="wrap" justifyContent="space-between">
             <div>
               <h2><Icon id="s-terminal" /> Functional</h2>
