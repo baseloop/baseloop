@@ -6,7 +6,7 @@ import { Router } from '@baseloop/router'
 export default function AppController () {
   const router = Router([
     {path: '/', name: 'home'},
-    {path: '/docs/:page?', name: 'docs', defaults: {page: 'setup'}},
+    {path: '/docs/:page?', name: 'docs', defaults: {page: 'motivation'}},
   ])
 
   const docs = DocsController(router)
