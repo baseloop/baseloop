@@ -32,7 +32,7 @@ const appStyle = css`
 `
 
 const navItemsStyle = css`
-  width: 1024px;
+  width: 100%;
   
   > div {
     align-self: center;
