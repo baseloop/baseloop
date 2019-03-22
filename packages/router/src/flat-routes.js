@@ -4,6 +4,7 @@ export default function flatRoutes (routes, parentRoute) {
     const newRoute = {
       path: parentRoute == null ? route.path : (parentRoute.path + route.path),
       name: parentRoute == null ? route.name : (parentRoute.name + '.' + route.name),
+      defaults: route.defaults
     }
     rs.push(newRoute)
 

@@ -16,10 +16,11 @@ export function Router (routeDefinitions) {
     e.preventDefault()
   })
 
-  const onEnter = wantedRoute => {
+  const onEnter = routeName => {
     return routeState.pipe(
       sample(url),
-      filter(s => s.route === wantedRoute),
+      filter(s => s.route.name === routeName),
+      map(s => ({pathVariables: s.pathVariables, queryParameters: s.queryParameters}))
     )
   }
 
