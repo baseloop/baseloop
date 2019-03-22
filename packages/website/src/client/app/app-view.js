@@ -53,7 +53,6 @@ export default class AppView extends React.PureComponent {
             <Flex justifyContent="space-between" css={navItemsStyle}>
               <h1><Link router={router} routeName="home">Baseloop</Link></h1>
               <div>
-                <a href="/asdasdasd"><Icon id="s-home" /> Not found page</a>
                 <Link router={router} routeName="home"><Icon id="s-home" /> Home</Link>
                 <Link router={router} routeName="docs"><Icon id="s-docs" /> Docs</Link>
                 <a href="https://github.com/baseloop/baseloop"><Icon id="b-github" /> Github</a>
