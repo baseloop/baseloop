@@ -11,6 +11,7 @@ const navigationStyle = css`
   background: ${NAV_BACK};
   box-sizing: border-box;
   padding: 16px;
+  border-bottom: solid 1px #312f2f0f;
   
   h1 {
     font-family: "Merienda", cursive;

@@ -20,7 +20,7 @@ const headerStyle = css`
     url(${backgroundImage});
   padding: 32px;
   text-align: center;
-  height: 192px;
+  height: 280px;
   color: ${HEADER_FOREGROUND};
 
   h1 {
@@ -38,6 +38,7 @@ const headerStyle = css`
 
 const shieldStyle = css`
   text-align: center;
+  margin-top: 40px;
   margin-bottom: 16px;
   
   > a {
@@ -47,10 +48,10 @@ const shieldStyle = css`
 
 const featuresContainerStyle = css`
   > div {
-    margin: 32px 0;
+    margin: 20px 0;
     border-radius: 6px;
-    text-align: center;
-    width: 320px;
+    text-align: left;
+    width: 480px;
   }
   
   h2 {
