@@ -1,42 +1,6 @@
-const path = require('path')
-const HtmlWebPackPlugin = require('html-webpack-plugin')
+const baseConfig = require('./webpack-client-base-config')
+const mergeDeepLeft = require('ramda').mergeDeepLeft
 
-module.exports = {
-  entry: './src/index.js',
-  output: {
-    publicPath: '/',
-    filename: 'index.js',
-    path: path.resolve(__dirname, '../dist')
-  },
+module.exports = mergeDeepLeft({
   mode: 'production',
-  module: {
-    rules: [
-      {
-        test: /\.jsx?$/,
-        exclude: /node_modules\/(?!(@baseloop)\/).*/,
-        use: {
-          loader: 'babel-loader',
-          options: {
-            presets: ['@babel/preset-env', '@babel/preset-react'],
-            plugins: ['babel-plugin-styled-components']
-          },
-        },
-      },
-      {
-        test: /\.html$/,
-        use: ['html-loader']
-      }
-    ]
-  },
-  resolve: {
-    symlinks: false
-  },
-  plugins: [
-    new HtmlWebPackPlugin({
-      hash: true,
-      favicon: './src/static/favicon.png',
-      template: './src/static/index.html',
-      filename: './index.html'
-    }),
-  ]
-}
+}, baseConfig)
