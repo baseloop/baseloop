@@ -39,6 +39,9 @@ export function Router (routeDefinitions) {
         return
       }
       const href = route.compile(pathVariables) + qs.compile(queryParameters)
+      if (href === window.location.pathname + window.location.search) {
+        return
+      }
       history.pushState({}, window.title, href)
       url.next(href)
     }
