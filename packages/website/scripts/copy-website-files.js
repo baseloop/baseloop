@@ -6,7 +6,7 @@ const inputPath = path.resolve(__dirname, '../dist/client')
 const outputPath = path.resolve(__dirname, '../../../website')
 
 function cleanOutputPath() {
-  del.sync([outputPath + '/**', `!${outputPath}/CNAME`, `!${outputPath}/_redirects`, `!${outputPath}`], {force: true});
+  del.sync([outputPath + '/**', `!${outputPath}/_headers`, `!${outputPath}/CNAME`, `!${outputPath}/_redirects`, `!${outputPath}`], {force: true});
 }
 
 function copyCompiledFilesToOutputPath() {
