@@ -6,17 +6,6 @@ principles such as functional and reactive programming.
 ![npm-version](https://img.shields.io/npm/v/@baseloop/core.svg?color=green&label=npm%20package)
 ![license](https://img.shields.io/npm/l/@baseloop/core.svg?color=green)
 
-## Running the demo
-
-- `git clone` the entire repository.
-- Install [Lerna](https://github.com/lerna/lerna/) and Webpack: `npm install -g lerna webpack webpack-cli`.
-- Run at the root level: `lerna bootstrap --hoist`. This will install and set up all dependencies.
-- Under the directory `packages/example/`, keep the following scripts running:
-  - `npm run watch-server` (a watcher that builds the server-side code)
-  - `npm run watch-client` (for client-side code)
-  - `npm run app` (the server app)
-- Go to [http://localhost:1337/](http://localhost:1337/)
-
 ## Architecture (store-view-controller)
 ![architecture](https://github.com/baseloop/baseloop/raw/master/resources/baseloop-architecture.png)
 
