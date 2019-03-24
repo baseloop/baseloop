@@ -43,6 +43,17 @@ module.exports = {
             name: 'fonts/[hash]-[name].[ext]'
           }
         }
+      },
+      {
+        test: /\.md$/,
+        use: [
+          {
+            loader: 'html-loader'
+          },
+          {
+            loader: 'markdown-loader'
+          }
+        ]
       }
     ]
   },

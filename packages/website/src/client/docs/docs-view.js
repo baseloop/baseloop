@@ -1,11 +1,12 @@
 import React from 'react'
 import { Link } from '@baseloop/ui'
 import { css } from 'styled-components'
-import InstallationView from './pages/installation-view'
-import MotivationView from './pages/motivation-view'
-import ArchitectureView from './pages/architecture-view'
-import FunctionalProgrammingView from './pages/functional-programming-view'
-import ReactiveProgrammingView from './pages/reactive-programming-view'
+import installation from './pages/installation.md'
+import motivation from './pages/motivation.md'
+import architecture from './pages/architecture.md'
+import functionalProgramming from './pages/functional-programming.md'
+import reactiveProgramming from './pages/reactive-programming.md'
+import markdownStyle from './markdown-style'
 
 const menu = [
   {
@@ -31,7 +32,6 @@ const pageStyle = css`
 
 const containerStyle = css`
   display: flex;
-  padding: 16px;
   width: 1024px;
   
   > div {
@@ -46,7 +46,7 @@ const menuStyle = css`
   
   h1 {
     font-size: 20px;
-    margin-bottom: 16px;
+    margin: 16px 0;
   }
   
   ul {
@@ -64,6 +64,8 @@ const menuStyle = css`
 
 const docStyle = css`
   flex: 1;
+  
+  ${markdownStyle}
 `
 
 export default class DocsView extends React.PureComponent {
@@ -77,11 +79,11 @@ export default class DocsView extends React.PureComponent {
             {menu.map(this.renderMenuItem)}
           </div>
           <div css={docStyle}>
-            {page === 'motivation' && <MotivationView />}
-            {page === 'architecture' && <ArchitectureView />}
-            {page === 'installation' && <InstallationView />}
-            {page === 'functional-programming' && <FunctionalProgrammingView />}
-            {page === 'reactive-programming' && <ReactiveProgrammingView />}
+            {page === 'motivation' && <div dangerouslySetInnerHTML={{__html: motivation}}/>}
+            {page === 'architecture' && <div dangerouslySetInnerHTML={{__html: architecture}}/>}
+            {page === 'installation' && <div dangerouslySetInnerHTML={{__html: installation}}/>}
+            {page === 'functional-programming' && <div dangerouslySetInnerHTML={{__html: functionalProgramming}}/>}
+            {page === 'reactive-programming' && <div dangerouslySetInnerHTML={{__html: reactiveProgramming}}/>}
           </div>
         </div>
       </div>
