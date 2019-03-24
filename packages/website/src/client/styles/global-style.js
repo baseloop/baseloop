@@ -10,6 +10,27 @@ const fontFamily = '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helve
 const GlobalStyle = createGlobalStyle`
   ${resetStyle}
   
+  html {
+    overflow-y: scroll;
+    overflow-y: overlay;
+  }
+  
+  ::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    border-radius: 0;
+    background-color: #eee;
+  }
+  
+  ::-webkit-scrollbar {
+    width: 12px;
+    background-color: #F5F5F5;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    background-color: #0771d2;
+  }
+  
   body {
     background: ${BACKGROUND};
     font-size: 16px;
