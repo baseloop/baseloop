@@ -14,3 +14,10 @@
   - `npm run website:server`
     - This will keep watching and building your client-side source code and auto-reload the page.
 - Go to [http://localhost:8080/](http://localhost:8080/) or whatever the port happens to be.
+
+### Run the example
+
+- Under the directory `packages/example/`, keep the following script running:
+  - `npm run example:server`
+    - This will keep watching and building your client-side source code and auto-reload the page.
+- Go to [http://localhost:8080/](http://localhost:8080/) or whatever the port happens to be.
