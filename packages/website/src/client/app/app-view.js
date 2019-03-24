@@ -21,6 +21,7 @@ const navigationStyle = css`
     margin: 0.5rem 1rem;
     color: ${NAV_FRONT};
     text-decoration: none;
+    white-space: nowrap;
     
     :hover {
       color: ${NAV_LINK_HOVER};
@@ -33,10 +34,15 @@ const appStyle = css`
 `
 
 const navItemsStyle = css`
+  align-items: center;
   width: 100%;
   
-  > div {
-    align-self: center;
+  @media (max-width: 768px) { 
+    justify-content: center;
+  
+    > h1 {
+      display: none;
+    }
   }
 `
 
@@ -54,7 +60,7 @@ export default class AppView extends React.PureComponent {
               <h1><Link router={router} routeName="home">Baseloop</Link></h1>
               <div>
                 <Link router={router} routeName="home"><Icon id="s-home" /> Home</Link>
-                <Link router={router} routeName="docs"><Icon id="s-docs" /> Docs</Link>
+                <Link router={router} routeName="docs"><Icon id="s-docs" /> Documentation</Link>
                 <a href="https://github.com/baseloop/baseloop"><Icon id="b-github" /> Github</a>
               </div>
             </Flex>

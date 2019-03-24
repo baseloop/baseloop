@@ -8,7 +8,7 @@ import Icon from '../component/icon'
 
 const contentStyle = css`
   padding: 1rem;
-  width: 64rem;
+  max-width: 64rem;
   
   > div {
     margin-bottom: 2rem;
@@ -16,8 +16,7 @@ const contentStyle = css`
 `
 
 const headerStyle = css`
-  background: ${HEADER_BACKGROUND},
-    url(${backgroundImage});
+  background: ${HEADER_BACKGROUND}, url(${backgroundImage});
   padding: 2rem;
   text-align: center;
   height: 17.5rem;
@@ -51,7 +50,7 @@ const featuresContainerStyle = css`
     margin: 1.25rem 0;
     border-radius: 0.375rem;
     text-align: left;
-    width: 30rem;
+    max-width: 30rem;
   }
   
   h2 {
@@ -77,7 +76,7 @@ export default function Home () {
       </Flex>
       <Flex justifyContent="center">
         <Flex css={contentStyle} direction="column">
-          <Flex css={featuresContainerStyle} direction="row" wrap="wrap" justifyContent="space-between">
+          <Flex css={featuresContainerStyle} direction="row" wrap="wrap" justifyContent="space-evenly">
             <div>
               <h2><Icon id="s-terminal" /> Functional</h2>
               <p>We use functional programming to enable predictable program behavior. This leads to highly maintainable programs at scale.</p>

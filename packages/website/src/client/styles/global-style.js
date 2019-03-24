@@ -13,6 +13,7 @@ const GlobalStyle = createGlobalStyle`
   html {
     overflow-y: scroll;
     overflow-y: overlay;
+    font-size: 16px;
   }
   
   ::-webkit-scrollbar-track {
@@ -33,7 +34,6 @@ const GlobalStyle = createGlobalStyle`
   
   body {
     background: ${BACKGROUND};
-    font-size: 16px;
     font-family: ${fontFamily};
     text-rendering: optimizeLegibility;
   }
