@@ -11,25 +11,9 @@ const GlobalStyle = createGlobalStyle`
   ${resetStyle}
   
   html {
-    overflow-y: scroll;
-    overflow-y: overlay;
+    overflow: hidden;
     font-size: 16px;
-  }
-  
-  ::-webkit-scrollbar-track {
-    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-    border-radius: 0;
-    background-color: #eee;
-  }
-  
-  ::-webkit-scrollbar {
-    width: 0.75rem;
-    background-color: #F5F5F5;
-  }
-  
-  ::-webkit-scrollbar-thumb {
-    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-    background-color: #0771d2;
+    height: 100vh;
   }
   
   body {
@@ -39,7 +23,7 @@ const GlobalStyle = createGlobalStyle`
   }
   
   body, #app-container {
-    min-height: 100vh;
+    height: 100vh;
   }
   
   h1 {
@@ -57,6 +41,10 @@ const GlobalStyle = createGlobalStyle`
   
   a:hover {
     color: ${LINK_HOVER};
+  }
+  
+  img {
+    max-width: 100%;
   }
   
   main {

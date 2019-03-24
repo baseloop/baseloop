@@ -7,6 +7,8 @@ import architecture from './pages/architecture.md'
 import functionalProgramming from './pages/functional-programming.md'
 import reactiveProgramming from './pages/reactive-programming.md'
 import markdownStyle from './markdown-style'
+import Icon from '../component/icon'
+import { MOBILE_NAV_BACK, NAV_FRONT } from '../styles/colors'
 
 const menu = [
   {
@@ -27,20 +29,26 @@ const menu = [
 const pageStyle = css`
   display: flex;
   justify-content: center;
-  padding: 2rem 0;
+  
+  @media (min-width: 960px) {
+    padding: 2rem;
+  }
 `
 
 const containerStyle = css`
   display: flex;
-  width: 90rem;
+  max-width: 90rem;
   
-  > div {
-    margin-bottom: 2rem;
-    margin-left: 2rem;
+  @media (max-width: 959px) {
+    flex-direction: column;
   }
 `
 
 const menuStyle = css`
+  @media (max-width: 959px) {
+    display: none;
+  }
+  
   padding-right: 1rem;
   border-right: 0.0625rem solid #ddd;
   
@@ -55,6 +63,7 @@ const menuStyle = css`
   
   li {
     margin: 0.75rem 1rem;
+    white-space: nowrap;
   }
   
   a {
@@ -62,15 +71,72 @@ const menuStyle = css`
   }
 `
 
+const mobileToolbarStyle = css`
+  background: ${MOBILE_NAV_BACK};
+  color: ${NAV_FRONT};
+  padding: 1rem;
+  position: fixed;
+  left: 0;
+  width: 100%;
+  box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.5);
+
+  @media (min-width: 960px) {
+    display: none;
+  }
+  
+  > a {
+    color: ${NAV_FRONT};
+  }
+`
+
 const docStyle = css`
   flex: 1;
   
+  @media (min-width: 960px) {
+    margin-left: 2rem;
+  }
+  
+  @media (max-width: 959px) {
+    padding: 1rem;
+    margin-top: 3rem;
+  }
+  
   ${markdownStyle}
+`
+
+const mobileMenuStyle = css`
+  background: rgba(255, 255, 255, 0.95);
+  position: fixed;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  margin-top: 3rem;
+  padding: 1rem;
+  
+  h1 {
+    margin: 0 0 1rem 0;
+  }
+  
+  li {
+    margin: 0.5rem 0;
+  }
+  
+  ul {
+    margin: 0.5rem 0 2rem 0;
+  }
 `
 
 export default class DocsView extends React.PureComponent {
   render () {
     const {page} = this.props
+
+    const pageContent = {
+      'motivation': motivation,
+      'architecture': architecture,
+      'installation': installation,
+      'functional-programming': functionalProgramming,
+      'reactive-programming': reactiveProgramming
+    }
 
     return (
       <div css={pageStyle}>
@@ -78,12 +144,14 @@ export default class DocsView extends React.PureComponent {
           <div css={menuStyle}>
             {menu.map(this.renderMenuItem)}
           </div>
+          <div css={mobileToolbarStyle} onClick={this.handleMobileMenuClick}>
+            <Icon id="s-bars" /> {getTitleByPage(page, menu)}
+          </div>
+          {this.state.isMobileMenuOpen && <div css={mobileMenuStyle}>
+            {menu.map(this.renderMenuItem)}
+          </div>}
           <div css={docStyle}>
-            {page === 'motivation' && <div dangerouslySetInnerHTML={{__html: motivation}}/>}
-            {page === 'architecture' && <div dangerouslySetInnerHTML={{__html: architecture}}/>}
-            {page === 'installation' && <div dangerouslySetInnerHTML={{__html: installation}}/>}
-            {page === 'functional-programming' && <div dangerouslySetInnerHTML={{__html: functionalProgramming}}/>}
-            {page === 'reactive-programming' && <div dangerouslySetInnerHTML={{__html: reactiveProgramming}}/>}
+            <div dangerouslySetInnerHTML={{__html: pageContent[page]}}/>
           </div>
         </div>
       </div>
@@ -108,14 +176,38 @@ export default class DocsView extends React.PureComponent {
 
   renderSubMenuItem (item) {
     return (
-      <li key={item.page}><Link router={this.props.router} routeName="docs" pathVariables={{page: item.page}}>{item.title}</Link></li>
+      <li key={item.page}><Link router={this.props.router} routeName="docs" pathVariables={{page: item.page}} onClick={this.closeMobileMenu}>{item.title}</Link></li>
     )
+  }
+
+  handleMobileMenuClick () {
+    this.setState({isMobileMenuOpen: !this.state.isMobileMenuOpen})
+  }
+
+  closeMobileMenu () {
+    this.setState({isMobileMenuOpen: false})
   }
 
   constructor (props, context) {
     super(props, context)
+    this.state = {isMobileMenuOpen: false}
     this.renderMenuItem = this.renderMenuItem.bind(this)
     this.renderSubMenuItem = this.renderSubMenuItem.bind(this)
     this.renderParentMenuItem = this.renderParentMenuItem.bind(this)
+    this.handleMobileMenuClick = this.handleMobileMenuClick.bind(this)
+    this.closeMobileMenu = this.closeMobileMenu.bind(this)
+  }
+}
+
+function getTitleByPage (page, children) {
+  for (const item of children) {
+    if (item.page === page) {
+      return item.title
+    } else if (item.children != null) {
+      const titleByPage = getTitleByPage(page, item.children)
+      if (titleByPage != null) {
+        return titleByPage
+      }
+    }
   }
 }

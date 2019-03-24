@@ -8,7 +8,7 @@ sit amet condimentum sem, sed pharetra lacus. Cras pellentesque laoreet sem sit 
 efficitur a lacus a egestas. Vivamus rhoncus fermentum justo, vel consectetur odio suscipit vel. Sed
 tempus diam id massa ultricies ultrices.
 
-![Architecture][architecture]
+[![Architecture][architecture]][architecture]
 
 [architecture]: https://raw.githubusercontent.com/baseloop/baseloop/master/resources/baseloop-architecture.png
 [releases]: https://github.com/showdownjs/showdown/releases

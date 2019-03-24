@@ -1,6 +1,7 @@
 export const NAV_BACK = '#0771d2'
 export const NAV_FRONT = '#CFD8DC'
 export const NAV_LINK_HOVER = '#fff'
+export const MOBILE_NAV_BACK = '#54718c'
 export const SECONDARY_BACK = '#e9e9e9'
 export const SECONDARY_FRONT = '#d8dde0'
 export const SECONDARY_DARK = '#cacfd2'

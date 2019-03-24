@@ -11,7 +11,8 @@ const navigationStyle = css`
   background: ${NAV_BACK};
   box-sizing: border-box;
   padding: 1rem;
-  border-bottom: solid 0.0625rem #312f2f0f;
+  box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.5);
+  z-index: 1;
   
   h1 {
     font-family: "Merienda", cursive;
@@ -30,7 +31,7 @@ const navigationStyle = css`
 `
 
 const appStyle = css`
-  min-height: 100vh;
+  height: 100vh;
 `
 
 const navItemsStyle = css`
@@ -42,6 +43,23 @@ const navItemsStyle = css`
   
     > h1 {
       display: none;
+    }
+  }
+`
+
+const mainContentStyle = css`
+  overflow-y: overlay;
+  overflow-y: auto;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  height: 100%;
+  
+  > div {
+    flex: 1;
+    
+    > div {
+      height: 100%;
     }
   }
 `
@@ -67,17 +85,19 @@ export default class AppView extends React.PureComponent {
           </Flex>
         </nav>
 
-        <Flex direction="column" flex="1">
-          <Flex justifyContent="center" flex="1">
-            <main>
-              {router.match('home') && <Home />}
-              {router.matchPartial('docs') && docs}
-              {router.match() && <div>Not found!</div>}
-            </main>
-          </Flex>
+        <div css={mainContentStyle}>
+          <div>
+            <Flex justifyContent="center" flex="1">
+              <main>
+                {router.match('home') && <Home />}
+                {router.matchPartial('docs') && docs}
+                {router.match() && <div>Not found!</div>}
+              </main>
+            </Flex>
+          </div>
 
           <footer>Copyright &copy; 2019 Baseloop</footer>
-        </Flex>
+        </div>
       </Flex>
     )
   }

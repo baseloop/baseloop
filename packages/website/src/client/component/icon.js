@@ -32,6 +32,7 @@ const idMap = {
   'comments': '\\f086',
   'copy': '\\f0c5',
   'rook': '\\f447',
+  'bars': '\\f0c9'
 }
 
 const typeIdMap = {
