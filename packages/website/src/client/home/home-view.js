@@ -7,56 +7,56 @@ import { HEADER_BACKGROUND, HEADER_FOREGROUND, FOOTER_BACKGROUND } from '../styl
 import Icon from '../component/icon'
 
 const contentStyle = css`
-  padding: 16px;
-  width: 1024px;
+  padding: 1rem;
+  width: 64rem;
   
   > div {
-    margin-bottom: 32px;
+    margin-bottom: 2rem;
   }
 `
 
 const headerStyle = css`
   background: ${HEADER_BACKGROUND},
     url(${backgroundImage});
-  padding: 32px;
+  padding: 2rem;
   text-align: center;
-  height: 280px;
+  height: 17.5rem;
   color: ${HEADER_FOREGROUND};
 
   h1 {
-    font-size: 48px;
+    font-size: 3rem;
     font-family: "Merienda", cursive;
     
   }
   
   p {
-    font-size: 24px;
-    margin-top: 16px;
+    font-size: 1.5rem;
+    margin-top: 1rem;
     font-weight: 200;
   }
 `
 
 const shieldStyle = css`
   text-align: center;
-  margin-top: 40px;
-  margin-bottom: 16px;
+  margin-top: 2.5rem;
+  margin-bottom: 1rem;
   
   > a {
-    margin-right: 8px;
+    margin-right: 0.5rem;
   }
 `
 
 const featuresContainerStyle = css`
   > div {
-    margin: 20px 0;
-    border-radius: 6px;
+    margin: 1.25rem 0;
+    border-radius: 0.375rem;
     text-align: left;
-    width: 480px;
+    width: 30rem;
   }
   
   h2 {
-    font-size: 24px;
-    margin-bottom: 16px;
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
     color: ${FOOTER_BACKGROUND};
   }
 `

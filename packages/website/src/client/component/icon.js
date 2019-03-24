@@ -53,8 +53,8 @@ class Icon extends React.PureComponent {
 
 Icon.defaultProps = {
   src: '',
-  width: '24px',
-  height: '24px',
+  width: '1.5rem',
+  height: '1.5rem',
   type: 'solid',
 }
 

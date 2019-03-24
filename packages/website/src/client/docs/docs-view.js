@@ -27,34 +27,34 @@ const menu = [
 const pageStyle = css`
   display: flex;
   justify-content: center;
-  padding: 32px 0;
+  padding: 2rem 0;
 `
 
 const containerStyle = css`
   display: flex;
-  width: 1024px;
+  width: 90rem;
   
   > div {
-    margin-bottom: 32px;
-    margin-left: 32px;
+    margin-bottom: 2rem;
+    margin-left: 2rem;
   }
 `
 
 const menuStyle = css`
-  padding-right: 16px;
-  border-right: 1px solid #ddd;
+  padding-right: 1rem;
+  border-right: 0.0625rem solid #ddd;
   
   h1 {
-    font-size: 20px;
-    margin: 16px 0;
+    font-size: 1.25rem;
+    margin: 1rem 0;
   }
   
   ul {
-    margin-bottom: 32px;
+    margin-bottom: 2rem;
   }
   
   li {
-    margin: 12px 16px;
+    margin: 0.75rem 1rem;
   }
   
   a {

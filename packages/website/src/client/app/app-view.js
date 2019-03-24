@@ -10,15 +10,15 @@ const navigationStyle = css`
   width: 100%;
   background: ${NAV_BACK};
   box-sizing: border-box;
-  padding: 16px;
-  border-bottom: solid 1px #312f2f0f;
+  padding: 1rem;
+  border-bottom: solid 0.0625rem #312f2f0f;
   
   h1 {
     font-family: "Merienda", cursive;
   }
   
   a {
-    margin: 8px 16px;
+    margin: 0.5rem 1rem;
     color: ${NAV_FRONT};
     text-decoration: none;
     

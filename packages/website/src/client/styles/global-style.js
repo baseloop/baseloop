@@ -22,7 +22,7 @@ const GlobalStyle = createGlobalStyle`
   }
   
   ::-webkit-scrollbar {
-    width: 12px;
+    width: 0.75rem;
     background-color: #F5F5F5;
   }
   
@@ -43,12 +43,12 @@ const GlobalStyle = createGlobalStyle`
   }
   
   h1 {
-    font-size: 24px;
+    font-size: 1.5rem;
   }
   
   p {
-    margin: 8px 0;
-    line-height: 22px;
+    margin: 0.5rem 0;
+    line-height: 1.375rem;
   }
   
   a {
@@ -69,7 +69,7 @@ const GlobalStyle = createGlobalStyle`
   footer {
     background: ${FOOTER_BACKGROUND};
     color: ${FOOTER_FOREGROUND};
-    padding: 32px;
+    padding: 2rem;
     text-align: center;
   }
   
