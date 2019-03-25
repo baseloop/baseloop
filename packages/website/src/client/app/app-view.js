@@ -79,7 +79,7 @@ export default class AppView extends React.PureComponent {
               <div>
                 <Link router={router} routeName="home"><Icon id="s-home" /> Home</Link>
                 <Link router={router} routeName="docs"><Icon id="s-docs" /> Documentation</Link>
-                <a href="https://github.com/baseloop/baseloop"><Icon id="b-github" /> Github</a>
+                <a href="https://github.com/baseloop/baseloop"><Icon id="b-github" /> GitHub</a>
               </div>
             </Flex>
           </Flex>
