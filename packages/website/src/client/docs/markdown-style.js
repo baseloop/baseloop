@@ -6,10 +6,10 @@ export default css`
   }
   
   h1 {
-    border-bottom: 0.0625rem solid #414f5c;
+    border-bottom: 0.0625rem solid #0672d2;
     padding-bottom: 0.75rem;
     font-size: 2.25rem;
-    color: #3c75a9;
+    color: #0672d2;
     margin: 1rem 0 1.5rem 0;
   }
   
