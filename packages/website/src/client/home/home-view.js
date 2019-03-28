@@ -50,7 +50,11 @@ const featuresContainerStyle = css`
     margin: 1.25rem 0;
     border-radius: 0.375rem;
     text-align: left;
-    max-width: 30rem;
+    width: 30rem;
+    
+    @media (max-width: 768px) {
+      width: 100%;
+    }
   }
   
   h2 {
