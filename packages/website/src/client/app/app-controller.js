@@ -9,6 +9,12 @@ export default function AppController () {
     {path: '/docs/:page?', name: 'docs', defaults: {page: 'motivation'}},
   ])
 
+  router.url.subscribe(() => {
+    if (window.ga != null) {
+      window.ga('send', 'pageview', window.location.pathname)
+    }
+  })
+
   const docs = DocsController(router)
 
   return createReactiveElement(AppView, {

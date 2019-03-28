@@ -27,6 +27,7 @@ export function Router (routeDefinitions) {
   const onLeave = () => {}
 
   return {
+    url,
     onEnter,
     onLeave,
     view: combineLatest(routes, route, createView),
