@@ -4,6 +4,12 @@ export function setPage (page) {
       this.page.url = window.location.href
       this.page.identifier = page
     }
+
+    const script = document.createElement('script')
+    script.async = true
+    script.src = 'https://baseloop.disqus.com/embed.js'
+
+    document.getElementsByTagName('head')[0].appendChild(script)
   } else {
     window.DISQUS.reset({
       reload: true,
