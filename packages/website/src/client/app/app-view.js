@@ -50,6 +50,7 @@ const navItemsStyle = css`
 const mainContentStyle = css`
   overflow-y: overlay;
   overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
   display: flex;
   flex: 1;
   flex-direction: column;

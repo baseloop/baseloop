@@ -52,8 +52,6 @@ const GlobalStyle = createGlobalStyle`
     width: 100%;
     flex: 1;
     box-sizing: border-box;
-    overflow-y: scroll;
-    -webkit-overflow-scrolling: touch;
   }
   
   footer {
