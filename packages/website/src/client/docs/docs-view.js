@@ -9,6 +9,7 @@ import reactiveProgramming from './pages/reactive-programming.md'
 import markdownStyle from './markdown-style'
 import Icon from '../component/icon'
 import { MOBILE_NAV_BACK, NAV_FRONT } from '../styles/colors'
+import { setPage } from '../util/disqus'
 
 const menu = [
   {
@@ -127,6 +128,16 @@ const mobileMenuStyle = css`
 `
 
 export default class DocsView extends React.PureComponent {
+  componentDidMount() {
+    setPage(`docs-${this.props.page}`)
+  }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.page !== this.props.page) {
+      setPage(`docs-${this.props.page}`)
+    }
+  }
+
   render () {
     const {page} = this.props
 
@@ -152,6 +163,7 @@ export default class DocsView extends React.PureComponent {
           </div>}
           <div css={docStyle}>
             <div dangerouslySetInnerHTML={{__html: pageContent[page]}}/>
+            <div id="disqus_thread" />
           </div>
         </div>
       </div>
