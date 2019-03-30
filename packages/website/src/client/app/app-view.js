@@ -11,7 +11,7 @@ const navigationStyle = css`
   background: ${NAV_BACK};
   box-sizing: border-box;
   padding: 1rem;
-  box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.5);
+  border-bottom: solid 1px #0e6dbd;
   z-index: 1;
   
   h1 {
@@ -73,20 +73,20 @@ export default class AppView extends React.PureComponent {
       <Flex direction="column" css={appStyle}>
         <GlobalStyle />
 
-        <nav css={navigationStyle}>
-          <Flex justifyContent="center">
-            <Flex justifyContent="space-between" css={navItemsStyle}>
-              <h1><Link router={router} routeName="home">Baseloop</Link></h1>
-              <div>
-                <Link router={router} routeName="home"><Icon id="s-home" /> Home</Link>
-                <Link router={router} routeName="docs"><Icon id="s-docs" /> Documentation</Link>
-                <a href="https://github.com/baseloop/baseloop"><Icon id="b-github" /> GitHub</a>
-              </div>
-            </Flex>
-          </Flex>
-        </nav>
-
         <div css={mainContentStyle}>
+          <nav css={navigationStyle}>
+            <Flex justifyContent="center">
+              <Flex justifyContent="space-between" css={navItemsStyle}>
+                <h1><Link router={router} routeName="home">Baseloop</Link></h1>
+                <div>
+                  <Link router={router} routeName="home"><Icon id="s-home" /> Home</Link>
+                  <Link router={router} routeName="docs"><Icon id="s-docs" /> Documentation</Link>
+                  <a href="https://github.com/baseloop/baseloop"><Icon id="b-github" /> GitHub</a>
+                </div>
+              </Flex>
+            </Flex>
+          </nav>
+          
           <div>
             <Flex justifyContent="center" flex="1">
               <main>
