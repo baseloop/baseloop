@@ -2,7 +2,7 @@
   "name": "@baseloop/website",
   "private": true,
   "scripts": {
-    "website:build:client": "webpack --config config/webpack-client-prod-config.js",
+    "website:build:client": "webpack --config config/webpack/client-prod.js",
     "website:create": "npm run website:build:client && node scripts/copy-website-files.js",
     "website:server": "baseloop-dev-server --bundler webpack --spa --config config/webpack-client-dev-config.js --dir dist/client"
   },
