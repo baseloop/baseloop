@@ -31,7 +31,7 @@ const navigationStyle = css`
 `
 
 const appStyle = css`
-  height: 100vh;
+  
 `
 
 const navItemsStyle = css`
