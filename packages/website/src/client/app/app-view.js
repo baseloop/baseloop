@@ -86,7 +86,7 @@ export default class AppView extends React.PureComponent {
               </Flex>
             </Flex>
           </nav>
-          
+
           <div>
             <Flex justifyContent="center" flex="1">
               <main>
