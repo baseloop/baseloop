@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "A router for Baseloop applications.",
   "main": "src/index.js",
+  "module": "src/index.js",
   "scripts": {
     "test": "jest"
   },
@@ -21,6 +22,7 @@
     "path-to-regexp": "^3.0.0"
   },
   "peerDependencies": {
+    "@baseloop/core": ">=1.0.0 <2.0.0",
     "ramda": ">=0.16.0 <1.0.0",
     "react": ">=16.0.0"
   },

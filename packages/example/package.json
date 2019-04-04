@@ -2,7 +2,7 @@
   "name": "@baseloop/example",
   "private": true,
   "scripts": {
-    "example:server": "baseloop-dev-server --bundler webpack --spa --config config/webpack-client-dev-config.js --dir dist/client"
+    "example:server": "baseloop-dev-server --config config/webpack/client-dev.js"
   },
   "dependencies": {
     "@baseloop/core": "1.0.1",

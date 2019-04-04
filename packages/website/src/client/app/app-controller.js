@@ -1,16 +1,16 @@
-import { createReactiveElement } from '@baseloop/core'
+import { createReactiveElement, isBrowser } from '@baseloop/core'
 import AppView from './app-view'
 import DocsController from '../docs/docs-controller'
 import { Router } from '@baseloop/router'
 
-export default function AppController () {
+export default function AppController ({initialUrl}) {
   const router = Router([
     {path: '/', name: 'home'},
     {path: '/docs/:page?', name: 'docs', defaults: {page: 'motivation'}},
-  ])
+  ], {initialUrl})
 
   router.url.subscribe(() => {
-    if (window.ga != null) {
+    if (isBrowser && window.ga != null) {
       window.ga('send', 'pageview', window.location.pathname)
     }
   })

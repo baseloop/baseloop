@@ -1,9 +1,22 @@
 import { AutoReloadClient } from '@baseloop/dev'
-import { render } from 'react-dom'
+import { isDevelopment } from '@baseloop/core'
+import { hydrate, render } from 'react-dom'
 import AppController from './app/app-controller'
 
-if (process.env.NODE_ENV === 'development') {
+if (isDevelopment) {
   AutoReloadClient()
 }
 
-AppController().subscribe(app => render(app, document.getElementById('app-container')))
+const container = document.getElementById('app-container')
+let firstRender = true
+
+AppController({
+  initialUrl: window.location.pathname + window.location.search
+}).subscribe(app => {
+  if (firstRender) {
+    hydrate(app, container)
+    firstRender = false
+  } else {
+    render(app, container)
+  }
+})

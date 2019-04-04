@@ -6,44 +6,87 @@ const express = require('express')
 const path = require('path')
 const webpack = require('webpack')
 const yargs = require('yargs')
+const childProcess = require('child_process')
 
 yargs.options(require('./options'))
 
 const argv = yargs.argv
 
-const app = express()
+const autoReloadServer = AutoReloadServer({
+  port: argv['auto-reload-port']
+})
 
-const staticOptions = {
-  index: false,
-  setHeaders: res => {
-    res.setHeader('Cache-Control', 'public, max-age=31557600')
+const clientBundlerOptions = require(path.resolve(argv['config-client']))
+const serverBundlerOptions = argv['config-server'] ? require(path.resolve(argv['config-server'])) : null
+
+if (serverBundlerOptions) {
+  const serverFile = path.resolve(argv['server'])
+
+  if (argv.bundler === 'webpack') {
+    console.log('∞ Starting Webpack server watcher...')
+    let process
+
+    const compiler = webpack(serverBundlerOptions)
+    const watcher = compiler.watch({}, (err, stats) => {
+      if (err) {
+        console.log('∞ Webpack server compilation error: ', err)
+      } else {
+        if (process != null && !process.killed) {
+          process.kill()
+        }
+
+        process = childProcess.spawn('node', [serverFile])
+
+        process.stdout.on('data', data => {
+          console.log(data.toString())
+        })
+
+        process.stderr.on('data', data => {
+          console.error(data.toString())
+        })
+
+        process.on('exit', code => {
+          if (code !== 0 && code != null) {
+            console.error(`∞ Server exit with code: ${code}`)
+          }
+        })
+
+        console.log(stats.toString({
+          colors: true
+        }))
+      }
+    })
   }
+} else {
+  const app = express()
+
+  const staticOptions = {
+    index: false,
+    setHeaders: res => {
+      res.setHeader('Cache-Control', 'public, max-age=31557600')
+    }
+  }
+
+  app.use('/', express.static(argv.publicDir, staticOptions))
+
+  app.use((req, res) => {
+    res.setHeader('Content-Type', 'text/html')
+    res.send(fs.readFileSync(path.join(argv.publicDir, 'index.html')))
+    res.end()
+  })
+
+  app.listen(argv.port, argv.host, () => {
+    console.log(`∞ Baseloop development server is running at http://${argv.host}:${argv.port}/`)
+  })
 }
 
-app.use('/', express.static(argv.dir, staticOptions))
-
-app.use((req, res) => {
-  res.setHeader('Content-Type', 'text/html')
-  res.send(fs.readFileSync(path.join(argv.dir, 'index.html')))
-  res.end()
-})
-
-app.listen(argv.port, argv.host, () => {
-  console.log(`Baseloop development server is running at http://${argv.host}:${argv.port}/`)
-})
-
-const autoReloadServer = AutoReloadServer({
-  port: argv.autoReloadPort
-})
-
 if (argv.bundler === 'webpack') {
-  console.log('Starting Webpack watcher...')
+  console.log('∞ Starting Webpack client watcher...')
 
-  const compilerOptions = require(path.resolve(argv.config))
-  const compiler = webpack(compilerOptions)
+  const compiler = webpack(clientBundlerOptions)
   const watcher = compiler.watch({}, (err, stats) => {
     if (err) {
-      console.log('Webpack compilation error: ', err)
+      console.log('∞ Webpack client compilation error: ', err)
     } else {
       autoReloadServer.forceReload()
 

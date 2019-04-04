@@ -3,18 +3,25 @@ import { BehaviorSubject, combineLatest } from 'rxjs'
 import { filter, map, sample } from 'rxjs/operators'
 import flatRoutes from './flat-routes'
 import { Route } from './route'
+import { isBrowser } from '@baseloop/core'
 
-export function Router (routeDefinitions) {
+export function Router (routeDefinitions, settings = {}) {
+  if (settings.initialUrl == null && !isBrowser) {
+    throw 'You need to specify the initial url for the router when not in browser environment'
+  }
+
   const initialRoutes = flatRoutes(routeDefinitions).map(Route)
   const routes = new BehaviorSubject(initialRoutes)
-  const url = new BehaviorSubject(window.location.pathname + window.location.search)
+  const url = new BehaviorSubject(settings.initialUrl || (window.location.pathname + window.location.search))
   const routeState = combineLatest(routes, url, parseUrlIntoRouteState)
   const route = routeState.pipe(map(state => state.route))
 
-  window.addEventListener('popstate', e => {
-    url.next(window.location.pathname)
-    e.preventDefault()
-  })
+  if (isBrowser) {
+    window.addEventListener('popstate', e => {
+      url.next(window.location.pathname)
+      e.preventDefault()
+    })
+  }
 
   const onEnter = routeName => {
     return routeState.pipe(

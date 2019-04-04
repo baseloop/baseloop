@@ -4,7 +4,7 @@
   "scripts": {
     "website:build:client": "webpack --config config/webpack/client-prod.js",
     "website:create": "npm run website:build:client && node scripts/copy-website-files.js",
-    "website:server": "baseloop-dev-server --bundler webpack --spa --config config/webpack-client-dev-config.js --dir dist/client"
+    "website:server": "baseloop-dev-server --config-client config/webpack/client-dev.js --config-server config/webpack/server-dev.js --server dist/server/index.js"
   },
   "dependencies": {
     "@baseloop/core": "1.0.1",

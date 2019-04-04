@@ -1,13 +1,13 @@
 const path = require('path')
-const HtmlWebPackPlugin = require('html-webpack-plugin')
 
 module.exports = {
-  entry: './src/client/index.js',
+  entry: './src/server/index.js',
   output: {
     publicPath: '/',
     filename: 'index.js',
-    path: path.resolve(__dirname, '../../dist/client')
+    path: path.resolve(__dirname, '../../dist/server')
   },
+  target: 'node',
   module: {
     rules: [
       {
@@ -59,13 +59,5 @@ module.exports = {
   },
   resolve: {
     symlinks: false
-  },
-  plugins: [
-    new HtmlWebPackPlugin({
-      hash: true,
-      favicon: './src/static/favicon.png',
-      template: './src/static/index.html',
-      filename: './index.html'
-    })
-  ]
+  }
 }

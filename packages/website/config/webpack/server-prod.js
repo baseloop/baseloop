@@ -1,4 +1,4 @@
-const baseConfig = require('./client-base')
+const baseConfig = require('./server-base')
 const mergeDeepLeft = require('ramda').mergeDeepLeft
 
 module.exports = mergeDeepLeft({

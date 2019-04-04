@@ -9,30 +9,38 @@ module.exports = {
     default: 'localhost',
     describe: 'The hostname to use'
   },
-  autoReloadPort: {
+  'auto-reload-port': {
     type: 'number',
     default: 3456,
-    describe: 'The port number to use for the auto reload server'
+    describe: 'The port number used for the auto reload WebSocket server'
   },
   bundler: {
     type: 'string',
-    required: true,
+    default: 'webpack',
     describe: 'What bundler to use',
     choices: ['webpack']
   },
   spa: {
     type: 'boolean',
-    default: false,
+    default: true,
     describe: 'SPA mode will always serve the root index'
   },
-  config: {
+  'config-client': {
     type: 'string',
-    describe: 'Path to the bundler config file',
+    describe: 'Path to the bundler client config file',
     required: true
   },
-  dir: {
+  'config-server': {
     type: 'string',
-    describe: 'The directory to serve',
-    required: true
+    describe: 'Path to the bundler server config file',
+    required: false
+  },
+  server: {
+    type: 'string',
+    describe: 'Path to the server file'
+  },
+  publicDir: {
+    type: 'string',
+    describe: 'The public directory from which to serve files if no custom server specified'
   }
 }
