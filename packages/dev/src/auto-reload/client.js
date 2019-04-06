@@ -3,7 +3,7 @@ module.exports = function AutoReloadClient (options = {}) {
   const ws = new WebSocket(`ws://localhost:${port}`)
 
   ws.onopen = event => {
-    console.info(`Auto-reload client started on WebSocket port ${port}`)
+    console.info(`∞ Auto-reload client started on WebSocket port ${port}`)
   }
 
   ws.onmessage = event => {
@@ -14,7 +14,7 @@ module.exports = function AutoReloadClient (options = {}) {
           window.location.reload()
         }
       } catch (e) {
-        console.error('Unexpected message: ', e)
+        console.error('∞ Unexpected message: ', e)
       }
     }
   }

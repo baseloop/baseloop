@@ -2,17 +2,17 @@ module.exports = {
   port: {
     type: 'number',
     default: 8080,
-    describe: 'The port number to use'
+    describe: 'The port number for internal server'
   },
   host: {
     type: 'string',
     default: 'localhost',
-    describe: 'The hostname to use'
+    describe: 'The hostname for internal server'
   },
   'auto-reload-port': {
     type: 'number',
     default: 3456,
-    describe: 'The port number used for the auto reload WebSocket server'
+    describe: 'The port number for the auto-reload WebSocket server'
   },
   bundler: {
     type: 'string',
@@ -23,7 +23,7 @@ module.exports = {
   spa: {
     type: 'boolean',
     default: true,
-    describe: 'SPA mode will always serve the root index'
+    describe: 'Single-Page App always serves the root index at every URL'
   },
   'config-client': {
     type: 'string',
@@ -37,9 +37,9 @@ module.exports = {
   },
   server: {
     type: 'string',
-    describe: 'Path to the server file'
+    describe: 'Path to the server file when running your own server instead'
   },
-  publicDir: {
+  'public-dir': {
     type: 'string',
     describe: 'The public directory from which to serve files if no custom server specified'
   }

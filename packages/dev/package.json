@@ -13,7 +13,7 @@
     "web"
   ],
   "bin": {
-    "baseloop-dev-server": "bin/baseloop-dev-server.js"
+    "baseloop": "bin/baseloop.js"
   },
   "author": "Kai Sellgren <kaisellgren@gmail.com>",
   "license": "ISC",
