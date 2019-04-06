@@ -1,7 +1,7 @@
 import { AutoReloadClient } from '@baseloop/dev'
 import { isDevelopment } from '@baseloop/core'
 import { hydrate, render } from 'react-dom'
-import AppController from './app/app-controller'
+import AppController from '../common/app/app-controller'
 
 if (isDevelopment) {
   AutoReloadClient()
