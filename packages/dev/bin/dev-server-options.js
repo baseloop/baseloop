@@ -27,13 +27,12 @@ module.exports = {
   },
   'config-client': {
     type: 'string',
-    describe: 'Path to the bundler client config file',
-    required: true
+    default: 'webpack.config.js',
+    describe: 'Path to the bundler client config file'
   },
   'config-server': {
     type: 'string',
-    describe: 'Path to the bundler server config file',
-    required: false
+    describe: 'Path to the bundler server config file'
   },
   server: {
     type: 'string',
@@ -41,6 +40,7 @@ module.exports = {
   },
   'public-dir': {
     type: 'string',
+    default: 'dist/',
     describe: 'The public directory from which to serve files if no custom server specified'
   }
 }
