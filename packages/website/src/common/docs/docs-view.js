@@ -2,6 +2,7 @@ import React from 'react'
 import { Link } from '@baseloop/ui'
 import { css } from 'styled-components'
 import installation from './pages/installation.md'
+import devServer from './pages/dev-server.md'
 import motivation from './pages/motivation.md'
 import architecture from './pages/architecture.md'
 import functionalProgramming from './pages/functional-programming.md'
@@ -16,6 +17,7 @@ const menu = [
       {title: 'Motivation and goals', page: 'motivation'},
       {title: 'Architecture', page: 'architecture'},
       {title: 'Installation', page: 'installation'},
+      {title: 'Development server', page: 'dev-server'},
     ],
   },
   {
@@ -134,6 +136,7 @@ export default class DocsView extends React.PureComponent {
       'motivation': motivation,
       'architecture': architecture,
       'installation': installation,
+      'dev-server': devServer,
       'functional-programming': functionalProgramming,
       'reactive-programming': reactiveProgramming
     }

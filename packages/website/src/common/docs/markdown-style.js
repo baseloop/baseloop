@@ -5,6 +5,10 @@ export default css`
     margin: 1rem 0;
   }
   
+  em {
+    font-style: italic;
+  }
+  
   h1 {
     border-bottom: 0.0625rem solid #0672d2;
     padding-bottom: 0.75rem;
@@ -25,11 +29,20 @@ export default css`
     margin: 1rem 0;
   }
   
+  h4 {
+    font-size: 1.0rem;
+    color: #3c75a9;
+    margin: 1rem 0;
+    font-weight: 500;
+  }
+  
   pre {
     padding: 1rem 0.75rem;
     background: #414f5c;
     border-radius: 0.25rem;
     margin: 1rem 0;
+    max-width: 100%;
+    white-space: pre-wrap;
   }
   
   code {
