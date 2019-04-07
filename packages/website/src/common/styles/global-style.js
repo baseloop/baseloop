@@ -1,6 +1,6 @@
 import { resetStyle } from '@baseloop/ui'
 import { createGlobalStyle } from 'styled-components'
-import { FOOTER_BACKGROUND, FOOTER_FOREGROUND, BACKGROUND, SECONDARY_BACK, LINK, LINK_HOVER } from './colors'
+import { BACKGROUND, SECONDARY_BACK, LINK, LINK_HOVER, NAV_BACK } from './colors'
 import iconsSolid from '../../static/icon-fonts/fa-solid-900.woff2'
 import iconsRegular from '../../static/icon-fonts/fa-regular-400.woff2'
 import iconsBrands from '../../static/icon-fonts/fa-brands-400.woff2'
@@ -11,19 +11,32 @@ const GlobalStyle = createGlobalStyle`
   ${resetStyle}
   
   html {
-    overflow: hidden;
     font-size: 16px;
-    height: 100vh;
   }
   
   body {
     background: ${BACKGROUND};
     font-family: ${fontFamily};
     text-rendering: optimizeLegibility;
+    overflow-y: scroll;
+    -webkit-overflow-scrolling: touch;
   }
   
-  body, #app-container {
-    height: 100vh;
+  @media (min-width: 960px) {
+    ::-webkit-scrollbar {
+	    width: 12px;
+	    background-color: #F5F5F5;
+    }
+    
+    ::-webkit-scrollbar-thumb {
+	    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+	    background-color: ${NAV_BACK};
+    }
+    
+    ::-webkit-scrollbar-track {
+      -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+      background-color: #F5F5F5;
+    }
   }
   
   h1 {
@@ -52,13 +65,6 @@ const GlobalStyle = createGlobalStyle`
     width: 100%;
     flex: 1;
     box-sizing: border-box;
-  }
-  
-  footer {
-    background: ${FOOTER_BACKGROUND};
-    color: ${FOOTER_FOREGROUND};
-    padding: 2rem;
-    text-align: center;
   }
   
   @font-face {
