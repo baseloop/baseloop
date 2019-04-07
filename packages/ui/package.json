@@ -2,7 +2,7 @@
   "name": "@baseloop/ui",
   "version": "1.0.1",
   "description": "A UI toolkit for web applications.",
-  "main": "src/index.js",
+  "module": "src/index.js",
   "keywords": [
     "baseloop",
     "ui",
@@ -11,6 +11,7 @@
   "author": "Kai Sellgren <kaisellgren@gmail.com>",
   "license": "ISC",
   "peerDependencies": {
+    "@baseloop/core": "^1.1.0",
     "ramda": ">=0.16.0 <1.0.0",
     "react": ">=16.0.0",
     "styled-components": "^4.1.3"
