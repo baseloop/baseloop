@@ -5,6 +5,7 @@ import { css } from 'styled-components'
 import { Flex, Link } from '@baseloop/ui'
 import Home from '../home/home-view'
 import Icon from '../component/icon'
+import { PositionFluid } from '@baseloop/ui'
 
 const navHeight = '4rem'
 const footerHeight = '4rem'
@@ -15,8 +16,6 @@ const navigationStyle = css`
   box-sizing: border-box;
   padding: 0 1rem;
   border-bottom: solid 1px #0e6dbd;
-  position: fixed;
-  z-index: 1;
   height: ${navHeight};
   
   > div {
@@ -40,7 +39,6 @@ const navigationStyle = css`
 `
 
 const appStyle = css`
-  
 `
 
 const navItemsStyle = css`
@@ -84,18 +82,20 @@ export default class AppView extends React.PureComponent {
         <GlobalStyle />
 
         <div css={containerStyle}>
-          <nav css={navigationStyle}>
-            <Flex justifyContent="center">
-              <Flex justifyContent="space-between" css={navItemsStyle}>
-                <h1><Link router={router} routeName="home">Baseloop</Link></h1>
-                <div>
-                  <Link router={router} routeName="home"><Icon id="s-home" /> Home</Link>
-                  <Link router={router} routeName="docs"><Icon id="s-docs" /> Documentation</Link>
-                  <a href="https://github.com/baseloop/baseloop"><Icon id="b-github" /> GitHub</a>
-                </div>
+          <PositionFluid>
+            <nav css={navigationStyle}>
+              <Flex justifyContent="center">
+                <Flex justifyContent="space-between" css={navItemsStyle}>
+                  <h1><Link router={router} routeName="home">Baseloop</Link></h1>
+                  <div>
+                    <Link router={router} routeName="home"><Icon id="s-home" /> Home</Link>
+                    <Link router={router} routeName="docs"><Icon id="s-docs" /> Documentation</Link>
+                    <a href="https://github.com/baseloop/baseloop"><Icon id="b-github" /> GitHub</a>
+                  </div>
+                </Flex>
               </Flex>
-            </Flex>
-          </nav>
+            </nav>
+          </PositionFluid>
           
           <div css={contentStyle}>
             <Flex justifyContent="center" flex="1">

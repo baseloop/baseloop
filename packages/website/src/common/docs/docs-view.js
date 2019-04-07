@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link } from '@baseloop/ui'
+import { Link, PositionFluid } from '@baseloop/ui'
 import { css } from 'styled-components'
 import installation from './pages/installation.md'
 import devServer from './pages/dev-server.md'
@@ -77,9 +77,6 @@ const mobileToolbarStyle = css`
   background: ${MOBILE_NAV_BACK};
   color: ${NAV_FRONT};
   padding: 1rem;
-  position: fixed;
-  left: 0;
-  width: 100%;
   box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.5);
 
   @media (min-width: 960px) {
@@ -147,9 +144,11 @@ export default class DocsView extends React.PureComponent {
           <div css={menuStyle}>
             {menu.map(this.renderMenuItem)}
           </div>
-          <div css={mobileToolbarStyle} onClick={this.handleMobileMenuClick}>
-            <Icon id="s-bars" /> {getTitleByPage(page, menu)}
-          </div>
+          <PositionFluid>
+            <div css={mobileToolbarStyle} onClick={this.handleMobileMenuClick}>
+              <Icon id="s-bars" /> {getTitleByPage(page, menu)}
+            </div>
+          </PositionFluid>
           {this.state.isMobileMenuOpen && <div css={mobileMenuStyle}>
             {menu.map(this.renderMenuItem)}
           </div>}
@@ -184,11 +183,18 @@ export default class DocsView extends React.PureComponent {
   }
 
   handleMobileMenuClick () {
-    this.setState({isMobileMenuOpen: !this.state.isMobileMenuOpen})
+    if (this.state.isMobileMenuOpen) {
+      this.closeMobileMenu()
+    } else {
+      this.setState({isMobileMenuOpen: true})
+      this.previousBodyOverflowY = window.document.body.style.overflowY || 'auto'
+      window.document.body.style.overflowY = 'hidden'
+    }
   }
 
   closeMobileMenu () {
     this.setState({isMobileMenuOpen: false})
+    window.document.body.style.overflowY = this.previousBodyOverflowY
   }
 
   constructor (props, context) {
