@@ -7,10 +7,10 @@
     "website:server": "baseloop start:server --config-client config/webpack/client-dev.js --config-server config/webpack/server-dev.js --server dist/server/index.js"
   },
   "dependencies": {
-    "@baseloop/core": "1.0.1",
-    "@baseloop/dev": "1.0.0",
-    "@baseloop/ui": "1.0.0",
-    "@baseloop/router": "1.0.0",
+    "@baseloop/core": "1.1.0",
+    "@baseloop/dev": "1.1.0",
+    "@baseloop/ui": "1.0.1",
+    "@baseloop/router": "1.1.0",
     "express": "^4.16.4",
     "ramda": "^0.26.1",
     "react": "^16.8.2",
