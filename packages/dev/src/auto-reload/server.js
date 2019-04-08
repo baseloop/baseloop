@@ -1,9 +1,10 @@
 const WebSocket = require('ws')
+const chalk = require('chalk')
 
 module.exports = function AutoReloadServer (options = {}) {
   const port = options.port || 3456
 
-  console.log(`∞ Baseloop auto-reload server is running at ws://localhost:${port}/`)
+  console.log(chalk`{blue ∞ Baseloop auto-reload server is running at} ws://localhost:${port}/`)
 
   const wss = new WebSocket.Server({port})
 
@@ -14,7 +15,7 @@ module.exports = function AutoReloadServer (options = {}) {
       try {
         c.send(JSON.stringify({forceReload: true}))
       } catch (e) {
-        console.error('∞ Could not send forceReload message to client: ', e)
+        console.error(chalk`{red ∞ Could not send forceReload message to client:} `, e)
       }
     })
   }

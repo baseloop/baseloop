@@ -18,6 +18,8 @@
   "author": "Kai Sellgren <kaisellgren@gmail.com>",
   "license": "ISC",
   "dependencies": {
+    "chalk": "^2.4.2",
+    "fs-extra": "^7.0.1",
     "express": "^4.16.4",
     "ws": "^6.2.0",
     "yargs": "^13.2.2"
