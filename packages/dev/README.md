@@ -1,4 +1,4 @@
-# @baseloop/dev
+# Developer utilities
 
 Developer utilities for [Baseloop](https://baseloop.dev/) -projects.
 
