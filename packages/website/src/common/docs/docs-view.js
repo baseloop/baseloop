@@ -1,5 +1,6 @@
 import React from 'react'
-import { Link, PositionFluid } from '@baseloop/ui'
+import { Link } from '@baseloop/router'
+import { PositionFluid } from '@baseloop/ui'
 import { css } from 'styled-components'
 import installation from './pages/installation.md'
 import devServer from './pages/dev-server.md'

@@ -1,7 +1,7 @@
 import React from 'react'
 import GlobalStyle from './global-style'
 import Flex from '../layout/flex'
-import { Link } from '@baseloop/ui'
+import { Link } from '@baseloop/router'
 
 export default class AppView extends React.PureComponent {
   render () {
