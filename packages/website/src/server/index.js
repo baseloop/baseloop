@@ -5,7 +5,7 @@ import path from 'path'
 import ReactDOMServer from 'react-dom/server'
 import AppController from '../common/app/app-controller'
 import { bindNodeCallback } from 'rxjs'
-import { combineObject } from '@baseloop/core'
+import { combineObject, isDevelopment } from '@baseloop/core'
 import { ServerStyleSheet } from 'styled-components'
 
 const app = express()
@@ -50,7 +50,18 @@ app.use((req, res) => {
 function internalServerErrorResponse(e, res) {
   console.error(e)
   res.status(500)
-  res.send('<h1>Internal server error</h1>')
+  const errorMessage = isDevelopment ? `<pre>${e.stack}</pre>` : ''
+  res.send(`
+<html>
+<head>
+  <title>Internal server error</title>
+</head>
+<body>
+  <h1>Internal server error</h1>
+  ${errorMessage}
+</body>
+</html>
+`)
   res.end()
 }
 
