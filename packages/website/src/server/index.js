@@ -35,7 +35,7 @@ app.use((req, res) => {
       try {
         const appHtml = ReactDOMServer.renderToString(styleSheet.collectStyles(app))
         const styleTags = styleSheet.getStyleTags()
-        res.send(indexHtml.toString().replace('__CONTENT__', appHtml).replace('</head>', `${styleTags}</head>`))
+        res.send(indexHtml.toString().replace('data-baseloop-app>', `data-baseloop-app>${appHtml}`).replace('</head>', `${styleTags}</head>`))
         res.end()
       } catch (e) {
         internalServerErrorResponse(e, res)
