@@ -1,6 +1,6 @@
 {
   "name": "@baseloop/dev",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Development tools such as baseloop-dev-server.",
   "main": "src/index.js",
   "keywords": [

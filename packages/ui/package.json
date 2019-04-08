@@ -1,6 +1,6 @@
 {
   "name": "@baseloop/ui",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "A UI toolkit for web applications.",
   "module": "src/index.js",
   "keywords": [
