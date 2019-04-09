@@ -24,7 +24,7 @@ This dev package comes with a command line tool that we will use next.
 Create the example project with our newly installed tool:
 
 ```
-npx baseloop create:project
+npx baseloop new project
 ```
 
 Now you should have a similar project structure:
@@ -81,14 +81,14 @@ The cli tool should have added the following line to your `package.json` file:
 
 ```
 "scripts": {
-  "app:dev": "baseloop start:server --config-client config/webpack/client-dev.js --config-server config/webpack/server-dev.js --server dist/server/index.js"
+  "dev": "baseloop dev --config-client config/webpack/client-dev.js --config-server config/webpack/server-dev.js --server dist/server/index.js"
 }
 ```
 
 We can run our example with it:
 
 ```
-npm run app:dev
+npm run dev
 ```
 
 ```

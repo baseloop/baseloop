@@ -21,14 +21,13 @@ module.exports = {
     const packageJsonFile = path.resolve('package.json')
     let packageJson = JSON.parse(fs.readFileSync(packageJsonFile))
     packageJson.scripts = packageJson.scripts || {}
-    packageJson.scripts['app:dev'] = 'baseloop start:server --config-client config/webpack/client-dev.js --config-server config/webpack/server-dev.js --server dist/server/index.js'
+    packageJson.scripts['dev'] = 'baseloop dev --config-client config/webpack/client-dev.js --config-server config/webpack/server-dev.js --server dist/server/index.js'
     fs.writeFileSync(packageJsonFile, JSON.stringify(packageJson))
 
     console.log(chalk`{blue ∞ Installing npm dependencies}`)
 
     const deps = [
       '@baseloop/core',
-      '@baseloop/ui',
       '@baseloop/router',
       'rxjs',
       'react',

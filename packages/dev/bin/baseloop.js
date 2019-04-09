@@ -12,8 +12,8 @@ const createProjectDescription = `Creates a new sample project in the current di
 require('yargs')
   .scriptName('baseloop')
   .usage('$0 <cmd> [args]')
-  .command('start:server', startServerDescription, devServer.options, devServer.command)
-  .command('create:project', createProjectDescription, exampleProject.options, exampleProject.command)
+  .command('dev', startServerDescription, devServer.options, devServer.command)
+  .command('new project', createProjectDescription, exampleProject.options, exampleProject.command)
   .help()
   .demandCommand()
   .argv
