@@ -4,7 +4,7 @@ import ProfileController from '../profile/profile-controller'
 import SayController from '../say/say-controller'
 import AppView from './app-view'
 
-export default function AppController () {
+export default function AppController ({initialUrl}) {
   const router = Router([
     {path: '/', name: 'home'},
     {path: '/profile', name: 'profile'},
@@ -12,7 +12,7 @@ export default function AppController () {
     {path: '/mortgage-application/:id', name: 'mortgage-application'},
     {path: '/routes', name: 'routes'},
     {path: '/say/:textToSay', name: 'say'},
-  ])
+  ], {initialUrl})
 
   const profileController = ProfileController()
   const sayController = SayController({router})

@@ -1,4 +1,10 @@
-import { render } from 'react-dom'
-import AppController from './app/app-controller'
+import { isDevelopment, run } from '@baseloop/core'
+import AppController from '../common/app/app-controller'
 
-AppController().subscribe(app => render(app, document.getElementById('app-container')))
+const app = AppController({
+  initialUrl: window.location.pathname + window.location.search
+})
+
+run(app, {
+  enableAutoReload: isDevelopment
+})
