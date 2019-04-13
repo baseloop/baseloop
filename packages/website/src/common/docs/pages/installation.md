@@ -4,10 +4,9 @@ In this tutorial, we will set up an example project that uses Baseloop.
 
 ## Setting up dependencies
 
-Let's start by creating an empty NPM project:
+Let's start by creating an empty NPM project somewhere on your disk:
 
 ```
-mkdir test && cd test
 npm init 
 ```
 
