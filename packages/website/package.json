@@ -7,9 +7,9 @@
     "website:server": "baseloop dev --config-client config/webpack/client-dev.js --config-server config/webpack/server-dev.js --server dist/server/index.js"
   },
   "dependencies": {
-    "@baseloop/core": "1.1.2",
-    "@baseloop/ui": "1.1.0",
-    "@baseloop/router": "1.2.0",
+    "@baseloop/core": "1.1.3",
+    "@baseloop/ui": "1.1.1",
+    "@baseloop/router": "1.2.1",
     "express": "^4.16.4",
     "ramda": "^0.26.1",
     "react": "^16.8.2",
@@ -22,7 +22,7 @@
     "@babel/core": "^7.2.2",
     "@babel/preset-env": "^7.2.3",
     "@babel/preset-react": "^7.0.0",
-    "@baseloop/dev": "1.1.3",
+    "@baseloop/dev": "1.1.4",
     "babel-cli": "^6.26.0",
     "babel-loader": "^8.0.4",
     "babel-plugin-styled-components": "^1.10.0",
