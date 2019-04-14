@@ -72,9 +72,9 @@ export default function Home () {
           <h1>Baseloop</h1>
           <p><Icon id="s-wrench" /> A toolkit for writing modern functional reactive web applications in JavaScript.</p>
           <div css={shieldStyle}>
-            <Shield src="https://img.shields.io/npm/v/@baseloop/core.svg?color=green&label=npm%20package" />
-            <Shield src="https://img.shields.io/npm/l/@baseloop/core.svg?color=green" />
-            <Shield src="https://img.shields.io/discord/551772477165010959.svg?color=green&label=chat%20on%20Discord" href="https://discord.gg/zMyuFwt" />
+            <Shield src="https://img.shields.io/npm/v/@baseloop/core.svg?color=green&label=npm%20package" alt="Package version" />
+            <Shield src="https://img.shields.io/npm/l/@baseloop/core.svg?color=green" alt="License" />
+            <Shield src="https://img.shields.io/discord/551772477165010959.svg?color=green&label=chat on Discord" href="https://discord.gg/zMyuFwt" alt="Discord link" />
           </div>
         </div>
       </Flex>
@@ -90,7 +90,7 @@ export default function Home () {
             <div>
               <h2><Icon id="s-bolt" /> Reactive</h2>
               <p>Applications with an abundance of events benefit the most from reactive programming, which both simplifies your (async) evented code and separates logical concerns.</p>
-              <p>This leads to <a href="https://en.wikipedia.org/wiki/Separation_of_concerns" target="_blank">Separation of Concerns</a>, because changes to data are co-located and isolated, thus impossible to change from the outside world.</p>
+              <p>This leads to <a href="https://en.wikipedia.org/wiki/Separation_of_concerns" target="_blank" rel="noreferrer noopener">Separation of Concerns</a>, because changes to data are co-located and isolated, thus impossible to change from the outside world.</p>
             </div>
 
             <div>

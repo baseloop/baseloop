@@ -13,7 +13,7 @@ module.exports = mergeDeepLeft({
   plugins: [
     new HtmlWebPackPlugin({
       hash: true,
-      favicon: './src/static/favicon.png',
+      favicon: './src/static/icons/favicon.png',
       template: './src/static/index.html',
       filename: './index.html'
     })
