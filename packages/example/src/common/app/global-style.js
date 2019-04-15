@@ -1,4 +1,4 @@
-import { resetStyle } from './reset-style'
+import { resetStyle } from '@baseloop/ui'
 import { createGlobalStyle } from 'styled-components'
 
 const fontFamily = '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"'
