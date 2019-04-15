@@ -2,6 +2,9 @@ import React from 'react'
 import GlobalStyle from './global-style'
 import Flex from '../layout/flex'
 import { Link } from '@baseloop/router'
+import FormatDate from './format-date'
+
+const date = new Date
 
 export default class AppView extends React.PureComponent {
   render () {
@@ -21,6 +24,9 @@ export default class AppView extends React.PureComponent {
 
         <Flex direction="column" flex="1">
           <main>
+            {router.match('home') && <div>
+              <span>This page was loaded <FormatDate date={date} />. Yay.</span>
+            </div>}
             {router.match('profile') && profile}
             {router.match('say') && say}
             {router.match() && <div><h1>Page not found</h1><p>The page you were looking for could not be found.</p></div>}
