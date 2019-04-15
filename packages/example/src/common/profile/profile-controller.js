@@ -1,9 +1,9 @@
 import { of } from 'rxjs'
-import { createReactiveElement, Store } from '@baseloop/core'
+import { createReactiveElement, Box } from '@baseloop/core'
 import ProfileView from './profile-view'
 
 export default function ProfileController () {
-  const profile = Store({
+  const profile = Box({
     name: 'John Doe',
     profession: 'Plumber',
     gender: null,

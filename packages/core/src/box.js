@@ -1,7 +1,15 @@
 import { BehaviorSubject } from 'rxjs'
 import { lensProp, set } from 'ramda'
 
-class StoreClass extends BehaviorSubject {
+class BoxClass extends BehaviorSubject {
+  get () {
+    return this.value
+  }
+
+  set (value) {
+    super.next(value)
+  }
+
   update (path, value) {
     if (arguments.length === 1) {
       const me = this
@@ -11,6 +19,6 @@ class StoreClass extends BehaviorSubject {
   }
 }
 
-export default function Store (initialState) {
-  return new StoreClass(initialState)
+export default function Box (initialState) {
+  return new BoxClass(initialState)
 }

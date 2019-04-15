@@ -1,4 +1,4 @@
-export { default as Store } from './store'
+export { default as Box } from './box'
 export { createReactiveElement } from './util/vdom'
 export { combineObject, log } from './util/rxjs'
 export { run } from './run'
