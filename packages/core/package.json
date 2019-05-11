@@ -2,7 +2,11 @@
   "name": "@baseloop/core",
   "version": "1.1.3",
   "description": "A toolkit for writing functional reactive web applications.",
-  "module": "src/index.js",
+  "main": "src/index.ts",
+  "module": "src/index.ts",
+  "scripts": {
+    "tsc": "tsc"
+  },
   "keywords": [
     "baseloop",
     "reactive",
@@ -17,6 +21,7 @@
   "peerDependencies": {
     "ramda": ">=0.16.0 <1.0.0",
     "react": ">=16.0.0",
+    "react-dom": ">=16.0.0",
     "rxjs": ">=6.0.0 < 7.0.0"
   },
   "publishConfig": {

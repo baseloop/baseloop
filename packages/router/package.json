@@ -2,9 +2,11 @@
   "name": "@baseloop/router",
   "version": "1.2.1",
   "description": "A router for Baseloop applications.",
-  "module": "src/index.js",
+  "main": "src/index.ts",
+  "module": "src/index.ts",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "tsc": "tsc"
   },
   "keywords": [
     "baseloop",
@@ -26,6 +28,7 @@
     "react": ">=16.0.0"
   },
   "devDependencies": {
+    "@baseloop/core": ">=1.0.0 <2.0.0",
     "babel-jest": "^24.4.0",
     "jest": "^24.4.0"
   },
