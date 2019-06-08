@@ -2,10 +2,10 @@ import React from 'react'
 import styled from 'styled-components'
 
 interface Props {
-  direction: string,
-  flex: string,
-  alignItems: string,
-  justifyContent: string,
+  direction: string
+  flex: string
+  alignItems: string
+  justifyContent: string
   wrap: string
 }
 
@@ -20,18 +20,14 @@ const FlexDiv = styled.div`
 
 export default class Flex extends React.PureComponent<Props> {
   static defaultProps = {
+    alignItems: 'initial',
     direction: 'row',
     flex: 'initial',
-    alignItems: 'initial',
     justifyContent: 'initial',
     wrap: 'nowrap'
   }
 
-  render () {
-    return (
-      <FlexDiv {...this.props}>
-        {this.props.children}
-      </FlexDiv>
-    )
+  render() {
+    return <FlexDiv {...this.props}>{this.props.children}</FlexDiv>
   }
 }

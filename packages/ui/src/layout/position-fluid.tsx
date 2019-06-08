@@ -1,20 +1,20 @@
+import { isBrowser } from '@baseloop/core'
 import React from 'react'
 import styled from 'styled-components'
-import { isBrowser } from '@baseloop/core'
 
 interface Props {
-  width: string,
-  height: string,
-  threshold: number,
-  zIndex: number,
-  transitionSpeed: string,
+  width: string
+  height: string
+  threshold: number
+  zIndex: number
+  transitionSpeed: string
   stayFixed: boolean
 }
 
 interface DivProps {
   isHidden: boolean
-  elementOffset: number,
-  zIndex: number,
+  elementOffset: number
+  zIndex: number
   containerWidth: string
   containerHeight: string
   transitionSpeed: string
@@ -27,37 +27,39 @@ const PositionFluidDiv = styled.div`
   transition: all ${(props: DivProps) => props.transitionSpeed};
   transform: translateY(0);
   z-index: ${(props: DivProps) => props.zIndex};
-  
-  ${(props: DivProps) => props.isHidden && `
+
+  ${(props: DivProps) =>
+    props.isHidden &&
+    `
     transform: translateY(-${props.elementOffset}px);
     background: red;
   `}
 `
 
 interface State {
-  isHidden: boolean,
-  prevScrollY: number | null,
-  showY: number | null,
+  isHidden: boolean
+  prevScrollY: number | null
+  showY: number | null
   hidY: number | null
 }
 
 export default class PositionFluid extends React.PureComponent<Props, State> {
   static defaultProps = {
-    width: '100%',
     height: 'auto',
+    stayFixed: false,
     threshold: 50,
-    zIndex: 1,
     transitionSpeed: '0.25s',
-    stayFixed: false
+    width: '100%',
+    zIndex: 1
   }
 
   private readonly ref: React.RefObject<any>
 
-  constructor (props: Props) {
+  constructor(props: Props) {
     super(props)
 
     this.ref = React.createRef()
-    this.state = {isHidden: false, hidY: null, showY: null, prevScrollY: null}
+    this.state = { isHidden: false, hidY: null, showY: null, prevScrollY: null }
     this.handleScroll = this.handleScroll.bind(this)
 
     if (isBrowser) {
@@ -65,25 +67,25 @@ export default class PositionFluid extends React.PureComponent<Props, State> {
     }
   }
 
-  componentWillUnmount () {
+  componentWillUnmount() {
     window.removeEventListener('scroll', this.handleScroll)
   }
 
-  handleScroll () {
-    const scrollY = (window.document.documentElement.scrollTop || window.scrollY)
+  handleScroll() {
+    const scrollY = window.document.documentElement.scrollTop || window.scrollY
 
     if (this.state.prevScrollY == null) {
-      this.setState({prevScrollY: scrollY})
+      this.setState({ prevScrollY: scrollY })
     }
 
     const isScrollingDown = (this.state.prevScrollY || 0) < scrollY
 
     if (this.state.hidY == null) {
-      this.setState({hidY: scrollY + this.props.threshold})
+      this.setState({ hidY: scrollY + this.props.threshold })
     }
 
     if (this.state.showY == null) {
-      this.setState({showY: scrollY - this.props.threshold})
+      this.setState({ showY: scrollY - this.props.threshold })
     }
 
     if (scrollY > (this.state.hidY || 0) && isScrollingDown && !this.props.stayFixed) {
@@ -95,15 +97,15 @@ export default class PositionFluid extends React.PureComponent<Props, State> {
 
     if ((scrollY < (this.state.showY || 0) && !isScrollingDown) || this.props.stayFixed) {
       this.setState({
-        isHidden: false,
-        hidY: scrollY + this.props.threshold
+        hidY: scrollY + this.props.threshold,
+        isHidden: false
       })
     }
 
-    this.setState({prevScrollY: scrollY})
+    this.setState({ prevScrollY: scrollY })
   }
 
-  render () {
+  render() {
     const height = isBrowser && this.ref.current ? this.ref.current.clientHeight : 0
     const offsetTop = isBrowser && this.ref.current ? this.ref.current.offsetTop : 0
 

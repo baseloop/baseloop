@@ -2,9 +2,21 @@
   "name": "@baseloop/ui",
   "version": "1.1.1",
   "description": "A UI toolkit for web applications.",
-  "main": "src/index.ts",
-  "module": "src/index.ts",
+  "main": "dist/cjs/index.js",
+  "module": "dist/esm/index.js",
+  "es2015": "dist/es2015/index.js",
+  "types": "dist/es2015/index.d.ts",
+  "typings": "dist/es2015/index.d.ts",
   "scripts": {
+    "test": "jest",
+    "build": "npm run build:es2015 && npm run build:esm && npm run build:cjs",
+    "build:es2015": "tsc --module es2015 --target es2015 --outDir dist/es2015",
+    "build:esm": "tsc --module es2015 --target es5 --outDir dist/esm",
+    "build:cjs": "tsc --module commonjs --target es5 --outDir dist/cjs",
+    "format": "prettier --write \"src/**/*.ts\" \"src/**/*.js\"",
+    "lint": "tslint -p tsconfig.json -c ../../tslint.json",
+    "prepare": "npm run build",
+    "prepublishOnly": "npm run test && npm run lint",
     "tsc": "tsc"
   },
   "keywords": [
