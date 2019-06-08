@@ -1,11 +1,14 @@
-import { combineLatest, Observable, of } from 'rxjs'
 import { clone, init, is, last, reduce, tail } from 'ramda'
-import { tap, map } from 'rxjs/operators'
+import { combineLatest, Observable, of } from 'rxjs'
+import { map, tap } from 'rxjs/operators'
 
 export function log () {
   const args = Array.prototype.slice.call(arguments)
+
+  // tslint:disable-next-line:only-arrow-functions
   return tap(function () {
     const allParams = args.concat(Array.prototype.slice.call(arguments))
+    // tslint:disable-next-line:no-console
     console.log(...allParams)
   })
 }
@@ -15,7 +18,7 @@ interface ObservableAndFullPath {
   fullPath: string
 }
 
-export function combineObject (obj: Object) {
+export function combineObject (obj: object) {
   const data = getObservableDataRecursivelyFromObject(obj)
   const observables = data.map(o => o.value)
   const fullPaths = data.map(o => o.fullPath)
@@ -57,7 +60,7 @@ function getObservableDataRecursivelyFromObject (obj: Record<string, any>, path 
   return observables
 }
 
-function setObjectValueBasedOnPath (obj: Object, path: string, value: any) {
+function setObjectValueBasedOnPath (obj: object, path: string, value: any) {
   const parts = tail(path.split('.'))
   const o: Record<string, any> = reduce((o: Record<string, any>, key: string) => o[key], obj, init(parts))
   const lastPart = last(parts)

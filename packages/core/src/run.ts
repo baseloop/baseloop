@@ -1,5 +1,5 @@
-import { hydrate, render } from 'react-dom'
 import { ReactElement } from 'react'
+import { hydrate, render } from 'react-dom'
 import { Observable } from 'rxjs'
 
 class RunOptions {

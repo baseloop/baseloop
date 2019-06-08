@@ -1,5 +1,5 @@
-import { BehaviorSubject } from 'rxjs'
 import { lensProp, set } from 'ramda'
+import { BehaviorSubject } from 'rxjs'
 
 export class Box<T> extends BehaviorSubject<T> {
   constructor (value: any) {

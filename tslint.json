@@ -1,0 +1,15 @@
+{
+  "extends": "tslint:recommended",
+  "rules": {
+    "arrow-parens": false,
+    "interface-name": false,
+    "member-access": false,
+    "no-shadowed-variable": false,
+    "quotemark": {
+      "options": ["single", "avoid-escape"]
+    },
+    "semicolon": false,
+    "space-before-function-paren": true,
+    "trailing-comma": false
+  }
+}
