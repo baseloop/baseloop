@@ -6,7 +6,7 @@ class RunOptions {
   containerQuerySelector?: string
 }
 
-export function run (app: Observable<ReactElement>, options: RunOptions = {}) {
+export function run(app: Observable<ReactElement>, options: RunOptions = {}) {
   const container = document.querySelector(options.containerQuerySelector || '[data-baseloop-app]')
 
   let firstRender = true

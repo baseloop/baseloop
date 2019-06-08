@@ -5,7 +5,7 @@ import { combineObject } from './rxjs'
 
 type Element = string | FunctionComponent | ComponentClass | ClassType<any, any, any>
 
-export function createReactiveElement (element: Element, propsWithObservables: object): Observable<ReactElement> {
+export function createReactiveElement(element: Element, propsWithObservables: object): Observable<ReactElement> {
   return combineObject(propsWithObservables).pipe(
     map(props => createElement(element, props)) // TODO: children?
   )

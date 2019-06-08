@@ -9,7 +9,7 @@
       "options": ["single", "avoid-escape"]
     },
     "semicolon": false,
-    "space-before-function-paren": true,
+    "space-before-function-paren": false,
     "trailing-comma": false
   }
 }

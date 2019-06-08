@@ -2,11 +2,11 @@ import { clone, init, is, last, reduce, tail } from 'ramda'
 import { combineLatest, Observable, of } from 'rxjs'
 import { map, tap } from 'rxjs/operators'
 
-export function log () {
+export function log() {
   const args = Array.prototype.slice.call(arguments)
 
   // tslint:disable-next-line:only-arrow-functions
-  return tap(function () {
+  return tap(function() {
     const allParams = args.concat(Array.prototype.slice.call(arguments))
     // tslint:disable-next-line:no-console
     console.log(...allParams)
@@ -14,11 +14,11 @@ export function log () {
 }
 
 interface ObservableAndFullPath {
-  value: Observable<any>,
+  value: Observable<any>
   fullPath: string
 }
 
-export function combineObject (obj: object) {
+export function combineObject(obj: object) {
   const data = getObservableDataRecursivelyFromObject(obj)
   const observables = data.map(o => o.value)
   const fullPaths = data.map(o => o.fullPath)
@@ -38,7 +38,7 @@ export function combineObject (obj: object) {
   return combineLatest(...observables).pipe(map(createObject))
 }
 
-function getObservableDataRecursivelyFromObject (obj: Record<string, any>, path = '') {
+function getObservableDataRecursivelyFromObject(obj: Record<string, any>, path = '') {
   const observables: ObservableAndFullPath[] = []
 
   for (const key in obj) {
@@ -47,7 +47,7 @@ function getObservableDataRecursivelyFromObject (obj: Record<string, any>, path 
       const fullPath = path + '.' + key
 
       if (is(Observable, value)) {
-        observables.push({value, fullPath})
+        observables.push({ value, fullPath })
       } else if (is(Object, value)) {
         const xs = getObservableDataRecursivelyFromObject(value, fullPath)
         for (const x of xs) {
@@ -60,7 +60,7 @@ function getObservableDataRecursivelyFromObject (obj: Record<string, any>, path 
   return observables
 }
 
-function setObjectValueBasedOnPath (obj: object, path: string, value: any) {
+function setObjectValueBasedOnPath(obj: object, path: string, value: any) {
   const parts = tail(path.split('.'))
   const o: Record<string, any> = reduce((o: Record<string, any>, key: string) => o[key], obj, init(parts))
   const lastPart = last(parts)
