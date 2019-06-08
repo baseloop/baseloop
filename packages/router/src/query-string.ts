@@ -4,12 +4,17 @@ export const compile = (params: Record<string, any> | null) => {
   if (params == null || Object.keys(params).length === 0) {
     return ''
   }
-  return '?' + toPairs(params).map(([key, value]) => {
-    if (value == null || value === '') {
-      return key
-    }
-    return key + '=' + encodeURIComponent(value)
-  }).join('&')
+  return (
+    '?' +
+    toPairs(params)
+      .map(([key, value]) => {
+        if (value == null || value === '') {
+          return key
+        }
+        return key + '=' + encodeURIComponent(value)
+      })
+      .join('&')
+  )
 }
 
 export const parse = (qs?: string | null) => {

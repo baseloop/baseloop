@@ -2,31 +2,33 @@ import flatRoutes from '../flat-routes'
 
 test('flattens routes', () => {
   const routes = [
-    {path: '/', name: 'home'},
+    { path: '/', name: 'home' },
     {
-      path: '/foo', name: 'foo', children: [
-        {path: '/test', name: 'test'},
-      ],
+      children: [{ path: '/test', name: 'test' }],
+      name: 'foo',
+      path: '/foo'
     },
     {
-      path: '/qux', name: 'qux', children: [
-        {path: '/a', name: 'a'},
+      children: [
+        { path: '/a', name: 'a' },
         {
-          path: '/b', name: 'b', children: [
-            {path: '/asd', name: 'asd'},
-          ],
-        },
+          children: [{ path: '/asd', name: 'asd' }],
+          name: 'b',
+          path: '/b'
+        }
       ],
-    },
+      name: 'qux',
+      path: '/qux'
+    }
   ]
 
   expect(flatRoutes(routes)).toEqual([
-    {path: '/', name: 'home'},
-    {path: '/foo', name: 'foo'},
-    {path: '/foo/test', name: 'foo.test'},
-    {path: '/qux', name: 'qux'},
-    {path: '/qux/a', name: 'qux.a'},
-    {path: '/qux/b', name: 'qux.b'},
-    {path: '/qux/b/asd', name: 'qux.b.asd'},
+    { path: '/', name: 'home' },
+    { path: '/foo', name: 'foo' },
+    { path: '/foo/test', name: 'foo.test' },
+    { path: '/qux', name: 'qux' },
+    { path: '/qux/a', name: 'qux.a' },
+    { path: '/qux/b', name: 'qux.b' },
+    { path: '/qux/b/asd', name: 'qux.b.asd' }
   ])
 })

@@ -2,9 +2,9 @@ import pathToRegexp from 'path-to-regexp'
 import { clone, last } from 'ramda'
 
 interface RouteSettings {
-  path: string,
-  name: string,
-  defaults?: Object
+  path: string
+  name: string
+  defaults?: object
 }
 
 export class Route {
@@ -12,16 +12,16 @@ export class Route {
   compile: pathToRegexp.PathFunction<object>
 
   private readonly isFinalParameterOptional: boolean
-  private readonly defaults?: Object
+  private readonly defaults?: object
   private regex: RegExp
   private keys: any[] = []
   private pathParts: string[]
 
-  constructor ({path, name, defaults}: RouteSettings) {
+  constructor({ path, name, defaults }: RouteSettings) {
     this.regex = pathToRegexp(path, this.keys, {
-      sensitive: false,
-      strict: false,
       end: false,
+      sensitive: false,
+      strict: false
     })
 
     this.pathParts = getPathParts(path)
@@ -31,7 +31,7 @@ export class Route {
     this.defaults = defaults
   }
 
-  parse (pathname: string): Object {
+  parse(pathname: string): object {
     const results = this.regex.exec(pathname)
     if (results == null) {
       return {}
@@ -48,14 +48,15 @@ export class Route {
     return pathVariables
   }
 
-  match (pathname: string) {
+  match(pathname: string) {
     const pathnameParts = getPathParts(pathname)
-    const isExactMatch = pathnameParts.length === this.pathParts.length ||
+    const isExactMatch =
+      pathnameParts.length === this.pathParts.length ||
       (this.isFinalParameterOptional && pathnameParts.length === this.pathParts.length - 1)
     return this.regex.test(pathname) && isExactMatch
   }
 }
 
-function getPathParts (path: string) {
+function getPathParts(path: string) {
   return path == null ? [] : path.split('/').filter(v => v !== '')
 }
