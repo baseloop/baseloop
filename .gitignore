@@ -5,3 +5,4 @@ TODO
 *.iml
 .idea
 package-lock.json
+dist/
