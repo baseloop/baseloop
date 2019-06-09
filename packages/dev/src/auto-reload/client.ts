@@ -2,11 +2,12 @@ interface Options {
   port?: number
 }
 
-export function AutoReloadClient (options: Options = {}) {
+export function AutoReloadClient(options: Options = {}) {
   const port = options.port || 3456
   const ws = new WebSocket(`ws://localhost:${port}`)
 
-  ws.onopen = event => {
+  ws.onopen = () => {
+    // tslint:disable-next-line:no-console
     console.info(`∞ Auto-reload client started on WebSocket port ${port}`)
   }
 
@@ -18,6 +19,7 @@ export function AutoReloadClient (options: Options = {}) {
           window.location.reload()
         }
       } catch (e) {
+        // tslint:disable-next-line:no-console
         console.error('∞ Unexpected message: ', e)
       }
     }

@@ -2,9 +2,25 @@
   "name": "@baseloop/dev",
   "version": "1.1.4",
   "description": "Development tools such as baseloop-dev-server.",
-  "main": "src/index.ts",
-  "module": "src/index.ts",
+  "bin": {
+    "baseloop": "dist/bin/baseloop.js"
+  },
+  "main": "dist/cjs/index.js",
+  "module": "dist/esm/index.js",
+  "es2015": "dist/es2015/index.js",
+  "types": "dist/es2015/index.d.ts",
+  "typings": "dist/es2015/index.d.ts",
   "scripts": {
+    "test": "jest",
+    "build": "npm run build:es2015 && npm run build:esm && npm run build:cjs && npm run build:bin",
+    "build:es2015": "tsc --module es2015 --target es2015 --outDir dist/es2015",
+    "build:esm": "tsc --module es2015 --target es5 --outDir dist/esm",
+    "build:cjs": "tsc --module commonjs --target es5 --outDir dist/cjs",
+    "build:bin": "tsc --build tsconfig-bin.json",
+    "format": "prettier --write \"src/**/*.ts\" \"src/**/*.js\"",
+    "lint": "tslint -p tsconfig.json -c ../../tslint.json",
+    "prepare": "npm run build",
+    "prepublishOnly": "npm run test && npm run lint",
     "tsc": "tsc"
   },
   "keywords": [
@@ -16,9 +32,6 @@
     "unidirectional",
     "web"
   ],
-  "bin": {
-    "baseloop": "bin/baseloop.js"
-  },
   "author": "Kai Sellgren <kaisellgren@gmail.com>",
   "license": "ISC",
   "dependencies": {
