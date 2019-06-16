@@ -1,5 +1,11 @@
 {
   "compilerOptions": {
+    "baseUrl": "./packages",
+    "paths": {
+      "@baseloop/*": [
+        "./*/src"
+      ]
+    },
     "noEmit": false,
     "noImplicitAny": true,
     "noImplicitThis": true,

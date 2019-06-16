@@ -1,6 +1,12 @@
 {
   "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "rootDir": "src",
+    "noEmit": true
+  },
   "include": [
+    "src/client/index.ts",
+    "src/server/index.ts",
     "typings/types.d.ts"
   ]
 }
