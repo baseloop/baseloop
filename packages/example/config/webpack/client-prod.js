@@ -1,6 +1,6 @@
 const baseConfig = require('./client-base')
-const mergeDeepLeft = require('ramda').mergeDeepLeft
+const merge = require('webpack-merge')
 
-module.exports = mergeDeepLeft({
+module.exports = merge(baseConfig, {
   mode: 'production',
-}, baseConfig)
+})

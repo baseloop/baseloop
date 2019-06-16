@@ -1,13 +1,13 @@
 const commonConfig = require('./common')
-const mergeDeepLeft = require('ramda').mergeDeepLeft
+const merge = require('webpack-merge')
 const path = require('path')
 
-module.exports = mergeDeepLeft({
-  entry: './src/server/index.js',
+module.exports = merge(commonConfig, {
+  entry: './src/server/index.ts',
   output: {
     publicPath: '/',
     filename: 'index.js',
     path: path.resolve(__dirname, '../../dist/server')
   },
   target: 'node'
-}, commonConfig)
+})

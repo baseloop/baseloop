@@ -1,9 +1,9 @@
 const commonConfig = require('./common')
-const mergeDeepLeft = require('ramda').mergeDeepLeft
+const merge = require('webpack-merge')
 const path = require('path')
 const HtmlWebPackPlugin = require('html-webpack-plugin')
 
-module.exports = mergeDeepLeft({
+module.exports = merge(commonConfig, {
   entry: './src/client/index.js',
   output: {
     publicPath: '/',
@@ -18,4 +18,4 @@ module.exports = mergeDeepLeft({
       filename: './index.html'
     })
   ]
-}, commonConfig)
+})
