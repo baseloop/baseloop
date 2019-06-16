@@ -9,6 +9,7 @@
     "quotemark": {
       "options": ["single", "avoid-escape"]
     },
+    "no-console": false,
     "semicolon": false,
     "space-before-function-paren": false,
     "trailing-comma": false
