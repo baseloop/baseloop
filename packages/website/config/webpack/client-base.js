@@ -4,7 +4,7 @@ const path = require('path')
 const HtmlWebPackPlugin = require('html-webpack-plugin')
 
 module.exports = merge(commonConfig, {
-  entry: './src/client/index.js',
+  entry: './src/client/index.ts',
   output: {
     publicPath: '/',
     filename: 'index.js',

@@ -7,16 +7,18 @@ interface Params {
   initialUrl: string
 }
 
-export default function AppController ({initialUrl}: Params) {
-  const router = new Router([
-    {path: '/', name: 'home'},
-    {path: '/docs/:page?', name: 'docs', defaults: {page: 'motivation'}},
-  ], {initialUrl})
+export default function AppController({ initialUrl }: Params) {
+  const router = new Router(
+    [{ path: '/', name: 'home' }, { path: '/docs/:page?', name: 'docs', defaults: { page: 'motivation' } }],
+    { initialUrl }
+  )
 
   router.url.subscribe(() => {
-    const ga = (window as any)['ga']
-    if (isBrowser && ga != null) {
-      ga('send', 'pageview', window.location.pathname)
+    if (isBrowser) {
+      const ga = (window as any)['ga']
+      if (ga != null) {
+        ga('send', 'pageview', window.location.pathname)
+      }
     }
   })
 
@@ -24,6 +26,6 @@ export default function AppController ({initialUrl}: Params) {
 
   return createReactiveElement(AppView, {
     router: router.view,
-    docs: docs.view,
+    docs: docs.view
   })
 }

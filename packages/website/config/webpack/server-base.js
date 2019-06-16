@@ -3,7 +3,7 @@ const merge = require('webpack-merge')
 const path = require('path')
 
 module.exports = merge(commonConfig, {
-  entry: './src/server/index.js',
+  entry: './src/server/index.ts',
   output: {
     publicPath: '/',
     filename: 'index.js',
