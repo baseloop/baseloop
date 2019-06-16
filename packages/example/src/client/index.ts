@@ -1,4 +1,4 @@
-import { isDevelopment, run } from '@baseloop/core'
+import { isDevelopment, run } from '@baseloop/core/src/index'
 import { AutoReloadClient } from '@baseloop/dev'
 import AppController from '../common/app/app-controller'
 

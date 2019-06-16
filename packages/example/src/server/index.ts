@@ -1,12 +1,12 @@
-import fs from 'fs'
-import url from 'url'
+import { combineObject, isDevelopment } from '@baseloop/core'
 import express from 'express'
+import fs from 'fs'
 import path from 'path'
 import ReactDOMServer from 'react-dom/server'
-import AppController from '../common/app/app-controller'
 import { bindNodeCallback } from 'rxjs'
-import { combineObject, isDevelopment } from '@baseloop/core'
 import { ServerStyleSheet } from 'styled-components'
+import url from 'url'
+import AppController from '../common/app/app-controller'
 
 const app = express()
 
@@ -25,25 +25,30 @@ app.use((req, res) => {
   const urlParts = url.parse(req.url)
 
   combineObject({
-    indexHtml: bindNodeCallback(fs.readFile)(path.join('dist/client', 'index.html')),
     app: AppController({
       initialUrl: urlParts.path + (urlParts.search == null ? '' : urlParts.search)
-    })
+    }),
+    indexHtml: bindNodeCallback(fs.readFile)(path.join('dist/client', 'index.html'))
   }).subscribe({
-    next: ({indexHtml, app}: any) => {
+    error: e => internalServerErrorResponse(e, res),
+    next: ({ indexHtml, app }: any) => {
       const styleSheet = new ServerStyleSheet()
       try {
         const appHtml = ReactDOMServer.renderToString(styleSheet.collectStyles(app))
         const styleTags = styleSheet.getStyleTags()
-        res.send(indexHtml.toString().replace('data-baseloop-app>', `data-baseloop-app>${appHtml}`).replace('</head>', `${styleTags}</head>`))
+        res.send(
+          indexHtml
+            .toString()
+            .replace('data-baseloop-app>', `data-baseloop-app>${appHtml}`)
+            .replace('</head>', `${styleTags}</head>`)
+        )
         res.end()
       } catch (e) {
         internalServerErrorResponse(e, res)
       } finally {
         styleSheet.seal()
       }
-    },
-    error: e => internalServerErrorResponse(e, res)
+    }
   })
 })
 

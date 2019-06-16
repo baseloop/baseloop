@@ -1,5 +1,5 @@
-import React from 'react'
 import { Flex } from '@baseloop/ui'
+import React from 'react'
 import styled from 'styled-components'
 
 interface Props {
@@ -15,14 +15,12 @@ const Container = styled.div`
 `
 
 export default class FormEntry extends React.PureComponent<Props> {
-  render () {
+  render() {
     return (
       <Flex>
         <Container>
           <label>{this.props.label}:</label>
-          <div>
-            {this.props.children}
-          </div>
+          <div>{this.props.children}</div>
         </Container>
       </Flex>
     )

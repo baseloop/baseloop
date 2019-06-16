@@ -8,22 +8,25 @@ interface Params {
   initialUrl: string
 }
 
-export default function AppController ({initialUrl}: Params) {
-  const router = new Router([
-    {path: '/', name: 'home'},
-    {path: '/profile', name: 'profile'},
-    {path: '/mortgage-applications', name: 'mortgage-applications'},
-    {path: '/mortgage-application/:id', name: 'mortgage-application'},
-    {path: '/routes', name: 'routes'},
-    {path: '/say/:textToSay', name: 'say'},
-  ], {initialUrl})
+export default function AppController({ initialUrl }: Params) {
+  const router = new Router(
+    [
+      { path: '/', name: 'home' },
+      { path: '/profile', name: 'profile' },
+      { path: '/mortgage-applications', name: 'mortgage-applications' },
+      { path: '/mortgage-application/:id', name: 'mortgage-application' },
+      { path: '/routes', name: 'routes' },
+      { path: '/say/:textToSay', name: 'say' }
+    ],
+    { initialUrl }
+  )
 
   const profileController = ProfileController()
-  const sayController = SayController({router})
+  const sayController = SayController({ router })
 
   return createReactiveElement(AppView, {
-    router: router.view,
-    say: sayController.view,
     profile: profileController.view,
+    router: router.view,
+    say: sayController.view
   })
 }

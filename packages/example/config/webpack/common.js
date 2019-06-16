@@ -1,3 +1,5 @@
+const webpack = require('webpack')
+
 module.exports = {
   module: {
     rules: [
@@ -50,6 +52,14 @@ module.exports = {
   },
   resolve: {
     symlinks: false,
-    extensions: ['.ts', '.tsx', '.js']
-  }
+    extensions: ['.ts', '.tsx', '.js', '.jsx']
+  },
+  plugins: [
+    new webpack.NormalModuleReplacementPlugin(
+      /@baseloop\/[a-z]+$/,
+      resource => {
+        resource.request = resource.request + '/src/index'
+      }
+    )
+  ]
 }
