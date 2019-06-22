@@ -19,34 +19,6 @@ const staticOptions = {
 
 app.use('/', express.static('dist/client', staticOptions))
 
-app.use((req, res) => {
-  res.setHeader('Content-Type', 'text/html')
-
-  const urlParts = url.parse(req.url)
-
-  combineObject({
-    indexHtml: bindNodeCallback(fs.readFile)(path.join('dist/client', 'index.html')),
-    app: AppController({
-      initialUrl: urlParts.path + (urlParts.search == null ? '' : urlParts.search)
-    })
-  }).subscribe({
-    next: ({indexHtml, app}: any) => {
-      const styleSheet = new ServerStyleSheet()
-      try {
-        const appHtml = ReactDOMServer.renderToString(styleSheet.collectStyles(app))
-        const styleTags = styleSheet.getStyleTags()
-        res.send(indexHtml.toString().replace('data-baseloop-app>', `data-baseloop-app>${appHtml}`).replace('</head>', `${styleTags}</head>`))
-        res.end()
-      } catch (e) {
-        internalServerErrorResponse(e, res)
-      } finally {
-        styleSheet.seal()
-      }
-    },
-    error: e => internalServerErrorResponse(e, res)
-  })
-})
-
 function internalServerErrorResponse(e: Error, res: express.Response) {
   console.error(e)
   res.status(500)
@@ -64,6 +36,39 @@ function internalServerErrorResponse(e: Error, res: express.Response) {
 `)
   res.end()
 }
+
+app.use((req, res) => {
+  res.setHeader('Content-Type', 'text/html')
+
+  const urlParts = url.parse(req.url)
+
+  combineObject({
+    indexHtml: bindNodeCallback(fs.readFile)(path.join('dist/client', 'index.html')),
+    app: AppController({
+      initialUrl: urlParts.path + (urlParts.search == null ? '' : urlParts.search)
+    })
+  }).subscribe({
+    next: ({ indexHtml, app }: any) => {
+      const styleSheet = new ServerStyleSheet()
+      try {
+        const appHtml = ReactDOMServer.renderToString(styleSheet.collectStyles(app))
+        const styleTags = styleSheet.getStyleTags()
+        res.send(
+          indexHtml
+            .toString()
+            .replace('data-baseloop-app>', `data-baseloop-app>${appHtml}`)
+            .replace('</head>', `${styleTags}</head>`)
+        )
+        res.end()
+      } catch (e) {
+        internalServerErrorResponse(e, res)
+      } finally {
+        styleSheet.seal()
+      }
+    },
+    error: e => internalServerErrorResponse(e, res)
+  })
+})
 
 const host = 'localhost'
 const port = 8080

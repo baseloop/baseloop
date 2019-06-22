@@ -19,6 +19,24 @@ const staticOptions = {
 
 app.use('/', express.static('dist/client', staticOptions))
 
+function internalServerErrorResponse(e: Error, res: express.Response) {
+  console.error(e)
+  res.status(500)
+  const errorMessage = isDevelopment ? `<pre>${e.stack}</pre>` : ''
+  res.send(`
+<html>
+<head>
+  <title>Internal server error</title>
+</head>
+<body>
+  <h1>Internal server error</h1>
+  ${errorMessage}
+</body>
+</html>
+`)
+  res.end()
+}
+
 app.use((req, res) => {
   res.setHeader('Content-Type', 'text/html')
 
@@ -51,24 +69,6 @@ app.use((req, res) => {
     }
   })
 })
-
-function internalServerErrorResponse(e: Error, res: express.Response) {
-  console.error(e)
-  res.status(500)
-  const errorMessage = isDevelopment ? `<pre>${e.stack}</pre>` : ''
-  res.send(`
-<html>
-<head>
-  <title>Internal server error</title>
-</head>
-<body>
-  <h1>Internal server error</h1>
-  ${errorMessage}
-</body>
-</html>
-`)
-  res.end()
-}
 
 const host = 'localhost'
 const port = 8080

@@ -12,17 +12,17 @@ interface Props {
 }
 
 export default class Select extends React.PureComponent<Props> {
-  static defaultProps = {
+  public static defaultProps = {
     onChange: () => null,
     options: []
   }
 
-  constructor(props: Props) {
+  public constructor(props: Props) {
     super(props)
     this.handleChange = this.handleChange.bind(this)
   }
 
-  render() {
+  public render() {
     return (
       <select onChange={this.handleChange} value={this.props.value || ''}>
         <option key="default">Choose...</option>
@@ -35,7 +35,7 @@ export default class Select extends React.PureComponent<Props> {
     )
   }
 
-  handleChange(e: ChangeEvent<HTMLSelectElement>) {
+  private handleChange(e: ChangeEvent<HTMLSelectElement>) {
     this.props.onChange(e.target.value)
   }
 }

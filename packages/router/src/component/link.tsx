@@ -7,6 +7,7 @@ interface LinkProps {
   pathVariables?: object
   queryParameters?: object
   onClick?: (e: Event) => void
+
   [key: string]: any
 }
 

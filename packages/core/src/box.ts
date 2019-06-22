@@ -2,24 +2,24 @@ import { lensProp, set } from 'ramda'
 import { BehaviorSubject } from 'rxjs'
 
 export class Box<T> extends BehaviorSubject<T> {
-  constructor(value: any) {
+  public constructor(value: any) {
     super(value)
   }
 
-  get() {
+  public get(): T {
     return super.getValue()
   }
 
-  set(value: any) {
+  public set(value: any): void {
     super.next(value)
   }
 
-  update(path: string): (value: any) => void
-  update(path: string, value: any): void
+  public update(path: string): (value: any) => void
+  public update(path: string, value: any): void
 
-  update(path: string, value?: any): any {
+  public update(path: string, value?: any): any {
     if (value === undefined) {
-      return (value: any) => this.update(path, value)
+      return (value: any): void => this.update(path, value)
     }
     super.next(set(lensProp(path), value, this.get()))
   }

@@ -5,7 +5,7 @@
     "website:build:client": "webpack --config config/webpack/client-prod.js",
     "website:create": "npm run website:build:client && node scripts/copy-website-files.js",
     "website:server": "baseloop dev --config-client config/webpack/client-dev.js --config-server config/webpack/server-dev.js --server dist/server/index.js",
-    "tsc": "tsc"
+    "lint": "eslint ./ --ext .js,.jsx,.ts,.tsx"
   },
   "dependencies": {
     "@baseloop/core": "1.1.3",

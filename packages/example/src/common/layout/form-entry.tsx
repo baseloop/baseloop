@@ -15,7 +15,7 @@ const Container = styled.div`
 `
 
 export default class FormEntry extends React.PureComponent<Props> {
-  render() {
+  public render() {
     return (
       <Flex>
         <Container>

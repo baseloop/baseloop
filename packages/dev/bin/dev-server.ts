@@ -17,6 +17,7 @@ export const command = (argv: any) => {
     port: argv['auto-reload-port']
   })
 
+  /*eslint @typescript-eslint/no-var-requires:0*/
   const clientBundlerOptions = require(path.resolve(argv['config-client']))
   const serverBundlerOptions = argv['config-server'] ? require(path.resolve(argv['config-server'])) : null
 

@@ -5,7 +5,9 @@ import iconsSolid from '../../static/icon-fonts/fa-solid-900.woff2'
 import iconsRegular from '../../static/icon-fonts/fa-regular-400.woff2'
 import iconsBrands from '../../static/icon-fonts/fa-brands-400.woff2'
 
-const fontFamily = '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"'
+const fontFamily =
+  '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif,' +
+  '"Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"'
 
 const GlobalStyle = createGlobalStyle`
   ${resetStyle}

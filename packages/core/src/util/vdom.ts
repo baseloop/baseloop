@@ -7,6 +7,6 @@ type Element = string | FunctionComponent | ComponentClass | ClassType<any, any,
 
 export function createReactiveElement(element: Element, propsWithObservables: object): Observable<ReactElement> {
   return combineObject(propsWithObservables).pipe(
-    map(props => createElement(element, props)) // TODO: children?
+    map((props: object): Element => createElement(element, props)) // TODO: children?
   )
 }

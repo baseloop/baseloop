@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 
 interface Props {
-  color: string,
+  color: string
   textToSay: string
 }
 
@@ -15,9 +15,13 @@ const Container = styled.div`
 `
 
 export default class Say extends React.PureComponent<Props> {
-  render () {
-    return <Container color={this.props.color}>
-      <p>Text from the path variable: "{this.props.textToSay}" (text color taken from the URL parameter).</p>
-    </Container>
+  public render() {
+    return (
+      <Container color={this.props.color}>
+        <p>
+          Text from the path variable: &quot;{this.props.textToSay}&quot; (text color taken from the URL parameter).
+        </p>
+      </Container>
+    )
   }
 }

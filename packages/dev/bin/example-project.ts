@@ -8,7 +8,7 @@ import yargs from 'yargs'
 import exampleServerOptions from './example-project-options'
 import * as util from './util'
 
-export const command = (argv: any) => {
+export const command = () => {
   console.log(util.baseloopAsciiLogo)
 
   console.log(chalk`{blue ∞ Setting up an example project}`)

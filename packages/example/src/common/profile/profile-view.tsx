@@ -12,7 +12,7 @@ interface Props {
 }
 
 export default class ProfileView extends React.PureComponent<Props> {
-  render() {
+  public render() {
     const { profileStore, profile, genderOptions } = this.props
 
     const selectedGender = genderOptions.find(option => option.id === profile.gender)

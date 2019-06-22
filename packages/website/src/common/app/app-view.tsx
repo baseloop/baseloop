@@ -18,34 +18,34 @@ const Nav = styled.div`
   padding: 0 1rem;
   border-bottom: solid 1px #0e6dbd;
   height: ${navHeight};
-  
+
   > div {
     height: 100%;
   }
-  
+
   h1 {
-    font-family: "Merienda", cursive;
+    font-family: 'Merienda', cursive;
   }
-  
+
   a {
     margin: 0.5rem 1rem;
     color: ${NAV_FRONT};
     text-decoration: none;
     white-space: nowrap;
-    
+
     :hover {
       color: ${NAV_LINK_HOVER};
-    }  
+    }
   }
 `
 
 const NavItems = styled(Flex)`
   align-items: center;
   width: 100%;
-  
-  @media (max-width: 768px) { 
+
+  @media (max-width: 768px) {
     justify-content: center;
-  
+
     > h1 {
       display: none;
     }
@@ -69,13 +69,13 @@ const Footer = styled.div`
 `
 
 interface Props {
-  router: RouterView,
+  router: RouterView
   docs: any
 }
 
 export default class AppView extends React.PureComponent<Props> {
-  render () {
-    const {router, docs} = this.props
+  public render() {
+    const { router, docs } = this.props
 
     return (
       <Flex direction="column">
@@ -86,17 +86,27 @@ export default class AppView extends React.PureComponent<Props> {
             <Nav>
               <Flex justifyContent="center">
                 <NavItems justifyContent="space-between">
-                  <h1><Link router={router} routeName="home">Baseloop</Link></h1>
+                  <h1>
+                    <Link router={router} routeName="home">
+                      Baseloop
+                    </Link>
+                  </h1>
                   <div>
-                    <Link router={router} routeName="home"><Icon id="s-home" /> Home</Link>
-                    <Link router={router} routeName="docs"><Icon id="s-docs" /> Documentation</Link>
-                    <a href="https://github.com/baseloop/baseloop"><Icon id="b-github" /> GitHub</a>
+                    <Link router={router} routeName="home">
+                      <Icon id="s-home" /> Home
+                    </Link>
+                    <Link router={router} routeName="docs">
+                      <Icon id="s-docs" /> Documentation
+                    </Link>
+                    <a href="https://github.com/baseloop/baseloop">
+                      <Icon id="b-github" /> GitHub
+                    </a>
                   </div>
                 </NavItems>
               </Flex>
             </Nav>
           </PositionFluid>
-          
+
           <Content>
             <Flex justifyContent="center" flex="1">
               <main>
@@ -113,4 +123,3 @@ export default class AppView extends React.PureComponent<Props> {
     )
   }
 }
-

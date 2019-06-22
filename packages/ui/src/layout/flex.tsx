@@ -19,7 +19,7 @@ const FlexDiv = styled.div`
 `
 
 export default class Flex extends React.PureComponent<Props> {
-  static defaultProps = {
+  public static defaultProps: Props = {
     alignItems: 'initial',
     direction: 'row',
     flex: 'initial',
@@ -27,7 +27,7 @@ export default class Flex extends React.PureComponent<Props> {
     wrap: 'nowrap'
   }
 
-  render() {
+  public render() {
     return <FlexDiv {...this.props}>{this.props.children}</FlexDiv>
   }
 }

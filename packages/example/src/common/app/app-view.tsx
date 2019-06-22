@@ -20,7 +20,7 @@ const Container = styled.div`
 `
 
 export default class AppView extends React.PureComponent<Props> {
-  render() {
+  public render() {
     const { router, profile, say } = this.props
 
     return (

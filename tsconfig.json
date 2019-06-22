@@ -6,10 +6,6 @@
         "./*/src"
       ]
     },
-    "noEmit": false,
-    "noImplicitAny": true,
-    "noImplicitThis": true,
-    "noImplicitReturns": true,
     "target": "esnext",
     "lib": [
       "es5",
@@ -19,14 +15,11 @@
     ],
     "jsx": "react",
     "strict": true,
-    "strictFunctionTypes": true,
-    "strictNullChecks": true,
-    "strictPropertyInitialization": true,
-    "alwaysStrict": true,
     "esModuleInterop": true,
     "moduleResolution": "node",
     "declaration": true,
     "declarationMap": true,
+    "noImplicitReturns": true,
     "noUnusedLocals": true,
     "noFallthroughCasesInSwitch": true,
     "resolveJsonModule": true,

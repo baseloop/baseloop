@@ -7,13 +7,13 @@ export class RouterView {
   private routes: Route[]
   private readonly route: Route | null
 
-  constructor(router: Router, routes: Route[], route: Route | null) {
+  public constructor(router: Router, routes: Route[], route: Route | null) {
     this.router = router
     this.routes = routes
     this.route = route
   }
 
-  navigate(routeName: string, pathVariables = {}, queryParameters = {}): void {
+  public navigate(routeName: string, pathVariables = {}, queryParameters = {}): void {
     const route = this.routes.find(route => route.name === routeName)
     if (route == null) {
       return
@@ -26,7 +26,7 @@ export class RouterView {
     this.router.url.next(href)
   }
 
-  buildUrl(routeName: string, pathVariables = {}, queryParameters = {}) {
+  public buildUrl(routeName: string, pathVariables = {}, queryParameters = {}) {
     const route = this.routes.find(route => route.name === routeName)
     if (route == null) {
       return ''
@@ -34,7 +34,7 @@ export class RouterView {
     return route.compile(pathVariables) + qs.compile(queryParameters)
   }
 
-  match(routeName?: string | null): boolean {
+  public match(routeName?: string | null): boolean {
     if (this.route == null) {
       return routeName == null
     } else {
@@ -42,7 +42,7 @@ export class RouterView {
     }
   }
 
-  matchPartial(routeName: string): boolean {
+  public matchPartial(routeName: string): boolean {
     if (this.route == null) {
       return false
     }

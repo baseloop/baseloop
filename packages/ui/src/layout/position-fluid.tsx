@@ -44,7 +44,7 @@ interface State {
 }
 
 export default class PositionFluid extends React.PureComponent<Props, State> {
-  static defaultProps = {
+  public static defaultProps: Props = {
     height: 'auto',
     stayFixed: false,
     threshold: 50,
@@ -55,7 +55,7 @@ export default class PositionFluid extends React.PureComponent<Props, State> {
 
   private readonly ref: React.RefObject<any>
 
-  constructor(props: Props) {
+  public constructor(props: Props) {
     super(props)
 
     this.ref = React.createRef()
@@ -67,11 +67,11 @@ export default class PositionFluid extends React.PureComponent<Props, State> {
     }
   }
 
-  componentWillUnmount() {
+  public componentWillUnmount() {
     window.removeEventListener('scroll', this.handleScroll)
   }
 
-  handleScroll() {
+  private handleScroll() {
     const scrollY = window.document.documentElement.scrollTop || window.scrollY
 
     if (this.state.prevScrollY == null) {
@@ -105,7 +105,7 @@ export default class PositionFluid extends React.PureComponent<Props, State> {
     this.setState({ prevScrollY: scrollY })
   }
 
-  render() {
+  public render() {
     const height = isBrowser && this.ref.current ? this.ref.current.clientHeight : 0
     const offsetTop = isBrowser && this.ref.current ? this.ref.current.offsetTop : 0
 

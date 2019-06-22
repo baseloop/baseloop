@@ -8,7 +8,6 @@ interface Options {
 export function AutoReloadServer(options: Options = {}) {
   const port = options.port || 3456
 
-  // tslint:disable-next-line:no-console
   console.log(chalk`{blue ∞ Baseloop auto-reload server is running at} ws://localhost:${port.toString()}/`)
 
   const wss = new WebSocket.Server({ port })
@@ -20,7 +19,6 @@ export function AutoReloadServer(options: Options = {}) {
       try {
         c.send(JSON.stringify({ forceReload: true }))
       } catch (e) {
-        // tslint:disable-next-line:no-console
         console.error(chalk`{red ∞ Could not send forceReload message to client:} `, e)
       }
     })

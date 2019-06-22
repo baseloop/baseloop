@@ -29,19 +29,19 @@ export interface CurrentRoute {
 }
 
 export class Router {
-  url: BehaviorSubject<string>
-  view: Observable<any>
+  public url: BehaviorSubject<string>
+  public view: Observable<any>
 
   private routeState: Observable<RouteState | null>
 
-  constructor(routeDefinitions: RouteDefinition[], settings: RouterSettings) {
+  public constructor(routeDefinitions: RouteDefinition[], settings: RouterSettings) {
     if ((settings == null || settings.initialUrl == null) && !isBrowser) {
       throw new Error('You need to specify the initial url for the router when not in browser environment')
     }
 
     const initialRoutes = flatRoutes(routeDefinitions).map(def => new Route(def))
     const routes = new BehaviorSubject(initialRoutes)
-    this.url = new BehaviorSubject(settings.initialUrl || window.location.pathname + window.location.search)
+    this.url = new BehaviorSubject(settings!.initialUrl || window.location.pathname + window.location.search)
     this.routeState = combineLatest(routes, this.url).pipe(map(parseUrlIntoRouteState))
     const route = this.routeState.pipe(map(state => (state == null ? null : state.route)))
 
@@ -55,7 +55,7 @@ export class Router {
     this.view = combineLatest(routes, route).pipe(map(([routes, route]) => new RouterView(this, routes, route)))
   }
 
-  onEnter(routeName: string): Observable<CurrentRoute> {
+  public onEnter(routeName: string): Observable<CurrentRoute> {
     return this.routeState.pipe(
       sample(this.url),
       filter(s => s != null && s.route.name === routeName),
@@ -66,7 +66,7 @@ export class Router {
     )
   }
 
-  onLeave(routeName: string) {
+  public onLeave(routeName: string) {
     throw new Error('Not implemented')
   }
 }

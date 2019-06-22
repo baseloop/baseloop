@@ -7,21 +7,21 @@ interface Props {
 }
 
 export default class Input extends React.PureComponent<Props> {
-  static defaultProps = {
+  public static defaultProps = {
     inputProps: {},
     onChange: () => null
   }
 
-  constructor(props: Props) {
+  public constructor(props: Props) {
     super(props)
     this.handleChange = this.handleChange.bind(this)
   }
 
-  render() {
+  public render() {
     return <input value={this.props.value} type="text" {...this.props.inputProps} onChange={this.handleChange} />
   }
 
-  handleChange(e: ChangeEvent<HTMLInputElement>) {
+  private handleChange(e: ChangeEvent<HTMLInputElement>) {
     this.props.onChange(e.target.value)
   }
 }

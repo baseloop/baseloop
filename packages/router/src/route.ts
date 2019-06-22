@@ -8,8 +8,8 @@ interface RouteSettings {
 }
 
 export class Route {
-  name: string
-  compile: pathToRegexp.PathFunction<object>
+  public name: string
+  public compile: pathToRegexp.PathFunction<object>
 
   private readonly isFinalParameterOptional: boolean
   private readonly defaults?: object
@@ -17,7 +17,7 @@ export class Route {
   private keys: any[] = []
   private pathParts: string[]
 
-  constructor({ path, name, defaults }: RouteSettings) {
+  public constructor({ path, name, defaults }: RouteSettings) {
     this.regex = pathToRegexp(path, this.keys, {
       end: false,
       sensitive: false,
@@ -31,7 +31,7 @@ export class Route {
     this.defaults = defaults
   }
 
-  parse(pathname: string): object {
+  public parse(pathname: string): object {
     const results = this.regex.exec(pathname)
     if (results == null) {
       return {}
@@ -48,7 +48,7 @@ export class Route {
     return pathVariables
   }
 
-  match(pathname: string) {
+  public match(pathname: string) {
     const pathnameParts = getPathParts(pathname)
     const isExactMatch =
       pathnameParts.length === this.pathParts.length ||
