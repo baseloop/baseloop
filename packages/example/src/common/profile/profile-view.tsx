@@ -1,4 +1,4 @@
-import { Box } from '@baseloop/core'
+import { Model } from '@baseloop/core'
 import React from 'react'
 import Input from '../form/Input'
 import NumberInput from '../form/number-input'
@@ -6,7 +6,7 @@ import Select from '../form/Select'
 import FormEntry from '../layout/form-entry'
 
 interface Props {
-  profileStore: Box<{}>
+  profileStore: Model<{}>
   profile: any
   genderOptions: any[]
 }

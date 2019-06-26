@@ -1,9 +1,9 @@
-import { Box, createReactiveElement } from '@baseloop/core'
+import { Model, createReactiveElement } from '@baseloop/core'
 import { of } from 'rxjs'
 import ProfileView from './profile-view'
 
 export default function ProfileController() {
-  const profile = new Box({
+  const profile = new Model({
     annualIncome: 1500000,
     birthday: new Date(),
     emails: [{ address: 'bar@baz.foo', type: 'PERSONAL' }, { address: 'foo@bar.baz', type: 'BUSINESS' }],

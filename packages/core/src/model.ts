@@ -1,7 +1,7 @@
 import { lensProp, set } from 'ramda'
 import { BehaviorSubject } from 'rxjs'
 
-export class Box<T> extends BehaviorSubject<T> {
+export class Model<T> extends BehaviorSubject<T> {
   public constructor(value: any) {
     super(value)
   }

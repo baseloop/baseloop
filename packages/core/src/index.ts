@@ -1,4 +1,4 @@
-export { Box } from './box'
+export { Model } from './model'
 export { createReactiveElement } from './util/vdom'
 export { combineObject, log } from './util/rxjs'
 export { run } from './run'
