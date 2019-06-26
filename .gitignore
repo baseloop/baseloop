@@ -6,3 +6,4 @@ TODO
 .idea
 package-lock.json
 dist/
+npm-debug.log
