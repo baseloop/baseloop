@@ -10,7 +10,11 @@ module.exports = {
           loader: 'babel-loader',
           options: {
             presets: ['@babel/preset-env', '@babel/preset-react', '@babel/preset-typescript'],
-            plugins: ['babel-plugin-styled-components', '@babel/proposal-class-properties', '@babel/proposal-object-rest-spread']
+            plugins: [
+              'babel-plugin-styled-components',
+              '@babel/proposal-class-properties',
+              '@babel/proposal-object-rest-spread'
+            ]
           }
         }
       },
@@ -55,11 +59,8 @@ module.exports = {
     extensions: ['.ts', '.tsx', '.js', '.jsx']
   },
   plugins: [
-    new webpack.NormalModuleReplacementPlugin(
-      /@baseloop\/[a-z]+$/,
-      resource => {
-        resource.request = resource.request + '/src/index'
-      }
-    )
+    new webpack.NormalModuleReplacementPlugin(/@baseloop\/[a-z]+$/, resource => {
+      resource.request = resource.request + '/src/index'
+    })
   ]
 }
