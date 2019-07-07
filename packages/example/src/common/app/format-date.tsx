@@ -1,4 +1,4 @@
-import { useObservables } from '@baseloop/ui'
+import { useObservable } from '@baseloop/ui'
 import React from 'react'
 import { interval } from 'rxjs'
 import { map } from 'rxjs/operators'
@@ -14,7 +14,7 @@ function format(date: Date) {
 }
 
 export default function FormatDate({ date }: Params) {
-  const [text] = useObservables([interval(1000).pipe(map(() => format(date))), format(date)])
+  const text = useObservable(interval(1000).pipe(map(() => format(date))), format(date))
 
   return <span>{text}</span>
 }

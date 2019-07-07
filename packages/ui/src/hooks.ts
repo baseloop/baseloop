@@ -1,16 +1,13 @@
 import { useEffect, useState } from 'react'
-import { combineLatest, Observable } from 'rxjs'
+import { Observable } from 'rxjs'
 
-export function useObservables<T>(...observablePairs: Array<[Observable<T>, any]>) {
-  const observable = combineLatest(observablePairs.map(pair => pair[0]))
-  const initialValues = observablePairs.map(pair => pair[1])
-
-  const [, setValue] = useState(initialValues)
+export function useObservable<T>(observable: Observable<T>, initialValue: T): T {
+  const [value, setValue] = useState(initialValue)
 
   useEffect(() => {
     const subscription = observable.subscribe(setValue)
     return () => subscription.unsubscribe()
-  }, observablePairs)
+  }, [observable, initialValue])
 
-  return initialValues
+  return value
 }
