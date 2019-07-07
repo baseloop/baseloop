@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 
-interface Props {
+export interface Props {
   color: string
   textToSay: string
 }
@@ -14,14 +14,10 @@ const Container = styled.div`
   color: ${(props: ContainerProps) => props.color};
 `
 
-export default class Say extends React.PureComponent<Props> {
-  public render() {
-    return (
-      <Container color={this.props.color}>
-        <p>
-          Text from the path variable: &quot;{this.props.textToSay}&quot; (text color taken from the URL parameter).
-        </p>
-      </Container>
-    )
-  }
+export default function Say({ color, textToSay }: Props) {
+  return (
+    <Container color={color}>
+      <p>Text from the path variable: &quot;{textToSay}&quot; (text color taken from the URL parameter).</p>
+    </Container>
+  )
 }

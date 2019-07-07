@@ -4,46 +4,43 @@ import Input from '../form/Input'
 import NumberInput from '../form/number-input'
 import Select from '../form/Select'
 import FormEntry from '../layout/form-entry'
+import { Profile } from './profile'
 
-interface Props {
-  profileStore: Model<{}>
-  profile: any
+export interface Props {
+  profileModel: Model<Profile>
+  profile: Profile
   genderOptions: any[]
 }
 
-export default class ProfileView extends React.PureComponent<Props> {
-  public render() {
-    const { profileStore, profile, genderOptions } = this.props
+export default function ProfileView({ profileModel, profile, genderOptions }: Props) {
+  const selectedGender = genderOptions.find(option => option.id === profile.gender)
 
-    const selectedGender = genderOptions.find(option => option.id === profile.gender)
+  return (
+    <section>
+      <h1>Profile</h1>
+      <p>On this page you may edit your profile.</p>
 
-    return (
-      <section>
-        <h1>Profile</h1>
-        <p>On this page you may edit your profile.</p>
+      <FormEntry label="Name">
+        <Input value={profile.name} onChange={profileModel.update('name')} inputProps={{ autoFocus: true }} />
+      </FormEntry>
 
-        <FormEntry label="Name">
-          <Input value={profile.name} onChange={profileStore.update('name')} inputProps={{ autoFocus: true }} />
-        </FormEntry>
+      <FormEntry label="Profession">
+        <Input value={profile.profession} onChange={profileModel.update('profession')} />
+      </FormEntry>
 
-        <FormEntry label="Profession">
-          <Input value={profile.profession} onChange={profileStore.update('profession')} />
-        </FormEntry>
+      <FormEntry label="Gender">
+        <Select value={profile.gender} options={genderOptions} onChange={profileModel.update('gender')} />
+      </FormEntry>
 
-        <FormEntry label="Gender">
-          <Select value={profile.gender} options={genderOptions} onChange={profileStore.update('gender')} />
-        </FormEntry>
+      <FormEntry label="Annual income">
+        <NumberInput value={profile.annualIncome.toString()} onChange={profileModel.update('annualIncome')} />
+      </FormEntry>
 
-        <FormEntry label="Annual income">
-          <NumberInput value={profile.annualIncome} onChange={profileStore.update('annualIncome')} />
-        </FormEntry>
-
-        <h1>Summary</h1>
-        <p>
-          {profile.name || 'Mister X'} is a {selectedGender ? selectedGender.label : ''} professional{' '}
-          {profile.profession || 'freeloader'}.
-        </p>
-      </section>
-    )
-  }
+      <h1>Summary</h1>
+      <p>
+        {profile.name || 'Mister X'} is a {selectedGender ? selectedGender.label : ''} professional{' '}
+        {profile.profession || 'freeloader'}.
+      </p>
+    </section>
+  )
 }

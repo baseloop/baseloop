@@ -8,10 +8,10 @@ import GlobalStyle from './global-style'
 
 const date = new Date()
 
-interface Props {
+export interface Props {
   router: RouterView
-  profile: any
-  say: any
+  profile: React.ReactElement
+  say: React.ReactElement
 }
 
 const Container = styled.div`
@@ -19,59 +19,55 @@ const Container = styled.div`
   height: 100%;
 `
 
-export default class AppView extends React.PureComponent<Props> {
-  public render() {
-    const { router, profile, say } = this.props
+export default function AppView({ profile, say, router }: Props) {
+  return (
+    <Container>
+      <Flex>
+        <GlobalStyle />
 
-    return (
-      <Container>
-        <Flex>
-          <GlobalStyle />
+        <nav>
+          <p>Navigation goes here</p>
+          <Link router={router} routeName="profile">
+            My profile
+          </Link>
+          <Link router={router} routeName="mortgage-applications">
+            Mortgage applications
+          </Link>
+          <Link router={router} routeName="routes">
+            Routes
+          </Link>
+          <Link
+            router={router}
+            routeName="say"
+            pathVariables={{ textToSay: 'default text' }}
+            queryParameters={{ color: 'red' }}
+          >
+            Say
+          </Link>
+        </nav>
 
-          <nav>
-            <p>Navigation goes here</p>
-            <Link router={router} routeName="profile">
-              My profile
-            </Link>
-            <Link router={router} routeName="mortgage-applications">
-              Mortgage applications
-            </Link>
-            <Link router={router} routeName="routes">
-              Routes
-            </Link>
-            <Link
-              router={router}
-              routeName="say"
-              pathVariables={{ textToSay: 'default text' }}
-              queryParameters={{ color: 'red' }}
-            >
-              Say
-            </Link>
-          </nav>
+        <Flex direction="column" flex="1">
+          <main>
+            {router.match('home') && (
+              <div>
+                <span>
+                  This page was loaded <FormatDate date={date} />. Yay.
+                </span>
+              </div>
+            )}
+            {router.match('profile') && profile}
+            {router.match('say') && say}
+            {router.match(null) && (
+              <div>
+                <h1>Page not found</h1>
+                <p>The page you were looking for could not be found.</p>
+              </div>
+            )}
+          </main>
 
-          <Flex direction="column" flex="1">
-            <main>
-              {router.match('home') && (
-                <div>
-                  <span>
-                    This page was loaded <FormatDate date={date} />. Yay.
-                  </span>
-                </div>
-              )}
-              {router.match('profile') && profile}
-              {router.match('say') && say}
-              {router.match(null) && (
-                <div>
-                  <h1>Page not found</h1>
-                  <p>The page you were looking for could not be found.</p>
-                </div>
-              )}
-            </main>
-
-            <footer>Footer</footer>
-          </Flex>
+          <footer>Footer</footer>
         </Flex>
-      </Container>
-    )
-  }
+      </Flex>
+    </Container>
+  )
 }
