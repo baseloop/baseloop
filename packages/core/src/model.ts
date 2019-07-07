@@ -2,7 +2,7 @@ import { lensProp, set } from 'ramda'
 import { BehaviorSubject } from 'rxjs'
 
 export class Model<T> extends BehaviorSubject<T> {
-  public constructor(value: any) {
+  public constructor(value: T) {
     super(value)
   }
 
@@ -10,7 +10,7 @@ export class Model<T> extends BehaviorSubject<T> {
     return super.getValue()
   }
 
-  public set(value: any): void {
+  public set(value: T): void {
     super.next(value)
   }
 
