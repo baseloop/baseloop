@@ -6,8 +6,8 @@ if (isDevelopment) {
   AutoReloadClient()
 }
 
-const app = AppController({
-  initialUrl: window.location.pathname + window.location.search
-})
-
-run(app)
+run(
+  AppController({
+    initialUrl: window.location.pathname + window.location.search
+  })
+)
