@@ -24,32 +24,36 @@ app.use((req, res) => {
 
   const urlParts = url.parse(req.url)
 
-  combineObject({
-    app: AppController({
-      initialUrl: urlParts.path + (urlParts.search == null ? '' : urlParts.search)
-    }),
-    indexHtml: bindNodeCallback(fs.readFile)(path.join('dist/client', 'index.html'))
-  }).subscribe({
-    error: e => internalServerErrorResponse(e, res),
-    next: ({ indexHtml, app }: any) => {
-      const styleSheet = new ServerStyleSheet()
-      try {
-        const appHtml = ReactDOMServer.renderToString(styleSheet.collectStyles(app))
-        const styleTags = styleSheet.getStyleTags()
-        res.send(
-          indexHtml
-            .toString()
-            .replace('data-baseloop-app>', `data-baseloop-app>${appHtml}`)
-            .replace('</head>', `${styleTags}</head>`)
-        )
-        res.end()
-      } catch (e) {
-        internalServerErrorResponse(e, res)
-      } finally {
-        styleSheet.seal()
+  try {
+    combineObject({
+      app: AppController({
+        initialUrl: urlParts.path + (urlParts.search == null ? '' : urlParts.search)
+      }),
+      indexHtml: bindNodeCallback(fs.readFile)(path.join('dist/client', 'index.html'))
+    }).subscribe({
+      error: e => internalServerErrorResponse(e, res),
+      next: ({ indexHtml, app }: any) => {
+        const styleSheet = new ServerStyleSheet()
+        try {
+          const appHtml = ReactDOMServer.renderToString(styleSheet.collectStyles(app))
+          const styleTags = styleSheet.getStyleTags()
+          res.send(
+            indexHtml
+              .toString()
+              .replace('data-baseloop-app>', `data-baseloop-app>${appHtml}`)
+              .replace('</head>', `${styleTags}</head>`)
+          )
+          res.end()
+        } catch (e) {
+          internalServerErrorResponse(e, res)
+        } finally {
+          styleSheet.seal()
+        }
       }
-    }
-  })
+    })
+  } catch (e) {
+    internalServerErrorResponse(e, res)
+  }
 })
 
 const host = 'localhost'
@@ -61,18 +65,20 @@ app.listen(port, host, () => {
 
 function internalServerErrorResponse(e: Error, res: express.Response) {
   console.error(e)
-  res.status(500)
-  const errorMessage = isDevelopment ? `<pre>${e.stack}</pre>` : ''
-  res.send(`
+  if (isDevelopment) {
+    res.send(fs.readFileSync(path.join('dist/client', 'index.html')))
+  } else {
+    res.status(500)
+    res.send(`
 <html>
 <head>
   <title>Internal server error</title>
 </head>
 <body>
   <h1>Internal server error</h1>
-  ${errorMessage}
 </body>
 </html>
 `)
+  }
   res.end()
 }
