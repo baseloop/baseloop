@@ -2,6 +2,10 @@ import { clone, init, is, last, reduce, tail } from 'ramda'
 import { combineLatest, Observable, of, MonoTypeOperatorFunction } from 'rxjs'
 import { map, tap } from 'rxjs/operators'
 
+export type ObservableRecord<T> = {
+  [P in keyof T]: Observable<T[P]> | T[P] | ObservableRecord<T[P]>
+}
+
 export function log<T>(): MonoTypeOperatorFunction<T> {
   const args = Array.prototype.slice.call(arguments)
 
@@ -16,17 +20,18 @@ interface ObservableAndFullPath {
   fullPath: string
 }
 
-export function combineObject(obj: object): Observable<object> {
+export function combineObject<T>(obj: ObservableRecord<T>): Observable<T> {
   const data = getObservableDataRecursivelyFromObject(obj)
+
+  if (data.length === 0) {
+    return of(obj as T)
+  }
+
   const observables = data.map((o: ObservableAndFullPath) => o.value)
   const fullPaths = data.map((o: ObservableAndFullPath) => o.fullPath)
 
-  if (observables.length === 0) {
-    return of(obj)
-  }
-
-  const createObject = (values: any[]): object => {
-    const o = clone(obj)
+  const createObject = (values: any[]): T => {
+    const o = clone(obj as T)
     values.forEach((value, i) => {
       setObjectValueBasedOnPath(o, fullPaths[i], value)
     })
@@ -58,7 +63,7 @@ function getObservableDataRecursivelyFromObject(obj: Record<string, any>, path =
   return observables
 }
 
-function setObjectValueBasedOnPath(obj: object, path: string, value: any): void {
+function setObjectValueBasedOnPath<T>(obj: T, path: string, value: any): void {
   const parts = tail(path.split('.'))
   const o: Record<string, any> = reduce((o: Record<string, any>, key: string): any => o[key], obj, init(parts))
   const lastPart = last(parts)

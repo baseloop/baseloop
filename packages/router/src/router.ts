@@ -30,7 +30,7 @@ export interface CurrentRoute {
 
 export class Router {
   public url: BehaviorSubject<string>
-  public view: Observable<any>
+  public view: Observable<RouterView>
 
   private routeState: Observable<RouteState | null>
 

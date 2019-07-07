@@ -1,12 +1,13 @@
-import { ClassType, ComponentClass, createElement, FunctionComponent, ReactElement } from 'react'
+import { ComponentClass, createElement, FunctionComponent, ReactElement } from 'react'
 import { Observable } from 'rxjs'
 import { map } from 'rxjs/operators'
-import { combineObject } from './rxjs'
+import { combineObject, ObservableRecord } from './rxjs'
 
-type Element = string | FunctionComponent | ComponentClass | ClassType<any, any, any>
+type Element<T> = FunctionComponent<T> | ComponentClass<T>
 
-export function createReactiveElement(element: Element, propsWithObservables: object): Observable<ReactElement> {
-  return combineObject(propsWithObservables).pipe(
-    map((props: object): Element => createElement(element, props)) // TODO: children?
-  )
+export function createReactiveElement<T>(
+  element: Element<T>,
+  propsAsObservables: ObservableRecord<T>
+): Observable<ReactElement> {
+  return combineObject(propsAsObservables).pipe(map(props => createElement(element, props)))
 }
