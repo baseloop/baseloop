@@ -47,7 +47,7 @@ export class Router {
 
     if (isBrowser) {
       window.addEventListener('popstate', e => {
-        this.url.next(window.location.pathname)
+        this.url.next(window.location.pathname + window.location.search)
         e.preventDefault()
       })
     }
