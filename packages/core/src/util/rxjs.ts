@@ -6,9 +6,7 @@ export type ObservableRecord<T> = {
   [P in keyof T]: Observable<T[P]> | T[P] | ObservableRecord<T[P]>
 }
 
-export function log<T>(): MonoTypeOperatorFunction<T> {
-  const args = Array.prototype.slice.call(arguments)
-
+export function log<T>(...args: any[]): MonoTypeOperatorFunction<T> {
   return tap(function(): void {
     const allParams = args.concat(Array.prototype.slice.call(arguments))
     console.log(...allParams)
