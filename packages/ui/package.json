@@ -1,6 +1,6 @@
 {
   "name": "@baseloop/ui",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "A UI toolkit for web applications.",
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
@@ -33,7 +33,7 @@
     "styled-components": ">=4.0.0 <5.0.0"
   },
   "devDependencies": {
-    "@baseloop/core": "^1.2.0"
+    "@baseloop/core": "^1.2.1"
   },
   "publishConfig": {
     "access": "public"
