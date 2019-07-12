@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import Flex from '@baseloop/ui/src/layout/flex'
+import { Flex } from '@baseloop/ui'
 import backgroundImage from '../../static/header-background.png'
 import Shield from '../component/shield'
 import { HEADER_BACKGROUND, HEADER_FOREGROUND, FOOTER_BACKGROUND } from '../styles/colors'

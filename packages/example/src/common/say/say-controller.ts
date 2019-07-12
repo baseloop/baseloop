@@ -1,5 +1,5 @@
 import { createReactiveElement } from '@baseloop/core'
-import { Router } from '@baseloop/router/src'
+import { Router } from '@baseloop/router'
 import { map, startWith } from 'rxjs/operators'
 import Say from './say'
 
