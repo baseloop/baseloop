@@ -66,7 +66,7 @@ export class Router {
     )
   }
 
-  public onLeave(routeName: string) {
+  public onLeave() {
     throw new Error('Not implemented')
   }
 }
