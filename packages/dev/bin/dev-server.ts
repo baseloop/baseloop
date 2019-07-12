@@ -4,7 +4,6 @@ import childProcess from 'child_process'
 import express from 'express'
 import fs from 'fs'
 import path from 'path'
-import webpack from 'webpack'
 import yargs from 'yargs'
 import { AutoReloadServer } from '../src/auto-reload/server'
 import devServerOptions from './dev-server-options'
@@ -26,11 +25,13 @@ export const command = (argv: any) => {
     const serverFile = path.resolve(argv.server)
 
     if (argv.bundler === 'webpack') {
+      const webpack = require('webpack')
+
       console.log(chalk`{blue ∞ Starting Webpack server watcher}`)
       let process: childProcess.ChildProcess
 
       const compiler = webpack(serverBundlerOptions)
-      compiler.watch({}, (err, stats) => {
+      compiler.watch({}, (err: Error, stats: any) => {
         if (err) {
           console.log(chalk`{red ∞ Webpack server compilation error:} `, err)
         } else {
@@ -88,10 +89,12 @@ export const command = (argv: any) => {
   }
 
   if (argv.bundler === 'webpack') {
+    const webpack = require('webpack')
+
     console.log(chalk`{blue ∞ Starting Webpack client watcher}`)
 
     const compiler = webpack(clientBundlerOptions)
-    compiler.watch({}, (err, stats) => {
+    compiler.watch({}, (err: Error, stats: any) => {
       if (err) {
         console.log(chalk`{red ∞ Webpack client compilation error:} `, err)
       } else {

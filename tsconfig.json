@@ -23,7 +23,8 @@
     "noUnusedLocals": true,
     "noFallthroughCasesInSwitch": true,
     "resolveJsonModule": true,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "module": "esnext"
   },
   "exclude": [
     "**/*.spec.ts",
