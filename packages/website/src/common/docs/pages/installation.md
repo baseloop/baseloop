@@ -1,6 +1,7 @@
 # Installation
 
-In this tutorial, we will set up an example project that uses Baseloop.
+In this tutorial, we will set up an example project that uses Baseloop. We are using NPM here, but you may use another
+ tool like Yarn.
 
 ## Setting up dependencies
 
@@ -23,52 +24,42 @@ This dev package comes with a command line tool that we will use next.
 Create the example project with our newly installed tool:
 
 ```
-npx baseloop new project
+npx baseloop new
 ```
 
 Now you should have a similar project structure:
 
 ```
-config/
-  webpack/
-    client-base.js
-    client-dev.js
-    common.js
-    server-base.js
-    server-dev.js
 src/
   client/
-    index.js
+    index.ts
   common/
     about/
-      about-controller.js
-      about-view.js
+      about-controller.ts
+      about-view.tsx
     app/
-      app-controller.js
-      app-view.js
+      app-controller.ts
+      app-view.tsx
     home/
-      home-view.js
+      home-view.tsx
     static/
       favicon.png
       index.html
   server/
-    index.js
+    index.ts
 package.json
+webpack.config.js
 ```
 
-Let's explain the project structure, which you are of course free to modify as you please.
+Let me explain the project structure, which you are free to modify as you please.
 
-The configuration files are located under `config/`, grouped by the type of configuration (`webpack/` for example).
-The Webpack configuration is mostly defined in `common.js`, which is used by both frontend and backend (hence "common").
-Then we have the individual configuration files for both backend and frontend. 
-We also have separate `dev` and `prod` files for development and production purposes.
-
-We will not go through Webpack configuration as that is something you can learn through their documentation.
-You can also use another bundler such as [Parcel](https://parceljs.org/) or [Rollup](https://rollupjs.org/) if you like.
+Our example project is using Webpack. The configuration is defined in `webpack.config.js`, which is used by both frontend and backend.
+You are free to use any other build tool you like such as [Parcel](https://parceljs.org/) or [Rollup](https://rollupjs.org/). We will not go through Webpack configuration as that is something you
+can learn through their documentation.
 
 The main source code lies under `src/`, grouped in `client/`, `common/` and `server/` folders. The `common/` folder is
-used for almost all source code, because we are writing a universal JavaScript app that can render your app on the server
-side as well.
+used for almost all source code, because we are writing universal JavaScript that can render your app on the server
+side.
 
 We prefer grouping source code based on *features* instead of types of code. This means we want all the code related
 to one feature to lie within their own separate folder. Therefore we do not have folders such as `controllers/` or `views/`,
@@ -76,15 +67,16 @@ but instead folders such as `app/`, `about/`, `profile/`, `todos/`, `feature-x/`
 
 ## Running the example
 
-The cli tool should have added the following line to your `package.json` file:
+The cli tool we ran added the following line to your `package.json` file:
 
 ```
 "scripts": {
-  "dev": "baseloop dev --config-client config/webpack/client-dev.js --config-server config/webpack/server-dev.js --server dist/server/index.js"
+  ...
+  "dev": "baseloop dev --server dist/server/index.js"
 }
 ```
 
-We can run our example with it:
+We can run our app with it:
 
 ```
 npm run dev
