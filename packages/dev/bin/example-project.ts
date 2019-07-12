@@ -5,27 +5,26 @@ import fs from 'fs-extra'
 import path from 'path'
 import process from 'process'
 import yargs from 'yargs'
-import exampleServerOptions from './example-project-options'
 import * as util from './util'
 
 export const command = () => {
   console.log(util.baseloopAsciiLogo)
 
+  const packageJsonFile = path.resolve('package.json')
+
+  if (!fs.existsSync(packageJsonFile)) {
+    throw 'No package.json file found! Please run at least "npm init" before you start.'
+  }
+
   console.log(chalk`{blue ∞ Setting up an example project}`)
-  const source = path.resolve(util.binPath, '../example-project/')
+  const source = path.resolve(util.binPath, '../../example-project/')
   const destination = path.resolve('')
   fs.copySync(source, destination)
 
   console.log(chalk`{blue ∞ Adding an npm script to your package.json}`)
-  const packageJsonFile = path.resolve('package.json')
   const packageJson = JSON.parse(fs.readFileSync(packageJsonFile).toString())
   packageJson.scripts = packageJson.scripts || {}
-  packageJson.scripts.dev = [
-    'baseloop dev',
-    '--config-client config/webpack/client-dev.js',
-    '--config-server config/webpack/server-dev.js',
-    '--server dist/server/index.js'
-  ].join(' ')
+  packageJson.scripts.dev = 'baseloop dev --server dist/server/index.js'
   fs.writeFileSync(packageJsonFile, JSON.stringify(packageJson))
 
   console.log(chalk`{blue ∞ Installing npm dependencies}`)
@@ -35,7 +34,6 @@ export const command = () => {
   const devDeps = [
     '@baseloop/dev',
     'webpack',
-    'webpack-merge',
     'html-webpack-plugin',
     'html-loader',
     'url-loader',
@@ -43,6 +41,7 @@ export const command = () => {
     '@babel/core',
     '@babel/preset-env',
     '@babel/preset-react',
+    '@babel/preset-typescript',
     'babel-cli',
     'babel-loader'
   ]
@@ -65,11 +64,11 @@ export const command = () => {
         if (code == null || code >= 0) {
           console.log(chalk`{green ∞ Done! Run the following command to get started:}
 
-  {magenta npm run app:dev}`)
+  {magenta npm run dev}`)
         }
       })
     }
   })
 }
 
-export const options = (argv: yargs.Argv) => argv.options(exampleServerOptions)
+export const options = (argv: yargs.Argv) => argv.options({})

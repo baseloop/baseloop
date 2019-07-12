@@ -16,6 +16,6 @@ yargs
   .scriptName('baseloop')
   .usage('$0 <cmd> [args]')
   .command('dev', startServerDescription, devServer.options, devServer.command)
-  .command('new project', createProjectDescription, exampleProject.options, exampleProject.command)
+  .command('new', createProjectDescription, exampleProject.options, exampleProject.command)
   .help()
   .demandCommand().argv

@@ -11,7 +11,7 @@ const app = express()
 
 const staticOptions = {
   index: false,
-  setHeaders: res => {
+  setHeaders: (res: express.Response) => {
     res.setHeader('Cache-Control', 'public, max-age=31557600')
   }
 }
@@ -29,7 +29,7 @@ app.use((req, res) => {
       initialUrl: urlParts.path + (urlParts.search == null ? '' : urlParts.search)
     })
   }).subscribe({
-    next: ({indexHtml, app}) => {
+    next: ({ indexHtml, app }) => {
       try {
         const appHtml = ReactDOMServer.renderToString(app)
         res.send(indexHtml.toString().replace('data-baseloop-app>', `data-baseloop-app>${appHtml}`))
@@ -42,7 +42,7 @@ app.use((req, res) => {
   })
 })
 
-function internalServerErrorResponse(e, res) {
+function internalServerErrorResponse(e: Error, res: express.Response) {
   console.error(e)
   res.status(500)
   const errorMessage = isDevelopment ? `<pre>${e.stack}</pre>` : ''

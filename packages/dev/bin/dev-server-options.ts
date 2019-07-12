@@ -10,13 +10,9 @@ const options: Record<string, any> = {
     describe: 'What bundler to use',
     type: 'string'
   },
-  'config-client': {
+  config: {
     default: 'webpack.config.js',
-    describe: 'Path to the bundler client config file',
-    type: 'string'
-  },
-  'config-server': {
-    describe: 'Path to the bundler server config file',
+    describe: 'Path to the bundler config file',
     type: 'string'
   },
   host: {
@@ -31,7 +27,7 @@ const options: Record<string, any> = {
   },
   'public-dir': {
     default: 'dist/',
-    describe: 'The public directory from which to serve files if no custom server specified',
+    describe: 'The public directory from which to serve files if no custom server is specified',
     type: 'string'
   },
   server: {
@@ -40,7 +36,8 @@ const options: Record<string, any> = {
   },
   spa: {
     default: true,
-    describe: 'Single-Page App always serves the root index at every URL',
+    describe:
+      'Single-Page App always serves the root index at every URL. Not available when a custom server is specified.',
     type: 'boolean'
   }
 }

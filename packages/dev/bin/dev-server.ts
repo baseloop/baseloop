@@ -18,8 +18,9 @@ export const command = (argv: any) => {
   })
 
   /*eslint @typescript-eslint/no-var-requires:0*/
-  const clientBundlerOptions = require(path.resolve(argv['config-client']))
-  const serverBundlerOptions = argv['config-server'] ? require(path.resolve(argv['config-server'])) : null
+  const configFunction = require(path.resolve(argv['config']))
+  const clientBundlerOptions = configFunction({ mode: 'development', target: 'client' })
+  const serverBundlerOptions = argv['server'] ? configFunction({ mode: 'development', target: 'server' }) : null
 
   if (serverBundlerOptions) {
     const serverFile = path.resolve(argv.server)

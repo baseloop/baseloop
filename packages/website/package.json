@@ -2,9 +2,9 @@
   "name": "@baseloop/website",
   "private": true,
   "scripts": {
-    "website:build:client": "webpack --config config/webpack/client-prod.js",
+    "website:build:client": "webpack --env.mode=production --env.target=client",
     "website:create": "npm run website:build:client && node scripts/copy-website-files.js",
-    "website:server": "baseloop dev --config-client config/webpack/client-dev.js --config-server config/webpack/server-dev.js --server dist/server/index.js",
+    "website:server": "baseloop dev --server dist/server/index.js",
     "lint": "eslint ./ --ext .js,.jsx,.ts,.tsx"
   },
   "dependencies": {

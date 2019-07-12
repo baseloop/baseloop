@@ -1,3 +1,4 @@
-src
-*.config.js
-tsconfig.json
+/src
+/*.config.js
+/tsconfig*
+/.es*
