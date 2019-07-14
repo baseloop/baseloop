@@ -10,6 +10,11 @@
   "es2015": "dist/es2015/index.js",
   "types": "dist/es2015/index.d.ts",
   "typings": "dist/es2015/index.d.ts",
+  "files": [
+    "/dist",
+    "/README.md",
+    "/example-project"
+  ],
   "scripts": {
     "test": "jest",
     "build": "npm run build:es2015 && npm run build:esm && npm run build:cjs && npm run build:bin",
