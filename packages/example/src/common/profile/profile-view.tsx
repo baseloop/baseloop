@@ -1,8 +1,8 @@
 import { Model } from '@baseloop/core'
 import React from 'react'
-import Input from '../form/Input'
+import Input from '../form/input'
 import NumberInput from '../form/number-input'
-import Select from '../form/Select'
+import Select from '../form/select'
 import FormEntry from '../layout/form-entry'
 import { Profile } from './profile'
 

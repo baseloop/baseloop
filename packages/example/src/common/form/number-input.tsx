@@ -1,5 +1,5 @@
 import React, { InputHTMLAttributes } from 'react'
-import Input from './Input'
+import Input from './input'
 
 interface Props {
   onChange: (value: string) => void
