@@ -13,7 +13,7 @@ export class RouterView {
     this.route = route
   }
 
-  public navigate(routeName: string, pathVariables = {}, queryParameters = {}): void {
+  public navigate(routeName: string, pathVariables = {}, queryParameters = {}, resetScrollPosition = true): void {
     const route = this.routes.find(route => route.name === routeName)
     if (route == null) {
       return
@@ -21,6 +21,9 @@ export class RouterView {
     const href = route.compile(pathVariables) + qs.compile(queryParameters)
     if (href === window.location.pathname + window.location.search) {
       return
+    }
+    if (resetScrollPosition) {
+      window.scrollTo(0, 0)
     }
     history.pushState({}, document.title, href)
     this.router.url.next(href)
