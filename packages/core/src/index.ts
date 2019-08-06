@@ -1,4 +1,5 @@
 export { Model } from './model'
+export { Action } from './action'
 export { createReactiveElement } from './util/vdom'
 export { combineObject, log } from './util/rxjs'
 export { run } from './run'
