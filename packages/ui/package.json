@@ -36,7 +36,10 @@
     "styled-components": ">=4.0.0 <5.0.0"
   },
   "devDependencies": {
-    "@baseloop/core": "^1.2.4"
+    "@baseloop/core": "^1.2.4",
+    "typescript": "^3.4.4",
+    "webpack": "^4.28.3",
+    "webpack-cli": "^3.1.2"
   },
   "publishConfig": {
     "access": "public"
