@@ -1,6 +1,6 @@
 import { isBrowser } from '@baseloop/core'
 import { BehaviorSubject, combineLatest, Observable } from 'rxjs'
-import { filter, map, sample } from 'rxjs/operators'
+import { filter, first, map, sample } from 'rxjs/operators'
 import flatRoutes from './flat-routes'
 import * as qs from './query-string'
 import { Route } from './route'
@@ -68,6 +68,12 @@ export class Router {
 
   public onLeave() {
     throw new Error('Not implemented')
+  }
+
+  public navigate(routeName: string, pathVariables = {}, queryParameters = {}, resetScrollPosition = true): void {
+    this.view.pipe(first()).subscribe(r => {
+      r.navigate(routeName, pathVariables, queryParameters, resetScrollPosition)
+    })
   }
 }
 
