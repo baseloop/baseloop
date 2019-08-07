@@ -1,6 +1,6 @@
 import { clone, init, is, last, reduce, tail } from 'ramda'
 import { combineLatest, Observable, of, MonoTypeOperatorFunction } from 'rxjs'
-import { map, tap } from 'rxjs/operators'
+import { catchError, map, tap } from 'rxjs/operators'
 import { isBrowser } from '../index'
 
 export type ObservableRecord<T> = {
@@ -15,6 +15,13 @@ export function log<T>(...args: any[]): MonoTypeOperatorFunction<T> {
     } else {
       console.log(...allParams.map(p => (p == null ? null : p.toString())))
     }
+  })
+}
+
+export function handleErrorsByLogging<T>(): MonoTypeOperatorFunction<T> {
+  return catchError((e, obs) => {
+    console.error(e)
+    return obs
   })
 }
 
