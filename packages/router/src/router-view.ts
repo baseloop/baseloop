@@ -25,6 +25,7 @@ export class RouterView {
     if (resetScrollPosition) {
       window.scrollTo(0, 0)
     }
+    this.router.previousUrl.next(window.location.pathname + window.location.search)
     history.pushState({}, document.title, href)
     this.router.url.next(href)
   }

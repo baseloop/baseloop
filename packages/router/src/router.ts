@@ -30,6 +30,7 @@ export interface CurrentRoute {
 
 export class Router {
   public url: BehaviorSubject<string>
+  public previousUrl: BehaviorSubject<string>
   public view: Observable<RouterView>
 
   private routeState: Observable<RouteState | null>
@@ -41,7 +42,9 @@ export class Router {
 
     const initialRoutes = flatRoutes(routeDefinitions).map(def => new Route(def))
     const routes = new BehaviorSubject(initialRoutes)
-    this.url = new BehaviorSubject(settings!.initialUrl || window.location.pathname + window.location.search)
+    const url = settings!.initialUrl || window.location.pathname + window.location.search
+    this.url = new BehaviorSubject(url)
+    this.previousUrl = new BehaviorSubject(url)
     this.routeState = combineLatest(routes, this.url).pipe(map(parseUrlIntoRouteState))
     const route = this.routeState.pipe(map(state => (state == null ? null : state.route)))
 
