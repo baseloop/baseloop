@@ -1,6 +1,7 @@
 import { clone, init, is, last, reduce, tail } from 'ramda'
 import { combineLatest, Observable, of, MonoTypeOperatorFunction } from 'rxjs'
 import { map, tap } from 'rxjs/operators'
+import { isBrowser } from '../index'
 
 export type ObservableRecord<T> = {
   [P in keyof T]: Observable<T[P]> | T[P] | ObservableRecord<T[P]>
@@ -9,7 +10,11 @@ export type ObservableRecord<T> = {
 export function log<T>(...args: any[]): MonoTypeOperatorFunction<T> {
   return tap(function(): void {
     const allParams = args.concat(Array.prototype.slice.call(arguments))
-    console.log(...allParams)
+    if (isBrowser) {
+      console.log(...allParams)
+    } else {
+      console.log(...allParams.map(p => (p == null ? null : p.toString())))
+    }
   })
 }
 
