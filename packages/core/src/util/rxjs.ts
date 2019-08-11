@@ -1,6 +1,6 @@
 import { clone, init, is, last, reduce, tail } from 'ramda'
-import { combineLatest, Observable, of, MonoTypeOperatorFunction } from 'rxjs'
-import { catchError, map, tap, withLatestFrom } from 'rxjs/operators'
+import { combineLatest, Observable, of, MonoTypeOperatorFunction, merge } from 'rxjs'
+import { catchError, map, mapTo, tap, withLatestFrom } from 'rxjs/operators'
 import { isBrowser } from '../index'
 
 export type ObservableRecord<T> = {
@@ -31,6 +31,16 @@ export function upon<T>(notifier: Observable<any>): MonoTypeOperatorFunction<T> 
     const mapper = map(([, source]: [any, T]) => source)
     return mapper(latest)
   }
+}
+
+export function awaiting(start: Observable<any>, end: Observable<any>): Observable<boolean> {
+  return merge(
+    start.pipe(mapTo(true)),
+    end.pipe(
+      catchError((e, obs) => obs),
+      mapTo(false)
+    )
+  )
 }
 
 interface ObservableAndFullPath {
