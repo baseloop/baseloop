@@ -45,6 +45,7 @@
     "@baseloop/core": "^1.2.6",
     "babel-jest": "^24.4.0",
     "jest": "^24.4.0",
+    "prettier": "^1.18.2",
     "typescript": "^3.4.4",
     "webpack": "^4.28.3",
     "webpack-cli": "^3.1.2"
