@@ -11,6 +11,7 @@ const date = new Date()
 export interface Props {
   router: RouterView
   profile: React.ReactElement
+  search: React.ReactElement
   say: React.ReactElement
 }
 
@@ -19,7 +20,7 @@ const Container = styled.div`
   height: 100%;
 `
 
-export default function AppView({ profile, say, router }: Props) {
+export default function AppView({ profile, search, say, router }: Props) {
   return (
     <Container>
       <Flex>
@@ -27,6 +28,9 @@ export default function AppView({ profile, say, router }: Props) {
 
         <nav>
           <p>Navigation goes here</p>
+          <Link router={router} routeName="search">
+            Search
+          </Link>
           <Link router={router} routeName="profile">
             My profile
           </Link>
@@ -56,6 +60,7 @@ export default function AppView({ profile, say, router }: Props) {
               </div>
             )}
             {router.match('profile') && profile}
+            {router.match('search') && search}
             {router.match('say') && say}
             {router.match(null) && (
               <div>
