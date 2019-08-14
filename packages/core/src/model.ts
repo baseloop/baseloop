@@ -6,13 +6,9 @@ export class Model<T> extends BehaviorSubject<T> {
     super(value)
   }
 
-  public get(): T {
-    return super.getValue()
-  }
+  public get = (): T => super.getValue()
 
-  public set(value: T): void {
-    super.next(value)
-  }
+  public set = (value: T): void => super.next(value)
 
   public update(path: string): (value: any) => void
   public update(path: string, value: any): void
