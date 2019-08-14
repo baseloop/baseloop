@@ -47,6 +47,7 @@
   },
   "devDependencies": {
     "babel-jest": "^24.4.0",
+    "eslint": "^5.14.0",
     "jest": "^24.4.0",
     "prettier": "^1.18.2",
     "typescript": "^3.4.4",

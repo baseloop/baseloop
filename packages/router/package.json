@@ -43,6 +43,7 @@
   },
   "devDependencies": {
     "@baseloop/core": "^1.2.8",
+    "eslint": "^5.14.0",
     "babel-jest": "^24.4.0",
     "jest": "^24.4.0",
     "prettier": "^1.18.2",
