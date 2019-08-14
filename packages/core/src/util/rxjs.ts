@@ -1,6 +1,6 @@
 import { clone, init, is, last, reduce, tail } from 'ramda'
-import { combineLatest, Observable, of, MonoTypeOperatorFunction, merge } from 'rxjs'
-import { catchError, map, mapTo, tap, withLatestFrom } from 'rxjs/operators'
+import { combineLatest, merge, MonoTypeOperatorFunction, Observable, of } from 'rxjs'
+import { catchError, map, mapTo, shareReplay, tap, withLatestFrom } from 'rxjs/operators'
 import { isBrowser } from '../index'
 
 export type ObservableRecord<T> = {
@@ -40,7 +40,7 @@ export function awaiting(start: Observable<any>, end: Observable<any>): Observab
       catchError((e, obs) => obs),
       mapTo(false)
     )
-  )
+  ).pipe(shareReplay())
 }
 
 interface ObservableAndFullPath {
