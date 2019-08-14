@@ -2,7 +2,7 @@
   "name": "@baseloop/example",
   "private": true,
   "scripts": {
-    "example:server": "baseloop dev --server dist/server/index.js",
+    "dev": "baseloop dev --server dist/server/index.js",
     "lint": "eslint ./ --ext .js,.jsx,.ts,.tsx"
   },
   "dependencies": {
