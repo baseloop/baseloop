@@ -1,6 +1,6 @@
 {
   "name": "@baseloop/ui",
-  "version": "1.2.7",
+  "version": "1.2.8",
   "description": "A UI toolkit for web applications.",
   "type": "module",
   "main": "dist/es2015/index.js",
@@ -36,7 +36,7 @@
     "styled-components": ">=4.0.0 <5.0.0"
   },
   "devDependencies": {
-    "@baseloop/core": "^1.2.7",
+    "@baseloop/core": "^1.2.8",
     "babel-jest": "^24.4.0",
     "jest": "^24.4.0",
     "prettier": "^1.18.2",

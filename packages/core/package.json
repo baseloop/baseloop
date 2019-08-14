@@ -1,6 +1,6 @@
 {
   "name": "@baseloop/core",
-  "version": "1.2.7",
+  "version": "1.2.8",
   "description": "A toolkit for writing functional reactive web applications.",
   "type": "module",
   "main": "dist/es2015/index.js",
