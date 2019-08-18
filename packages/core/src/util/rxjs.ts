@@ -86,7 +86,7 @@ export function combineObject<T>(obj: ObservableRecord<T>): Observable<T> {
     return o
   }
 
-  return combineLatest(...observables).pipe(map(createObject))
+  return combineLatest(observables).pipe(map(createObject))
 }
 
 function getObservableDataRecursivelyFromObject(obj: Record<string, any>, path = ''): ObservableAndFullPath[] {
@@ -97,7 +97,7 @@ function getObservableDataRecursivelyFromObject(obj: Record<string, any>, path =
       const value = obj[key]
       const fullPath = path + '.' + key
 
-      if (is(Observable, value)) {
+      if (typeof value['@@observable'] === 'function') {
         observables.push({ value, fullPath })
       } else if (is(Object, value)) {
         const xs = getObservableDataRecursivelyFromObject(value, fullPath)
