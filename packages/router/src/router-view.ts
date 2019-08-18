@@ -1,16 +1,19 @@
 import * as qs from './query-string'
 import { Route } from './route'
 import { Router } from './router'
+import { Action } from '@baseloop/core'
 
 export class RouterView {
   private router: Router
   private routes: Route[]
   private readonly route: Route | null
+  private navigationAction: Action
 
-  public constructor(router: Router, routes: Route[], route: Route | null) {
+  public constructor(router: Router, routes: Route[], route: Route | null, navigationAction: Action) {
     this.router = router
     this.routes = routes
     this.route = route
+    this.navigationAction = navigationAction
   }
 
   public navigate(routeName: string, pathVariables = {}, queryParameters = {}, resetScrollPosition = true): void {
@@ -28,6 +31,7 @@ export class RouterView {
     this.router.previousUrl.next(window.location.pathname + window.location.search)
     history.pushState({}, document.title, href)
     this.router.url.next(href)
+    this.navigationAction.trigger()
   }
 
   public buildUrl(routeName: string, pathVariables = {}, queryParameters = {}) {

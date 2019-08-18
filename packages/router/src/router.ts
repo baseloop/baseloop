@@ -1,4 +1,4 @@
-import { isBrowser } from '@baseloop/core'
+import { Action, isBrowser } from '@baseloop/core'
 import { BehaviorSubject, combineLatest, Observable } from 'rxjs'
 import { filter, first, map, sample } from 'rxjs/operators'
 import flatRoutes from './flat-routes'
@@ -29,6 +29,7 @@ export interface CurrentRoute {
 }
 
 export class Router {
+  private navigationAction: Action = new Action()
   public url: BehaviorSubject<string>
   public previousUrl: BehaviorSubject<string>
   public view: Observable<RouterView>
@@ -45,28 +46,39 @@ export class Router {
     const url = settings!.initialUrl || window.location.pathname + window.location.search
     this.url = new BehaviorSubject(url)
     this.previousUrl = new BehaviorSubject(url)
-    this.routeState = combineLatest(routes, this.url).pipe(map(parseUrlIntoRouteState))
+    this.routeState = combineLatest([routes, this.url]).pipe(map(parseUrlIntoRouteState))
     const route = this.routeState.pipe(map(state => (state == null ? null : state.route)))
 
     if (isBrowser) {
       window.addEventListener('popstate', e => {
         this.url.next(window.location.pathname + window.location.search)
+        this.navigationAction.trigger()
         e.preventDefault()
       })
     }
 
-    this.view = combineLatest(routes, route).pipe(map(([routes, route]) => new RouterView(this, routes, route)))
+    this.view = combineLatest([routes, route]).pipe(
+      map(([routes, route]) => new RouterView(this, routes, route, this.navigationAction))
+    )
   }
 
-  public onEnter(routeName: string): Observable<CurrentRoute> {
+  private _on(routeName: string, triggerBy: Observable<any>): Observable<CurrentRoute> {
     return this.routeState.pipe(
-      sample(this.url),
+      sample(triggerBy),
       filter(s => s != null && s.route.name === routeName),
       map(s => ({
         pathVariables: s == null ? {} : s.pathVariables || {},
         queryParameters: s == null ? {} : s.queryParameters || {}
       }))
     )
+  }
+
+  public on(routeName: string): Observable<CurrentRoute> {
+    return this._on(routeName, this.url)
+  }
+
+  public onEnter(routeName: string): Observable<CurrentRoute> {
+    return this._on(routeName, this.navigationAction)
   }
 
   public onLeave() {
