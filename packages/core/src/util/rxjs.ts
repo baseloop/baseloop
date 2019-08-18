@@ -1,6 +1,6 @@
 import { clone, init, is, last, reduce, tail } from 'ramda'
 import { combineLatest, merge, MonoTypeOperatorFunction, Observable, of } from 'rxjs'
-import { catchError, map, mapTo, shareReplay, tap, withLatestFrom } from 'rxjs/operators'
+import { catchError, filter, map, mapTo, shareReplay, tap, withLatestFrom } from 'rxjs/operators'
 import { isBrowser } from '../index'
 
 export type ObservableRecord<T> = {
@@ -41,6 +41,26 @@ export function awaiting(start: Observable<any>, end: Observable<any>): Observab
       mapTo(false)
     )
   ).pipe(shareReplay())
+}
+
+export function filterBy<T>(observableFilter: Observable<boolean>): MonoTypeOperatorFunction<T> {
+  return (obs: Observable<T>) =>
+    withLatestFrom(observableFilter)(obs).pipe(
+      filter((xs: [any, boolean]) => xs[1]),
+      map(xs => xs[0])
+    )
+}
+
+export function isEveryTrue(values: Array<Observable<boolean>>) {
+  return combineLatest(values).pipe(map(xs => xs.every(v => v)))
+}
+
+export function and(condition: Observable<boolean>): MonoTypeOperatorFunction<boolean> {
+  return (obs: Observable<boolean>) => withLatestFrom(condition)(obs).pipe(map((xs: [any, any]) => xs[0] && xs[1]))
+}
+
+export function not(): MonoTypeOperatorFunction<boolean> {
+  return (obs: Observable<boolean>) => obs.pipe(map(x => !x))
 }
 
 interface ObservableAndFullPath {

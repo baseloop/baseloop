@@ -1,7 +1,7 @@
 export { Model } from './model'
 export { Action } from './action'
 export { createReactiveElement } from './util/vdom'
-export { combineObject, log, handleErrorsByLogging, upon, awaiting } from './util/rxjs'
+export { combineObject, log, handleErrorsByLogging, upon, awaiting, filterBy, isEveryTrue, and, not } from './util/rxjs'
 export { run } from './run'
 
 export const isNode = typeof process !== 'undefined' && process.versions != null && process.versions.node != null
