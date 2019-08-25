@@ -8,8 +8,8 @@ export type ObservableRecord<T> = {
 }
 
 export function log<T>(...args: any[]): MonoTypeOperatorFunction<T> {
-  return tap(function(): void {
-    const allParams = args.concat(Array.prototype.slice.call(arguments))
+  return tap((...params) => {
+    const allParams = args.concat(params)
     if (isBrowser) {
       console.log(...allParams)
     } else {
