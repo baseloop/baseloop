@@ -1,6 +1,6 @@
 {
   "name": "@baseloop/dev",
-  "version": "1.2.8",
+  "version": "1.2.9",
   "description": "Development tools such as baseloop-dev-server.",
   "bin": {
     "baseloop": "dist/bin/baseloop.js"
@@ -42,26 +42,26 @@
     "chalk": "^2.4.2",
     "express": "^4.16.4",
     "fs-extra": "^7.0.1",
+    "webpack": ">=4.0.0 <5.0.0",
     "ws": "^6.2.0",
-    "yargs": "^13.2.2",
-    "webpack": ">=4.0.0 <5.0.0"
+    "yargs": "^13.2.2"
   },
   "devDependencies": {
     "@babel/preset-env": "^7.5.5",
     "@babel/preset-typescript": "^7.3.3",
     "@types/express": "^4.16.1",
-    "@types/ws": "^6.0.3",
     "@types/fs-extra": "^7.0.0",
     "@types/node": "^12.7.2",
     "@types/webpack": "^4.39.1",
+    "@types/ws": "^6.0.3",
     "@typescript-eslint/eslint-plugin": "^2.0.0",
     "@typescript-eslint/parser": "^2.0.0",
     "babel-jest": "^24.4.0",
     "eslint": "^5.14.0",
     "eslint-config-prettier": "^5.0.0",
-    "eslint-plugin-prettier": "^3.1.0",
     "eslint-plugin-import": "^2.14.0",
     "eslint-plugin-jsx-a11y": "^6.1.1",
+    "eslint-plugin-prettier": "^3.1.0",
     "eslint-plugin-react": "^7.11.0",
     "jest": "^24.4.0",
     "prettier": "^1.18.2",
