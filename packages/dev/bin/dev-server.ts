@@ -5,7 +5,7 @@ import express from 'express'
 import fs from 'fs'
 import path from 'path'
 import yargs from 'yargs'
-import { AutoReloadServer } from '@baseloop/dev'
+import { AutoReloadServer } from '../src/auto-reload/server'
 import devServerOptions from './dev-server-options'
 import * as util from './util'
 
