@@ -1,6 +1,6 @@
 {
   "name": "@baseloop/ui",
-  "version": "1.2.10",
+  "version": "1.2.11",
   "description": "A UI toolkit for web applications.",
   "type": "module",
   "main": "dist/es2015/index.js",
@@ -40,7 +40,7 @@
   "devDependencies": {
     "@babel/preset-env": "^7.5.5",
     "@babel/preset-typescript": "^7.3.3",
-    "@baseloop/core": "^1.2.10",
+    "@baseloop/core": "^1.2.11",
     "@types/react": "^16.9.2",
     "@types/react-dom": "^16.9.0",
     "@types/styled-components": "^4.1.18",
