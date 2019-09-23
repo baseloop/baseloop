@@ -48,6 +48,11 @@ class ReactiveElement<T> extends Component<Props<T>, State<T>> {
   }
 }
 
+/**
+ * This is like React.createElement(X) (or <X />). The only difference is: this lets you pass Observables as props.
+ * The result is a React element, which will automatically update its state based on the passed Observable props.
+ * You can mix and match both Observable and non-Observable props.
+ */
 export function createReactiveElement<T>(
   element: Element<T>,
   propsAsObservables: ObservableRecord<T>

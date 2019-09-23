@@ -1,6 +1,9 @@
 import { lensProp, set } from 'ramda'
 import { BehaviorSubject } from 'rxjs'
 
+/**
+ * This is a container for state. Allows you to easily update parts of the insides.
+ */
 export class Model<T> extends BehaviorSubject<T> {
   public constructor(value: T) {
     super(value)
