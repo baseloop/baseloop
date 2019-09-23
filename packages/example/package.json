@@ -23,7 +23,7 @@
     "@babel/preset-env": "^7.5.5",
     "@babel/preset-react": "^7.0.0",
     "@babel/preset-typescript": "^7.3.3",
-    "@baseloop/dev": "^1.2.8",
+    "@baseloop/dev": "^1.2.10",
     "@types/express": "^4.17.1",
     "@types/body-parser": "^1.17.1",
     "@types/node": "^12.7.2",
