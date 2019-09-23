@@ -16,6 +16,9 @@ export class RouterView {
     this.navigationAction = navigationAction
   }
 
+  /**
+   * Navigates to the given route with the given parameters. Does not do anything on server-side.
+   */
   public navigate(routeName: string, pathVariables = {}, queryParameters = {}, resetScrollPosition = true): void {
     const route = this.routes.find(route => route.name === routeName)
     if (route == null) {
@@ -42,6 +45,14 @@ export class RouterView {
     return route.compile(pathVariables) + qs.compile(queryParameters)
   }
 
+  /**
+   * Performs direct matching against the given route.
+   *
+   * Trailing paths produce negative matches:
+   * URL:   /foo/bar/qux
+   * Route: /foo/bar
+   * Result: no match
+   */
   public match(routeName?: string | null): boolean {
     if (this.route == null) {
       return routeName == null
@@ -50,6 +61,14 @@ export class RouterView {
     }
   }
 
+  /**
+   * Performs partial matching against the given route.
+   *
+   * Trailing paths produce positive matches:
+   * URL:   /foo/bar/qux
+   * Route: /foo/bar
+   * Result: matches
+   */
   public matchPartial(routeName: string): boolean {
     if (this.route == null) {
       return false
