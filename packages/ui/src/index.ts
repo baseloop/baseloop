@@ -3,8 +3,12 @@ export { default as resetStyle } from './styles/reset-style'
 export { default as PositionFluid } from './layout/position-fluid'
 export { useObservable } from './hooks'
 
-export function retrieveDataFromDOM<T>(selector: string): T | null {
-  const element = document.querySelector(selector)
+/**
+ * Fetches JSON-encoded data from the DOM with the given key.
+ * Looks for an element with data-attribute="<key>" and decodes its content.
+ */
+export function retrieveDataFromDOM<T>(key: string): T | null {
+  const element = document.querySelector(`[data-${key}]`)
   if (element != null) {
     const json = element.textContent
     if (json != null) {
