@@ -5,7 +5,6 @@
   "bin": {
     "baseloop": "dist/bin/baseloop.js"
   },
-  "type": "module",
   "main": "dist/es2015/index.js",
   "module": "dist/es2015/index.js",
   "es2015": "dist/es2015/index.js",
@@ -19,7 +18,7 @@
   "scripts": {
     "test": "jest",
     "build": "rm -rf dist && npm run build:es2015 && npm run build:bin",
-    "build:es2015": "tsc --module es2015 --target es2015 --outDir dist/es2015",
+    "build:es2015": "tsc --module commonjs --target es5 --outDir dist/es2015",
     "build:bin": "tsc --build tsconfig-bin.json",
     "format": "prettier --write \"src/**/*.ts\" \"src/**/*.js\"",
     "lint": "eslint ./ --ext .js,.jsx,.ts,.tsx",
