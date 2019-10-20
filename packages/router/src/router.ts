@@ -99,10 +99,10 @@ export class Router {
     )
   }
 
-  private _on(routeName: string, triggerBy: Observable<any>): Observable<CurrentRoute> {
+  private _on(triggerBy: Observable<any>, ...routeNames: string[]): Observable<CurrentRoute> {
     return this.routeState.pipe(
       sample(triggerBy),
-      filter(s => s != null && s.route.name === routeName),
+      filter(s => s != null && routeNames.includes(s.route.name)),
       map(s => ({
         pathVariables: s == null ? {} : s.pathVariables || {},
         queryParameters: s == null ? {} : s.queryParameters || {}
@@ -113,16 +113,16 @@ export class Router {
   /**
    * Triggers whenever we are on a route with the given name. This also triggers once on initial page load (client-side).
    */
-  public on(routeName: string): Observable<CurrentRoute> {
-    return this._on(routeName, this.url)
+  public on(...routeNames: string[]): Observable<CurrentRoute> {
+    return this._on(this.url, ...routeNames)
   }
 
   /**
    * Triggers whenever we navigate to a route with the given name. The only difference compared to `on()` is that this
    * does not trigger on initial page load (client-side), because that is not considered runtime navigation.
    */
-  public onEnter(routeName: string): Observable<CurrentRoute> {
-    return this._on(routeName, this.navigationAction)
+  public onEnter(...routeNames: string[]): Observable<CurrentRoute> {
+    return this._on(this.navigationAction, ...routeNames)
   }
 
   /**
