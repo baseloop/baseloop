@@ -23,7 +23,7 @@ const Container = styled.div`
 export default function AppView({ profile, search, say, router }: Props) {
   return (
     <Container>
-      <Flex>
+      <Flex direction="row">
         <GlobalStyle />
 
         <nav>
@@ -50,7 +50,7 @@ export default function AppView({ profile, search, say, router }: Props) {
           </Link>
         </nav>
 
-        <Flex direction="column" flex="1">
+        <Flex direction="column" flex="1" noDisplayFlex grow={1}>
           <main>
             {router.match('home') && (
               <div>

@@ -17,7 +17,7 @@ const Container = styled.div`
 export default class FormEntry extends React.PureComponent<Props> {
   public render() {
     return (
-      <Flex>
+      <Flex direction="row">
         <Container>
           <label>{this.props.label}:</label>
           <div>{this.props.children}</div>

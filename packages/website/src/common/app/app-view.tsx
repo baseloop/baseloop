@@ -81,10 +81,10 @@ export default class AppView extends React.PureComponent<Props> {
       <Flex direction="column">
         <GlobalStyle />
 
-        <div>
+        <Flex grow={1} noDisplayFlex>
           <PositionFluid>
             <Nav>
-              <Flex justifyContent="center">
+              <Flex direction="row" justifyContent="center">
                 <NavItems justifyContent="space-between">
                   <h1>
                     <Link router={router} routeName="home">
@@ -108,7 +108,7 @@ export default class AppView extends React.PureComponent<Props> {
           </PositionFluid>
 
           <Content>
-            <Flex justifyContent="center" flex="1">
+            <Flex direction="row" justifyContent="center" flex="1">
               <main>
                 {router.match('home') && <Home />}
                 {router.matchPartial('docs') && docs}
@@ -118,7 +118,7 @@ export default class AppView extends React.PureComponent<Props> {
           </Content>
 
           <Footer>Copyright &copy; 2019 Baseloop</Footer>
-        </div>
+        </Flex>
       </Flex>
     )
   }

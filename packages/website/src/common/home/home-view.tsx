@@ -86,7 +86,7 @@ export default function Home() {
           </ShieldContainer>
         </div>
       </Header>
-      <Flex justifyContent="center">
+      <Flex direction="row" justifyContent="center">
         <Content direction="column">
           <FeaturesContainer direction="row" wrap="wrap" justifyContent="space-evenly">
             <div>
