@@ -1,27 +1,26 @@
 import React, { ChangeEvent, InputHTMLAttributes } from 'react'
+import { Atom } from '@baseloop/atom'
+import { useAtom } from '@baseloop/hooks'
 
 interface Props {
   onChange: (value: string) => void
-  value: string
+  value: Atom<string>
   inputProps?: InputHTMLAttributes<HTMLInputElement>
 }
 
-export default class Input extends React.PureComponent<Props> {
-  public static defaultProps = {
-    inputProps: {},
-    onChange: () => null
-  }
+export default function Input(props: Props) {
+  const value = useAtom(props.value)
 
-  public constructor(props: Props) {
-    super(props)
-    this.handleChange = this.handleChange.bind(this)
-  }
+  return <input value={value == null ? '' : value} type="text" {...props.inputProps} onChange={handleChange} />
 
-  public render() {
-    return <input value={this.props.value} type="text" {...this.props.inputProps} onChange={this.handleChange} />
+  function handleChange(e: ChangeEvent<HTMLInputElement>) {
+    const value = e.target.value
+    props.onChange(value)
+    props.value.set(value)
   }
+}
 
-  private handleChange(e: ChangeEvent<HTMLInputElement>) {
-    this.props.onChange(e.target.value)
-  }
+Input.defaultProps = {
+  inputProps: {},
+  onChange: () => null
 }

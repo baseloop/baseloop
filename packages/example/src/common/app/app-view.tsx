@@ -21,6 +21,7 @@ const Container = styled.div`
 `
 
 export default function AppView({ profile, search, say, router }: Props) {
+  console.log('AppView')
   return (
     <Container>
       <Flex direction="row">

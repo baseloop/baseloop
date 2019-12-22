@@ -1,4 +1,4 @@
-import { useObservable } from '@baseloop/ui'
+import { useObservable } from '@baseloop/hooks'
 import React from 'react'
 import { interval } from 'rxjs'
 import { map } from 'rxjs/operators'

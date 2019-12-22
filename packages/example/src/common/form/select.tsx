@@ -1,4 +1,6 @@
 import React, { ChangeEvent } from 'react'
+import { Atom } from '@baseloop/atom'
+import { useAtom } from '@baseloop/hooks'
 
 interface Option {
   id: string
@@ -6,36 +8,34 @@ interface Option {
 }
 
 interface Props {
-  value: string | null
+  value: Atom<string | null>
   options: Option[]
-  onChange: (value: string) => void
+  onChange?: (value: string) => void
 }
 
-export default class Select extends React.PureComponent<Props> {
-  public static defaultProps = {
-    onChange: () => null,
-    options: []
-  }
+export default function Select(props: Props) {
+  const value = useAtom(props.value)
 
-  public constructor(props: Props) {
-    super(props)
-    this.handleChange = this.handleChange.bind(this)
-  }
+  return (
+    <select onChange={handleChange} value={value || ''}>
+      <option key="default">Choose...</option>
+      {props.options.map((option, i) => (
+        <option value={option.id} key={i}>
+          {option.label}
+        </option>
+      ))}
+    </select>
+  )
 
-  public render() {
-    return (
-      <select onChange={this.handleChange} value={this.props.value || ''}>
-        <option key="default">Choose...</option>
-        {this.props.options.map((option, i) => (
-          <option value={option.id} key={i}>
-            {option.label}
-          </option>
-        ))}
-      </select>
-    )
+  function handleChange(e: ChangeEvent<HTMLSelectElement>) {
+    if (props.onChange) {
+      props.onChange(e.target.value)
+    }
+    props.value.set(e.target.value)
   }
+}
 
-  private handleChange(e: ChangeEvent<HTMLSelectElement>) {
-    this.props.onChange(e.target.value)
-  }
+Select.defaultProps = {
+  onChange: () => null,
+  options: []
 }
