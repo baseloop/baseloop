@@ -1,6 +1,6 @@
 {
   "name": "@baseloop/atom",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "State container for RxJS",
   "main": "dist/es2015/index.js",
   "module": "dist/es2015/index.js",
@@ -39,9 +39,9 @@
   "devDependencies": {
     "@babel/preset-env": "^7.5.5",
     "@babel/preset-typescript": "^7.3.3",
+    "@types/jest": "^24.0.24",
     "@types/node": "^12.7.2",
     "@types/ramda": "^0.26.21",
-    "@types/jest": "^24.0.24",
     "@typescript-eslint/eslint-plugin": "^2.0.0",
     "@typescript-eslint/parser": "^2.0.0",
     "babel-jest": "^24.4.0",
