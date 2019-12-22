@@ -19,7 +19,7 @@ module.exports = {
     '@typescript-eslint/explicit-function-return-type': { allowExpressions: true },
     '@typescript-eslint/no-explicit-any': 'off',
     '@typescript-eslint/no-non-null-assertion': 'off',
-    '@typescript-eslint/no-use-before-define': ['error', { functions: false }]
+    '@typescript-eslint/no-use-before-define': ['error', { functions: false, classes: false }]
   },
   settings: {
     react: {
