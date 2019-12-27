@@ -1,0 +1,64 @@
+{
+  "name": "@baseloop/rxjs",
+  "version": "1.0.0",
+  "description": "RxJS toolbet",
+  "main": "dist/es2015/index.js",
+  "module": "dist/es2015/index.js",
+  "es2015": "dist/es2015/index.js",
+  "types": "dist/es2015/index.d.ts",
+  "typings": "dist/es2015/index.d.ts",
+  "files": [
+    "/dist",
+    "/README.md"
+  ],
+  "scripts": {
+    "test": "jest",
+    "build": "rm -rf dist && npm run build:es2015",
+    "build:es2015": "tsc --module es2015 --target es2015 --outDir dist/es2015",
+    "format": "prettier --write \"src/**/*.ts\" \"src/**/*.js\"",
+    "lint": "eslint ./ --ext .js,.jsx,.ts,.tsx",
+    "prepare": "npm run build",
+    "prepublishOnly": "npm run test",
+    "tsc": "tsc"
+  },
+  "keywords": [
+    "baseloop",
+    "rxjs"
+  ],
+  "author": "Kai Sellgren <kaisellgren@gmail.com>",
+  "license": "ISC",
+  "dependencies": {
+    "ramda": ">=0.16.0 <1.0.0"
+  },
+  "peerDependencies": {
+    "@baseloop/atom": ">=1.0.0 < 2.0.0",
+    "@baseloop/core": ">=1.0.0 < 2.0.0",
+    "rxjs": ">=6.0.0 < 7.0.0"
+  },
+  "devDependencies": {
+    "@babel/preset-env": "^7.5.5",
+    "@babel/preset-typescript": "^7.3.3",
+    "@baseloop/atom": "^1.0.1",
+    "@baseloop/core": "^1.2.12",
+    "@types/react": "^16.9.2",
+    "@types/react-dom": "^16.9.0",
+    "@types/styled-components": "^4.1.18",
+    "@typescript-eslint/eslint-plugin": "^2.0.0",
+    "@typescript-eslint/parser": "^2.0.0",
+    "babel-jest": "^24.4.0",
+    "eslint": "^5.14.0",
+    "eslint-config-prettier": "^5.0.0",
+    "eslint-plugin-import": "^2.14.0",
+    "eslint-plugin-jsx-a11y": "^6.1.1",
+    "eslint-plugin-prettier": "^3.1.0",
+    "eslint-plugin-react": "^7.11.0",
+    "jest": "^24.4.0",
+    "prettier": "^1.18.2",
+    "typescript": "^3.4.4",
+    "webpack": "^4.28.3",
+    "webpack-cli": "^3.1.2"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
