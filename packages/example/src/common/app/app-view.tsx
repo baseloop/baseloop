@@ -1,15 +1,15 @@
-import { Link } from '@baseloop/router'
-import { RouterView } from '@baseloop/router'
+import { Link, Router } from '@baseloop/router'
 import { Flex } from '@baseloop/ui'
 import React from 'react'
 import styled from 'styled-components'
 import FormatDate from './format-date'
 import GlobalStyle from './global-style'
+import { useRouter } from '@baseloop/hooks'
 
 const date = new Date()
 
 export interface Props {
-  router: RouterView
+  router: Router
   profile: React.ReactElement
   search: React.ReactElement
   say: React.ReactElement
@@ -21,6 +21,7 @@ const Container = styled.div`
 `
 
 export default function AppView({ profile, search, say, router }: Props) {
+  useRouter(router)
   console.log('AppView')
   return (
     <Container>
@@ -63,7 +64,7 @@ export default function AppView({ profile, search, say, router }: Props) {
             {router.match('profile') && profile}
             {router.match('search') && search}
             {router.match('say') && say}
-            {router.match(null) && (
+            {router.matchExact(null) && (
               <div>
                 <h1>Page not found</h1>
                 <p>The page you were looking for could not be found.</p>

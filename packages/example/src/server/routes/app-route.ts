@@ -1,5 +1,5 @@
 import url from 'url'
-import { combineObject, isDevelopment } from '@baseloop/core'
+import { isDevelopment } from '@baseloop/core'
 import AppController from '../../common/app/app-controller'
 import { bindNodeCallback } from 'rxjs'
 import fs from 'fs'
@@ -14,30 +14,25 @@ export const appRoute = (req: express.Request, res: express.Response) => {
   const urlParts = url.parse(req.url)
 
   try {
-    combineObject({
-      app: AppController({
+    bindNodeCallback(fs.readFile)(path.join('dist/client', 'index.html')).subscribe(indexHtml => {
+      const app = AppController({
         initialUrl: urlParts.path + (urlParts.search == null ? '' : urlParts.search)
-      }),
-      indexHtml: bindNodeCallback(fs.readFile)(path.join('dist/client', 'index.html'))
-    }).subscribe({
-      error: e => internalServerErrorResponse(e, res),
-      next: ({ indexHtml, app }: any) => {
-        const styleSheet = new ServerStyleSheet()
-        try {
-          const appHtml = ReactDOMServer.renderToString(styleSheet.collectStyles(app))
-          const styleTags = styleSheet.getStyleTags()
-          res.send(
-            indexHtml
-              .toString()
-              .replace('data-baseloop-app>', `data-baseloop-app>${appHtml}`)
-              .replace('</head>', `${styleTags}</head>`)
-          )
-          res.end()
-        } catch (e) {
-          internalServerErrorResponse(e, res)
-        } finally {
-          styleSheet.seal()
-        }
+      })
+      const styleSheet = new ServerStyleSheet()
+      try {
+        const appHtml = ReactDOMServer.renderToString(styleSheet.collectStyles(app))
+        const styleTags = styleSheet.getStyleTags()
+        res.send(
+          indexHtml
+            .toString()
+            .replace('data-baseloop-app>', `data-baseloop-app>${appHtml}`)
+            .replace('</head>', `${styleTags}</head>`)
+        )
+        res.end()
+      } catch (e) {
+        internalServerErrorResponse(e, res)
+      } finally {
+        styleSheet.seal()
       }
     })
   } catch (e) {

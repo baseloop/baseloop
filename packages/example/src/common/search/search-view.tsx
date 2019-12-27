@@ -1,15 +1,16 @@
-import { Model } from '@baseloop/core'
 import React from 'react'
 import Input from '../form/input'
 import FormEntry from '../layout/form-entry'
 import { SearchResult } from './search-result'
 import styled from 'styled-components'
+import { Atom } from '@baseloop/atom'
+import { Observable } from 'rxjs'
+import { useAtom, useObservable } from '@baseloop/hooks'
 
 export interface Props {
-  keywordModel: Model<string>
-  keyword: string
-  isSearching: boolean
-  searchResponse: SearchResult[]
+  keyword: Atom<string>
+  isSearching: Atom<boolean>
+  searchResponse: Observable<SearchResult[]>
 }
 
 const StyledResultContainer = styled.div`
@@ -20,14 +21,17 @@ const StyledResultContainer = styled.div`
   }
 `
 
-export default function SearchView({ keyword, keywordModel, isSearching, searchResponse }: Props) {
+export default function SearchView({ keyword, isSearching: isSearchingAtom, searchResponse }: Props) {
+  const isSearching = useAtom(isSearchingAtom)
+  const results = useObservable(searchResponse, [])
+
   return (
     <section>
       <h1>Search demo</h1>
       <p>This page demonstrates how to implement a simple search feature.</p>
 
       <FormEntry label="Type in the search keyword">
-        <Input value={keyword} onChange={keywordModel.set} inputProps={{ autoFocus: true }} />
+        <Input value={keyword} inputProps={{ autoFocus: true }} />
         {isSearching && <span>Searching...</span>}
       </FormEntry>
 
@@ -35,7 +39,7 @@ export default function SearchView({ keyword, keywordModel, isSearching, searchR
         <>
           <h1>Search results</h1>
           <StyledResultContainer>
-            {searchResponse.map((result, i) => (
+            {results.map((result, i) => (
               <div key={i}>
                 <div>{result.name}</div>
                 <div>{result.age}</div>

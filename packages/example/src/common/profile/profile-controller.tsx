@@ -19,9 +19,11 @@ export default function ProfileController() {
   profile.subscribe(p => console.log('profile model', p))
 
   return {
-    view: React.createElement(ProfileView, {
-      genderOptions: [{ id: 'FEMALE', label: 'Female' }, { id: 'MALE', label: 'Male' }],
-      profile
-    })
+    view: (
+      <ProfileView
+        genderOptions={[{ id: 'FEMALE', label: 'Female' }, { id: 'MALE', label: 'Male' }]}
+        profile={profile}
+      />
+    )
   }
 }

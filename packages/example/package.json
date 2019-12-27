@@ -10,6 +10,7 @@
     "@baseloop/core": "^1.2.9",
     "@baseloop/hooks": "^1.0.0",
     "@baseloop/ui": "^1.2.9",
+    "@baseloop/rxjs": "^1.0.0",
     "@baseloop/router": "^1.3.9",
     "body-parser": "^1.19.0",
     "express": "^4.16.4",

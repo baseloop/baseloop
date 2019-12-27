@@ -1,13 +1,15 @@
-import { isDevelopment, run } from '@baseloop/core'
+import { isDevelopment } from '@baseloop/core'
 import { AutoReloadClient } from '@baseloop/dev'
 import AppController from '../common/app/app-controller'
+import { hydrate } from 'react-dom'
 
 if (isDevelopment) {
   AutoReloadClient()
 }
 
-run(
+hydrate(
   AppController({
     initialUrl: window.location.pathname + window.location.search
-  })
+  }),
+  document.querySelector('[data-baseloop-app]')
 )

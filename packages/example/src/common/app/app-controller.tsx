@@ -1,9 +1,9 @@
-import { createReactiveElement } from '@baseloop/core'
 import { Router } from '@baseloop/router'
 import ProfileController from '../profile/profile-controller'
 import SayController from '../say/say-controller'
 import AppView from './app-view'
 import SearchController from '../search/search-controller'
+import * as React from 'react'
 
 interface Params {
   initialUrl: string
@@ -27,10 +27,7 @@ export default function AppController({ initialUrl }: Params) {
   const searchController = SearchController()
   const sayController = SayController({ router })
 
-  return createReactiveElement(AppView, {
-    profile: profileController.view,
-    search: searchController.view,
-    router: router.view,
-    say: sayController.view
-  })
+  return (
+    <AppView router={router} profile={profileController.view} say={sayController.view} search={searchController.view} />
+  )
 }
