@@ -1,8 +1,8 @@
 import * as React from 'react'
-import { RouterView } from '../router-view'
+import { Router } from '../router'
 
 interface LinkProps {
-  router: RouterView
+  router: Router
   routeName: string
   pathVariables?: object
   queryParameters?: object

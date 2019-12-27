@@ -1,11 +1,10 @@
 import { Action, isBrowser } from '@baseloop/core'
-import { BehaviorSubject, combineLatest, Observable } from 'rxjs'
-import { filter, first, map, sample } from 'rxjs/operators'
+import { combineLatest, Observable } from 'rxjs'
+import { filter, map, sample } from 'rxjs/operators'
 import flatRoutes from './flat-routes'
 import * as qs from './query-string'
 import { Route } from './route'
-import { RouterView } from './router-view'
-import { RouterServer } from './router-server'
+import { Atom } from '@baseloop/atom'
 
 export interface RouteDefinition {
   name: string
@@ -35,40 +34,19 @@ export class Router {
   /**
    * The current URL. This is static on the server-side.
    */
-  public url: BehaviorSubject<string>
+  public url: Atom<string>
+
+  /**
+   * The routes that are registered.
+   */
+  public routes: Atom<Route[]>
 
   /**
    * After navigation, this represents the previous URL. In the beginning its the same as `url`.
    */
-  public previousUrl: BehaviorSubject<string>
+  public previousUrl: Atom<string>
 
-  /**
-   * The RouterView class is useful inside React views, because this class is free of Observables. It lets you easily
-   * build and match URLs against the latest set of routing definitions.
-   */
-  public view: Observable<RouterView>
-
-  /**
-   * The initial route state. This does not change. Useful in some "once in the beginning" -situations.
-   */
-  public initialRouteState: RouteState | null
-
-  /**
-   * The initial route. This does not change. Useful in some "once in the beginning" -situations.
-   */
-  public initialRoute: Route | null
-
-  /**
-   * Since route definitions are defined as Observable<RouteDefinition[]>, they can change on the fly.
-   * This can be useful in certain circumstances like enabling dynamically changing routes based on user input.
-   *
-   * On the server side, however, you may sometimes wish to just build and match routes based on the initial routing
-   * definitions that were passed to the Router constructor. For this reason, we provide a RouterServer class for
-   * easily building and matching against initial route definitions.
-   */
-  public server: RouterServer
-
-  private routeState: Observable<RouteState | null>
+  public routeState: Atom<RouteState | null>
 
   public constructor(routeDefinitions: RouteDefinition[], settings: RouterSettings) {
     if ((settings == null || settings.initialUrl == null) && !isBrowser) {
@@ -76,27 +54,22 @@ export class Router {
     }
 
     const initialRoutes = flatRoutes(routeDefinitions).map(def => new Route(def))
-    const routes = new BehaviorSubject(initialRoutes)
+    this.routes = new Atom(initialRoutes)
     const url = settings!.initialUrl || window.location.pathname + window.location.search
-    this.url = new BehaviorSubject(url)
-    this.previousUrl = new BehaviorSubject(url)
-    this.routeState = combineLatest([routes, this.url]).pipe(map(parseUrlIntoRouteState))
-    this.initialRouteState = parseUrlIntoRouteState([initialRoutes, url])
-    this.initialRoute = this.initialRouteState == null ? null : this.initialRouteState.route
-    this.server = new RouterServer(new RouterView(this, initialRoutes, this.initialRoute, this.navigationAction))
-    const route = this.routeState.pipe(map(state => (state == null ? null : state.route)))
+    this.url = new Atom(url)
+    this.previousUrl = new Atom(url)
+    this.routeState = new Atom(parseUrlIntoRouteState([initialRoutes, url]))
+    combineLatest([this.routes, this.url]).subscribe(data => {
+      this.routeState.set(parseUrlIntoRouteState(data))
+    })
 
     if (isBrowser) {
       window.addEventListener('popstate', e => {
-        this.url.next(window.location.pathname + window.location.search)
+        this.url.set(window.location.pathname + window.location.search)
         this.navigationAction.trigger()
         e.preventDefault()
       })
     }
-
-    this.view = combineLatest([routes, route]).pipe(
-      map(([routes, route]) => new RouterView(this, routes, route, this.navigationAction))
-    )
   }
 
   private _on(triggerBy: Observable<any>, ...routeNames: string[]): Observable<CurrentRoute> {
@@ -108,6 +81,79 @@ export class Router {
         queryParameters: s == null ? {} : s.queryParameters || {}
       }))
     )
+  }
+
+  /**
+   * Navigates to the given route with the given parameters. Does not do anything on server-side.
+   */
+  public navigate(routeName: string, pathVariables = {}, queryParameters = {}, resetScrollPosition = true): void {
+    if (isBrowser) {
+      const route = this.routes.get().find(route => route.name === routeName)
+      if (route == null) {
+        return
+      }
+      const href = route.compile(pathVariables) + qs.compile(queryParameters)
+      if (href === window.location.pathname + window.location.search) {
+        return
+      }
+      if (resetScrollPosition) {
+        window.scrollTo(0, 0)
+      }
+      this.previousUrl.set(window.location.pathname + window.location.search)
+      history.pushState({}, document.title, href)
+      this.url.set(href)
+      this.navigationAction.trigger()
+    }
+  }
+
+  public buildUrl(routeName: string, pathVariables = {}, queryParameters = {}) {
+    const route = this.routes.get().find(route => route.name === routeName)
+    if (route == null) {
+      return ''
+    }
+    return route.compile(pathVariables) + qs.compile(queryParameters)
+  }
+
+  /**
+   * Performs exact matching against the given route.
+   *
+   * Trailing paths produce negative matches:
+   * URL:   /foo/bar/qux
+   * Route: /foo/bar
+   * Result: no match
+   */
+  public matchExact(routeName?: string | null): boolean {
+    const currentRoute = this.routeState.get()
+    const route = currentRoute == null ? null : currentRoute.route
+    if (route == null) {
+      return routeName == null
+    } else {
+      return route.name === routeName
+    }
+  }
+
+  /**
+   * Performs partial matching against the given route.
+   *
+   * Trailing paths produce positive matches:
+   * URL:   /foo/bar/qux
+   * Route: /foo/bar
+   * Result: matches
+   */
+  public match(routeName: string): boolean {
+    const currentRoute = this.routeState.get()
+    const route = currentRoute == null ? null : currentRoute.route
+    if (route == null) {
+      return false
+    }
+    const routeParts = route.name.split('.')
+    const matchParts = routeName.split('.')
+    for (let i = 0; i < matchParts.length; i++) {
+      if (matchParts[i] !== routeParts[i]) {
+        return false
+      }
+    }
+    return true
   }
 
   /**
@@ -123,54 +169,6 @@ export class Router {
    */
   public onEnter(...routeNames: string[]): Observable<CurrentRoute> {
     return this._on(this.navigationAction, ...routeNames)
-  }
-
-  /**
-   * Navigates to the given route with the given parameters. Does not do anything on server-side.
-   */
-  public navigate(routeName: string, pathVariables = {}, queryParameters = {}, resetScrollPosition = true): void {
-    if (isBrowser) {
-      this.view.pipe(first()).subscribe(r => {
-        r.navigate(routeName, pathVariables, queryParameters, resetScrollPosition)
-      })
-    }
-  }
-
-  public buildUrl(routeName: string, pathVariables = {}, queryParameters = {}): Observable<string> {
-    return this.view.pipe(
-      first(),
-      map((r: RouterView) => r.buildUrl(routeName, pathVariables, queryParameters))
-    )
-  }
-
-  /**
-   * Performs direct matching against the given route.
-   *
-   * Trailing paths produce negative matches:
-   * URL:   /foo/bar/qux
-   * Route: /foo/bar
-   * Result: no match
-   */
-  public match(routeName?: string | null): Observable<boolean> {
-    return this.view.pipe(
-      first(),
-      map((r: RouterView) => r.match(routeName))
-    )
-  }
-
-  /**
-   * Performs partial matching against the given route.
-   *
-   * Trailing paths produce positive matches:
-   * URL:   /foo/bar/qux
-   * Route: /foo/bar
-   * Result: matches
-   */
-  public matchPartial(routeName: string): Observable<boolean> {
-    return this.view.pipe(
-      first(),
-      map((r: RouterView) => r.matchPartial(routeName))
-    )
   }
 }
 
