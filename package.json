@@ -3,7 +3,8 @@
   "private": true,
   "devDependencies": {
     "@types/jest": "^24.0.24",
-    "lerna": "^3.16.4"
+    "lerna": "^3.16.4",
+    "rxjs": "^6.5.3"
   },
   "scripts": {
     "lint": "lerna run lint",
