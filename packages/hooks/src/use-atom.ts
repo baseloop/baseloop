@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { ImmutableAtom } from '../../atom/src'
+import { ImmutableAtom } from '@baseloop/atom'
 import { combineLatest } from 'rxjs'
 
 export function useAtom<A>(a: ImmutableAtom<A>): A
