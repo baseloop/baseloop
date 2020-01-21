@@ -9,7 +9,7 @@ if (isDevelopment) {
 
 hydrate(
   AppController({
-    initialUrl: window.location.pathname + window.location.search
+    initialUrl: window.location.href
   }),
   document.querySelector('[data-baseloop-app]')
 )

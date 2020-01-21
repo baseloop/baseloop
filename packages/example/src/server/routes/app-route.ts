@@ -1,23 +1,20 @@
-import url from 'url'
 import { isDevelopment } from '@baseloop/core'
-import AppController from '../../common/app/app-controller'
-import { bindNodeCallback } from 'rxjs'
+import express from 'express'
 import fs from 'fs'
 import path from 'path'
-import { ServerStyleSheet } from 'styled-components'
 import ReactDOMServer from 'react-dom/server'
-import express from 'express'
+import { bindNodeCallback } from 'rxjs'
+import { ServerStyleSheet } from 'styled-components'
+import AppController from '../../common/app/app-controller'
 
 export const appRoute = (req: express.Request, res: express.Response) => {
   res.setHeader('Content-Type', 'text/html')
 
-  const urlParts = url.parse(req.url)
+  const initialUrl = req.protocol + '://' + req.get('host') + req.originalUrl
 
   try {
     bindNodeCallback(fs.readFile)(path.join('dist/client', 'index.html')).subscribe(indexHtml => {
-      const app = AppController({
-        initialUrl: urlParts.path + (urlParts.search == null ? '' : urlParts.search)
-      })
+      const app = AppController({ initialUrl })
       const styleSheet = new ServerStyleSheet()
       try {
         const appHtml = ReactDOMServer.renderToString(styleSheet.collectStyles(app))

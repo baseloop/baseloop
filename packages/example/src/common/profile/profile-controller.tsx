@@ -16,8 +16,6 @@ export default function ProfileController() {
     profession: 'Plumber'
   })
 
-  profile.subscribe(p => console.log('profile model', p))
-
   return {
     view: (
       <ProfileView

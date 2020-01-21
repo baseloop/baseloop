@@ -14,7 +14,7 @@ export default function AppController({ initialUrl }: Params) {
     [
       { path: '/', name: 'home' },
       { path: '/profile', name: 'profile' },
-      { path: '/search', name: 'search' },
+      { path: '/search', name: 'search', hostname: /foo\.localhost/ },
       { path: '/mortgage-applications', name: 'mortgage-applications' },
       { path: '/mortgage-application/:id', name: 'mortgage-application' },
       { path: '/routes', name: 'routes' },
