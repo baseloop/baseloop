@@ -56,7 +56,7 @@ export class Router {
 
     const initialRoutes = flatRoutes(routeDefinitions).map(def => new Route(def))
     this.routes = new Atom(initialRoutes)
-    const url = settings?.initialUrl || window.location.href
+    const url = settings!.initialUrl || window.location.href
     this.url = new Atom(url)
     this.previousUrl = new Atom(url)
     this.routeState = new Atom(parseUrlIntoRouteState([initialRoutes, url]))
