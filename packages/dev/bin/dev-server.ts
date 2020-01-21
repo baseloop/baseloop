@@ -7,11 +7,8 @@ import path from 'path'
 import yargs from 'yargs'
 import { AutoReloadServer } from '../src/auto-reload/server'
 import devServerOptions from './dev-server-options'
-import * as util from './util'
 
 export const command = (argv: any) => {
-  console.log(util.baseloopAsciiLogo)
-
   const autoReloadServer = AutoReloadServer({
     port: argv['auto-reload-port']
   })
