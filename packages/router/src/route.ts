@@ -5,10 +5,12 @@ interface RouteSettings {
   path: string
   name: string
   defaults?: object
+  hostname?: RegExp
 }
 
 export class Route {
   public name: string
+  public hostname?: RegExp
   public compile: pathToRegexp.PathFunction<object>
 
   private readonly isFinalParameterOptional: boolean
@@ -17,7 +19,7 @@ export class Route {
   private keys: any[] = []
   private pathParts: string[]
 
-  public constructor({ path, name, defaults }: RouteSettings) {
+  public constructor({ path, name, defaults, hostname }: RouteSettings) {
     this.regex = pathToRegexp(path, this.keys, {
       end: false,
       sensitive: false,
@@ -29,6 +31,7 @@ export class Route {
     this.compile = pathToRegexp.compile(path)
     this.name = name
     this.defaults = defaults
+    this.hostname = hostname
   }
 
   public parse(pathname: string): object {
@@ -48,12 +51,16 @@ export class Route {
     return pathVariables
   }
 
-  public match(pathname: string) {
+  public match(pathname: string, hostname?: string) {
     const pathnameParts = getPathParts(pathname)
     const isExactMatch =
       pathnameParts.length === this.pathParts.length ||
       (this.isFinalParameterOptional && pathnameParts.length === this.pathParts.length - 1)
-    return this.regex.test(pathname) && isExactMatch
+    return (
+      this.regex.test(pathname) &&
+      isExactMatch &&
+      (hostname == null || this.hostname == null || this.hostname.test(hostname))
+    )
   }
 }
 

@@ -11,6 +11,7 @@ export interface RouteDefinition {
   path: string
   defaults?: object
   children?: RouteDefinition[]
+  hostname?: RegExp
 }
 
 export interface RouterSettings {
@@ -55,7 +56,7 @@ export class Router {
 
     const initialRoutes = flatRoutes(routeDefinitions).map(def => new Route(def))
     this.routes = new Atom(initialRoutes)
-    const url = settings!.initialUrl || window.location.pathname + window.location.search
+    const url = settings?.initialUrl || window.location.href
     this.url = new Atom(url)
     this.previousUrl = new Atom(url)
     this.routeState = new Atom(parseUrlIntoRouteState([initialRoutes, url]))
@@ -65,7 +66,7 @@ export class Router {
 
     if (isBrowser) {
       window.addEventListener('popstate', e => {
-        this.url.set(window.location.pathname + window.location.search)
+        this.url.set(window.location.href)
         this.navigationAction.trigger()
         e.preventDefault()
       })
@@ -92,16 +93,16 @@ export class Router {
       if (route == null) {
         return
       }
-      const href = route.compile(pathVariables) + qs.compile(queryParameters)
+      const href = this.buildUrl(routeName, pathVariables, queryParameters)
       if (href === window.location.pathname + window.location.search) {
         return
       }
       if (resetScrollPosition) {
         window.scrollTo(0, 0)
       }
-      this.previousUrl.set(window.location.pathname + window.location.search)
+      this.previousUrl.set(window.location.href)
       history.pushState({}, document.title, href)
-      this.url.set(href)
+      this.url.set(window.location.origin + href)
       this.navigationAction.trigger()
     }
   }
@@ -176,11 +177,11 @@ function parseUrlIntoRouteState([routes, currentUrl]: [Route[], string]): RouteS
   if (currentUrl == null) {
     return null
   }
-  const [currentPathname, currentQueryParameters] = currentUrl.split('?')
-  const route = routes.find(route => route.match(currentPathname))
+  const { hostname, pathname, search } = new URL(currentUrl)
+  const route = routes.find(route => route.match(pathname, hostname))
   if (route) {
-    const pathVariables = route.parse(currentPathname)
-    const queryParameters = qs.parse(currentQueryParameters)
+    const pathVariables = route.parse(pathname)
+    const queryParameters = qs.parse(search)
     return { route, pathVariables, queryParameters }
   }
   return null
