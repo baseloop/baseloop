@@ -8,8 +8,6 @@ import yargs from 'yargs'
 import * as util from './util'
 
 export const command = () => {
-  console.log(util.baseloopAsciiLogo)
-
   const packageJsonFile = path.resolve('package.json')
 
   if (!fs.existsSync(packageJsonFile)) {
