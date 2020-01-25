@@ -181,7 +181,7 @@ function parseUrlIntoRouteState([routes, currentUrl]: [Route[], string]): RouteS
   const route = routes.find(route => route.match(pathname, hostname))
   if (route) {
     const pathVariables = route.parse(pathname)
-    const queryParameters = qs.parse(search)
+    const queryParameters = qs.parse(search.replace(/^\?/, ''))
     return { route, pathVariables, queryParameters }
   }
   return null
