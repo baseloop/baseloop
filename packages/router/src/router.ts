@@ -18,7 +18,7 @@ export interface RouterSettings {
   initialUrl: string
 }
 
-interface RouteState {
+export interface RouteState {
   route: Route
   pathVariables: object
   queryParameters: object
