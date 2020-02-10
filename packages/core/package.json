@@ -33,6 +33,7 @@
   "author": "Kai Sellgren <kaisellgren@gmail.com>",
   "license": "ISC",
   "dependencies": {
+    "is-plain-object": "^3.0.0",
     "ramda": ">=0.16.0 <1.0.0"
   },
   "peerDependencies": {

@@ -1,7 +1,8 @@
-import { clone, init, is, last, reduce, tail } from 'ramda'
+import { clone, init, last, reduce, tail } from 'ramda'
 import { combineLatest, merge, MonoTypeOperatorFunction, Observable, of } from 'rxjs'
 import { catchError, filter, map, mapTo, shareReplay, startWith, tap, withLatestFrom } from 'rxjs/operators'
 import { isBrowser } from '../index'
+import isPlainObject from 'is-plain-object'
 
 export type ObservableRecord<T> = {
   [P in keyof T]: Observable<T[P]> | T[P] | ObservableRecord<T[P]>
@@ -102,7 +103,7 @@ function getObservableDataRecursivelyFromObject(obj: Record<string, any>, path =
 
       if (typeof value['@@observable'] === 'function') {
         observables.push({ value, fullPath })
-      } else if (is(Object, value)) {
+      } else if (isPlainObject(value)) {
         const xs = getObservableDataRecursivelyFromObject(value, fullPath)
         for (const x of xs) {
           observables.push(x)
