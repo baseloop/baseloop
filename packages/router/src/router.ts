@@ -169,7 +169,7 @@ export class Router {
    * does not trigger on initial page load (client-side), because that is not considered runtime navigation.
    */
   public onEnter(...routeNames: string[]): Observable<CurrentRoute> {
-    return this._on(this.navigationAction, ...routeNames)
+    return this._on((this.navigationAction as unknown) as Observable<any>, ...routeNames)
   }
 }
 
