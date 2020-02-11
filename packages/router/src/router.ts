@@ -20,8 +20,8 @@ export interface RouterSettings {
 
 export interface RouteState {
   route: Route
-  pathVariables: object
-  queryParameters: object
+  pathVariables: Record<string, any>
+  queryParameters: Record<string, any>
 }
 
 export interface CurrentRoute {
