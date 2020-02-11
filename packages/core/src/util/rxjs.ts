@@ -99,14 +99,16 @@ function getObservableDataRecursivelyFromObject(obj: Record<string, any>, path =
   for (const key in obj) {
     if (obj.hasOwnProperty(key)) {
       const value = obj[key]
-      const fullPath = path + '.' + key
+      if (value != null) {
+        const fullPath = path + '.' + key
 
-      if (typeof value['@@observable'] === 'function') {
-        observables.push({ value, fullPath })
-      } else if (isPlainObject(value)) {
-        const xs = getObservableDataRecursivelyFromObject(value, fullPath)
-        for (const x of xs) {
-          observables.push(x)
+        if (typeof value['@@observable'] === 'function') {
+          observables.push({ value, fullPath })
+        } else if (isPlainObject(value)) {
+          const xs = getObservableDataRecursivelyFromObject(value, fullPath)
+          for (const x of xs) {
+            observables.push(x)
+          }
         }
       }
     }
