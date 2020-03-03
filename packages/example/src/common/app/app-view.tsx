@@ -13,6 +13,7 @@ export interface Props {
   profile: React.ReactElement
   search: React.ReactElement
   say: React.ReactElement
+  children: React.ReactElement
 }
 
 const Container = styled.div`
@@ -20,7 +21,7 @@ const Container = styled.div`
   height: 100%;
 `
 
-export default function AppView({ profile, search, say, router }: Props) {
+export default function AppView({ profile, search, say, children, router }: Props) {
   useRouter(router)
   return (
     <Container>
@@ -40,6 +41,9 @@ export default function AppView({ profile, search, say, router }: Props) {
           </Link>
           <Link router={router} routeName="routes">
             Routes
+          </Link>
+          <Link router={router} routeName="children">
+            Children (multi-pages)
           </Link>
           <Link
             router={router}
@@ -62,8 +66,9 @@ export default function AppView({ profile, search, say, router }: Props) {
             )}
             {router.match('profile') && profile}
             {router.match('search') && search}
+            {router.match('children') && children}
             {router.match('say') && say}
-            {router.matchExact(null) && (
+            {router.matchNoRoute() && (
               <div>
                 <h1>Page not found</h1>
                 <p>The page you were looking for could not be found.</p>

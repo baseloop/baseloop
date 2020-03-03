@@ -51,7 +51,7 @@ export class Route {
     return pathVariables
   }
 
-  public match(pathname: string, hostname?: string) {
+  public matchExact(pathname: string, hostname?: string) {
     const pathnameParts = getPathParts(pathname)
     const isExactMatch =
       pathnameParts.length === this.pathParts.length ||
@@ -61,6 +61,10 @@ export class Route {
       isExactMatch &&
       (hostname == null || this.hostname == null || this.hostname.test(hostname))
     )
+  }
+
+  public match(pathname: string, hostname?: string) {
+    return this.regex.test(pathname) && (hostname == null || this.hostname == null || this.hostname.test(hostname))
   }
 }
 

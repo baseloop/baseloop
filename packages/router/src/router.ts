@@ -1,16 +1,15 @@
+import { Atom } from '@baseloop/atom'
 import { Action, isBrowser } from '@baseloop/core'
-import { combineLatest, Observable } from 'rxjs'
+import { Observable } from 'rxjs'
 import { filter, map, sample } from 'rxjs/operators'
 import flatRoutes from './flat-routes'
 import * as qs from './query-string'
 import { Route } from './route'
-import { Atom } from '@baseloop/atom'
 
 export interface RouteDefinition {
   name: string
   path: string
   defaults?: object
-  children?: RouteDefinition[]
   hostname?: RegExp
 }
 
@@ -24,18 +23,13 @@ export interface RouteState {
   queryParameters: Record<string, any>
 }
 
-export interface CurrentRoute {
-  pathVariables: Record<string, any>
-  queryParameters: Record<string, any>
-}
-
 export class Router {
   private navigationAction: Action = new Action()
 
   /**
    * The current URL. This is static on the server-side.
    */
-  public url: Atom<string>
+  public url: Atom<URL>
 
   /**
    * The routes that are registered.
@@ -45,9 +39,7 @@ export class Router {
   /**
    * After navigation, this represents the previous URL. In the beginning its the same as `url`.
    */
-  public previousUrl: Atom<string>
-
-  public routeState: Atom<RouteState | null>
+  public previousUrl: Atom<URL>
 
   public constructor(routeDefinitions: RouteDefinition[], settings: RouterSettings) {
     if ((settings == null || settings.initialUrl == null) && !isBrowser) {
@@ -57,31 +49,32 @@ export class Router {
     const initialRoutes = flatRoutes(routeDefinitions).map(def => new Route(def))
     this.routes = new Atom(initialRoutes)
     const url = settings!.initialUrl || window.location.href
-    this.url = new Atom(url)
-    this.previousUrl = new Atom(url)
-    this.routeState = new Atom(parseUrlIntoRouteState([initialRoutes, url]))
-    combineLatest([this.routes, this.url]).subscribe(data => {
-      this.routeState.set(parseUrlIntoRouteState(data))
-    })
+    this.url = new Atom(new URL(url))
+    this.previousUrl = new Atom(new URL(url))
 
     if (isBrowser) {
       window.addEventListener('popstate', e => {
-        this.url.set(window.location.href)
+        this.url.set(new URL(window.location.href))
         this.navigationAction.trigger()
         e.preventDefault()
       })
     }
   }
 
-  private _on(triggerBy: Observable<any>, ...routeNames: string[]): Observable<CurrentRoute> {
-    return this.routeState.pipe(
+  private _on(triggerBy: Observable<any>, ...routeNames: string[]): Observable<RouteState> {
+    return this.url.pipe(
       sample(triggerBy),
-      filter(s => s != null && routeNames.includes(s.route.name)),
-      map(s => ({
-        pathVariables: s == null ? {} : s.pathVariables || {},
-        queryParameters: s == null ? {} : s.queryParameters || {}
-      }))
-    )
+      map<URL, RouteState | null>(() => {
+        for (const routeName of routeNames) {
+          const routeState = this.match(routeName)
+          if (routeState != null) {
+            return routeState
+          }
+        }
+        return null
+      }),
+      filter(routeState => routeState != null)
+    ) as Observable<RouteState>
   }
 
   /**
@@ -89,7 +82,7 @@ export class Router {
    */
   public navigate(routeName: string, pathVariables = {}, queryParameters = {}, resetScrollPosition = true): void {
     if (isBrowser) {
-      const route = this.routes.get().find(route => route.name === routeName)
+      const route = this.routes.get().find(route => route.name == routeName)
       if (route == null) {
         return
       }
@@ -100,15 +93,15 @@ export class Router {
       if (resetScrollPosition) {
         window.scrollTo(0, 0)
       }
-      this.previousUrl.set(window.location.href)
+      this.previousUrl.set(new URL(window.location.href))
       history.pushState({}, document.title, href)
-      this.url.set(window.location.origin + href)
+      this.url.set(new URL(window.location.origin + href))
       this.navigationAction.trigger()
     }
   }
 
   public buildUrl(routeName: string, pathVariables = {}, queryParameters = {}) {
-    const route = this.routes.get().find(route => route.name === routeName)
+    const route: Route | undefined = this.routes.get().find(route => route.name == routeName)
     if (route == null) {
       return ''
     }
@@ -123,14 +116,17 @@ export class Router {
    * Route: /foo/bar
    * Result: no match
    */
-  public matchExact(routeName?: string | null): boolean {
-    const currentRoute = this.routeState.get()
-    const route = currentRoute == null ? null : currentRoute.route
-    if (route == null) {
-      return routeName == null
-    } else {
-      return route.name === routeName
+  public matchExact(routeName?: string | null): RouteState | null {
+    const { hostname, pathname, search } = this.url.get()
+
+    const route = this.routes.get().find(route => route.name == routeName)
+    if (route != null && route.matchExact(pathname, hostname)) {
+      const pathVariables = route.parse(pathname)
+      const queryParameters = qs.parse(search.replace(/^\?/, ''))
+      return { route, pathVariables, queryParameters }
     }
+
+    return null
   }
 
   /**
@@ -141,26 +137,42 @@ export class Router {
    * Route: /foo/bar
    * Result: matches
    */
-  public match(routeName: string): boolean {
-    const currentRoute = this.routeState.get()
-    const route = currentRoute == null ? null : currentRoute.route
+  public match(routeName: string): RouteState | null {
+    const { hostname, pathname, search } = this.url.get()
+
+    const route = this.routes.get().find(route => route.name == routeName)
     if (route == null) {
-      return false
+      return null
     }
-    const routeParts = route.name.split('.')
-    const matchParts = routeName.split('.')
-    for (let i = 0; i < matchParts.length; i++) {
-      if (matchParts[i] !== routeParts[i]) {
+
+    if (route.match(pathname, hostname)) {
+      const pathVariables = route.parse(pathname)
+      const queryParameters = qs.parse(search.replace(/^\?/, ''))
+      return { route, pathVariables, queryParameters }
+    }
+
+    return null
+  }
+
+  /**
+   * Returns true if the given URL matches no route.
+   */
+  public matchNoRoute(): boolean {
+    const { hostname, pathname } = this.url.get()
+
+    for (const route of this.routes.get()) {
+      if (route.matchExact(pathname, hostname)) {
         return false
       }
     }
+
     return true
   }
 
   /**
    * Triggers whenever we are on a route with the given name. This also triggers once on initial page load (client-side).
    */
-  public on(...routeNames: string[]): Observable<CurrentRoute> {
+  public on(...routeNames: string[]): Observable<RouteState> {
     return this._on(this.url, ...routeNames)
   }
 
@@ -168,21 +180,7 @@ export class Router {
    * Triggers whenever we navigate to a route with the given name. The only difference compared to `on()` is that this
    * does not trigger on initial page load (client-side), because that is not considered runtime navigation.
    */
-  public onEnter(...routeNames: string[]): Observable<CurrentRoute> {
+  public onEnter(...routeNames: string[]): Observable<RouteState> {
     return this._on((this.navigationAction as unknown) as Observable<any>, ...routeNames)
   }
-}
-
-function parseUrlIntoRouteState([routes, currentUrl]: [Route[], string]): RouteState | null {
-  if (currentUrl == null) {
-    return null
-  }
-  const { hostname, pathname, search } = new URL(currentUrl)
-  const route = routes.find(route => route.match(pathname, hostname))
-  if (route) {
-    const pathVariables = route.parse(pathname)
-    const queryParameters = qs.parse(search.replace(/^\?/, ''))
-    return { route, pathVariables, queryParameters }
-  }
-  return null
 }

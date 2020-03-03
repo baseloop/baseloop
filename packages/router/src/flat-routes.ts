@@ -10,10 +10,6 @@ export default function flatRoutes(routes: RouteDefinition[], parentRoute?: Rout
       hostname: parentRoute == null ? route.hostname : parentRoute.hostname
     }
     rs.push(newRoute)
-
-    if (route.children != null) {
-      rs.push(...flatRoutes(route.children, newRoute))
-    }
   })
   return rs
 }

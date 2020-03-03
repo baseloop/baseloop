@@ -1,11 +1,10 @@
 import { ajax } from 'rxjs/ajax'
-import { isBrowser } from '@baseloop/core'
+import { createReactiveElement, isBrowser } from '@baseloop/core'
 import { awaiting } from '@baseloop/rxjs'
 import { Observable, of } from 'rxjs'
 import { SearchResult } from './search-result'
 import SearchView from './search-view'
 import { debounceTime, delay, distinctUntilChanged, filter, shareReplay, startWith, switchMap } from 'rxjs/operators'
-import * as React from 'react'
 import { Atom } from '@baseloop/atom'
 
 export default function SearchController() {
@@ -29,6 +28,10 @@ export default function SearchController() {
   const isSearching = awaiting(searchRequest, searchResponse)
 
   return {
-    view: <SearchView keyword={keyword} isSearching={isSearching} searchResponse={searchResponse} />
+    view: createReactiveElement(SearchView, {
+      keyword: of(keyword),
+      isSearching: of(isSearching),
+      searchResponse: of(searchResponse)
+    })
   }
 }

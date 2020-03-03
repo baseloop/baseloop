@@ -7,9 +7,6 @@ if (isDevelopment) {
   AutoReloadClient()
 }
 
-hydrate(
-  AppController({
-    initialUrl: window.location.href
-  }),
-  document.querySelector('[data-baseloop-app]')
-)
+AppController({
+  initialUrl: window.location.href
+}).subscribe(app => hydrate(app, document.querySelector('[data-baseloop-app]')))

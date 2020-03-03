@@ -1,7 +1,8 @@
 import { Atom } from '@baseloop/atom'
+import { createReactiveElement } from '@baseloop/core'
+import { of } from 'rxjs'
 import { EmailType, Profile } from './profile'
 import ProfileView from './profile-view'
-import * as React from 'react'
 
 export default function ProfileController() {
   const profile = new Atom<Profile>({
@@ -17,11 +18,9 @@ export default function ProfileController() {
   })
 
   return {
-    view: (
-      <ProfileView
-        genderOptions={[{ id: 'FEMALE', label: 'Female' }, { id: 'MALE', label: 'Male' }]}
-        profile={profile}
-      />
-    )
+    view: createReactiveElement(ProfileView, {
+      genderOptions: [{ id: 'FEMALE', label: 'Female' }, { id: 'MALE', label: 'Male' }],
+      profile: of(profile)
+    })
   }
 }
