@@ -1,6 +1,6 @@
 {
   "name": "@baseloop/hooks",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "React hooks for Baseloop projects",
   "main": "dist/es2015/index.js",
   "module": "dist/es2015/index.js",
@@ -44,8 +44,8 @@
     "@babel/preset-env": "^7.5.5",
     "@babel/preset-typescript": "^7.3.3",
     "@baseloop/atom": "^1.0.1",
-    "@baseloop/core": "^1.2.13",
-    "@baseloop/router": "^2.0.4",
+    "@baseloop/core": "^1.2.14",
+    "@baseloop/router": "^2.1.0",
     "@types/jest": "^24.0.24",
     "@types/node": "^12.7.2",
     "@types/ramda": "^0.26.21",
