@@ -8,3 +8,5 @@ export const isNode = typeof process !== 'undefined' && process.versions != null
 export const isServer = isNode
 export const isBrowser = typeof window !== 'undefined' && typeof window.document !== 'undefined'
 export const isDevelopment = typeof process !== 'undefined' && process.env.NODE_ENV === 'development'
+export const isProduction = typeof process !== 'undefined' && process.env.NODE_ENV === 'production'
+export const isTest = typeof process !== 'undefined' && process.env.NODE_ENV === 'test'
