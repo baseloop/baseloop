@@ -1,31 +1,18 @@
 # Installation
 
-In this tutorial, we will set up an example project that uses Baseloop. We are using NPM here, but you may use another
- tool like Yarn.
+Start by cloning the example project: https://github.com/baseloop/baseloop-example
 
-## Setting up dependencies
+## Running the example
 
-Let's start by creating an empty NPM project somewhere on your disk:
-
-```
-npm init 
-```
-
-To get started with Baseloop, we recommend you to install the dev package first:
+Install the dependencies:
 
 ```
-npm install --save-dev @baseloop/dev
+npm i
 ```
 
-This dev package comes with a command line tool that we will use next.
+Run the example with `npm run dev`.
 
-## Creating our example project 
-
-Create the example project with our newly installed tool:
-
-```
-npx baseloop new
-```
+## Example project structure 
 
 Now you should have a similar project structure:
 
@@ -33,22 +20,17 @@ Now you should have a similar project structure:
 src/
   client/
     index.ts
-  common/
-    about/
-      about-controller.ts
-      about-view.tsx
-    app/
-      app-controller.ts
-      app-view.tsx
-    home/
-      home-view.tsx
-    static/
-      favicon.png
-      index.html
+    feature-x/
+      feature-x-controller.ts
+      feature-x-view.tsx
+    ...
   server/
+    static/
+      index.html
     index.ts
 package.json
 webpack.config.js
+...
 ```
 
 Let me explain the project structure, which you are free to modify as you please.
@@ -58,8 +40,8 @@ You are free to use any other build tool you like such as [Parcel](https://parce
 can learn through their documentation.
 
 The main source code lies under `src/`, grouped in `client/`, `common/` and `server/` folders. The `common/` folder is
-used for almost all source code, because we are writing universal JavaScript that can render your app on the server
-side.
+used for all shared source code between the server and the client. If you're writing SSR, all view related code
+would end up in `common`.
 
 We prefer grouping source code based on *features* instead of types of code. This means we want all the code related
 to one feature to lie within their own separate folder. Therefore we do not have folders such as `controllers/` or `views/`,
@@ -67,7 +49,7 @@ but instead folders such as `app/`, `about/`, `profile/`, `todos/`, `feature-x/`
 
 ## Running the example
 
-The cli tool we ran added the following line to your `package.json` file:
+A look into the `package.json` file reveals:
 
 ```
 "scripts": {

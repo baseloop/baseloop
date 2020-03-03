@@ -1,12 +1,11 @@
-import fs from 'fs'
-import url from 'url'
+import { isDevelopment } from '@baseloop/core'
 import express from 'express'
+import { promises as fs } from 'fs'
 import path from 'path'
 import ReactDOMServer from 'react-dom/server'
-import AppController from '../common/app/app-controller'
-import { bindNodeCallback } from 'rxjs'
-import { combineObject, isDevelopment } from '@baseloop/core'
 import { ServerStyleSheet } from 'styled-components'
+import AppController from '../common/app/app-controller'
+import 'regenerator-runtime/runtime'
 
 const app = express()
 
@@ -19,19 +18,17 @@ const staticOptions = {
 
 app.use('/', express.static('dist/client', staticOptions))
 
-app.use((req, res) => {
+app.use(async (req, res) => {
   res.setHeader('Content-Type', 'text/html')
 
-  const urlParts = url.parse(req.url)
+  const indexHtml = (await fs.readFile(path.join('dist/client', 'index.html'))).toString('utf-8')
+  const initialUrl = req.protocol + '://' + req.header('host') + req.url
 
   try {
-    combineObject({
-      indexHtml: bindNodeCallback(fs.readFile)(path.join('dist/client', 'index.html')),
-      app: AppController({
-        initialUrl: urlParts.path + (urlParts.search == null ? '' : urlParts.search)
-      })
+    AppController({
+      initialUrl
     }).subscribe({
-      next: ({ indexHtml, app }: any) => {
+      next: (app: any) => {
         const styleSheet = new ServerStyleSheet()
         try {
           const appHtml = ReactDOMServer.renderToString(styleSheet.collectStyles(app))
@@ -39,20 +36,20 @@ app.use((req, res) => {
           res.send(
             indexHtml
               .toString()
-              .replace('data-baseloop-app>', `data-baseloop-app>${appHtml}`)
+              .replace('data-app>', `data-app>${appHtml}`)
               .replace('</head>', `${styleTags}</head>`)
           )
           res.end()
         } catch (e) {
-          internalServerErrorResponse(e, res)
+          internalServerErrorResponse(e, res, indexHtml)
         } finally {
           styleSheet.seal()
         }
       },
-      error: e => internalServerErrorResponse(e, res)
+      error: (e: any) => internalServerErrorResponse(e, res, indexHtml)
     })
   } catch (e) {
-    internalServerErrorResponse(e, res)
+    internalServerErrorResponse(e, res, indexHtml)
   }
 })
 
@@ -63,10 +60,10 @@ app.listen(port, host, () => {
   console.log(`Website is running at http://${host}:${port}/`)
 })
 
-function internalServerErrorResponse(e: Error, res: express.Response) {
+function internalServerErrorResponse(e: Error, res: express.Response, indexHtml: string) {
   console.error(e)
   if (isDevelopment) {
-    res.send(fs.readFileSync(path.join('dist/client', 'index.html')))
+    res.send(indexHtml)
   } else {
     res.status(500)
     res.send(`

@@ -11,7 +11,7 @@ import reactiveProgramming from './pages/reactive-programming.md'
 import markdownStyle from './markdown-style'
 import Icon from '../component/icon'
 import { MOBILE_NAV_BACK, NAV_FRONT } from '../styles/colors'
-import { RouterView } from '@baseloop/router'
+import { Router } from '@baseloop/router'
 
 interface MenuItem {
   title: string
@@ -137,14 +137,14 @@ const MobileMenu = styled.div`
 
 interface Props {
   page: string
-  router: RouterView
+  router: Router
 }
 
 interface State {
   isMobileMenuOpen: boolean
 }
 
-export default class DocsView extends React.PureComponent<Props, State> {
+export default class DocsView extends React.Component<Props, State> {
   private previousBodyOverflowY: string | null = null
 
   public render() {

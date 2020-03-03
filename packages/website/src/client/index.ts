@@ -1,13 +1,12 @@
-import { isDevelopment, run } from '@baseloop/core'
+import { isDevelopment } from '@baseloop/core'
 import { AutoReloadClient } from '@baseloop/dev'
+import { render } from 'react-dom'
 import AppController from '../common/app/app-controller'
 
 if (isDevelopment) {
   AutoReloadClient()
 }
 
-const app = AppController({
-  initialUrl: window.location.pathname + window.location.search
-})
-
-run(app)
+AppController({
+  initialUrl: window.location.href
+}).subscribe(app => render(app, document.querySelector('[data-app]')))

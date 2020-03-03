@@ -1,4 +1,6 @@
 import { createReactiveElement, isBrowser } from '@baseloop/core'
+import { of } from 'rxjs'
+import { switchMap } from 'rxjs/operators'
 import AppView from './app-view'
 import DocsController from '../docs/docs-controller'
 import { Router } from '@baseloop/router'
@@ -24,8 +26,12 @@ export default function AppController({ initialUrl }: Params) {
 
   const docs = DocsController(router)
 
-  return createReactiveElement(AppView, {
-    router: router.view,
-    docs: docs.view
-  })
+  return router.url.pipe(
+    switchMap(() => {
+      return createReactiveElement(AppView, {
+        router: of(router),
+        docs: docs.view
+      })
+    })
+  )
 }

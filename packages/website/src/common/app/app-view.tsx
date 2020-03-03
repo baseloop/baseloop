@@ -5,8 +5,7 @@ import styled from 'styled-components'
 import Home from '../home/home-view'
 import Icon from '../component/icon'
 import { Flex, PositionFluid } from '@baseloop/ui'
-import { Link } from '@baseloop/router'
-import { RouterView } from '@baseloop/router'
+import { Link, Router } from '@baseloop/router'
 
 const navHeight = '4rem'
 const footerHeight = '4rem'
@@ -69,11 +68,11 @@ const Footer = styled.div`
 `
 
 interface Props {
-  router: RouterView
+  router: Router
   docs: any
 }
 
-export default class AppView extends React.PureComponent<Props> {
+export default class AppView extends React.Component<Props> {
   public render() {
     const { router, docs } = this.props
 
@@ -110,9 +109,9 @@ export default class AppView extends React.PureComponent<Props> {
           <Content>
             <Flex direction="row" justifyContent="center" flex="1">
               <main>
-                {router.match('home') && <Home />}
-                {router.matchPartial('docs') && docs}
-                {router.match() && <div>Not found!</div>}
+                {router.matchExact('home') && <Home />}
+                {router.match('docs') && docs}
+                {router.matchNoRoute() && <div>Not found!</div>}
               </main>
             </Flex>
           </Content>

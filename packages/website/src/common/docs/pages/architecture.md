@@ -1,16 +1,47 @@
 # Architecture
 
-Curabitur condimentum pellentesque nunc, vel ullamcorper magna condimentum vitae. Integer tincidunt ipsum
-vitae tempus tristique. Donec a ligula maximus, volutpat nisl id, cursus magna. Nam a justo eleifend,
-commodo arcu in, placerat dui. Nunc sed rutrum justo. Nulla volutpat eget odio ut congue. Vivamus blandit
-mauris nec cursus laoreet. Pellentesque fringilla commodo lacus, at imperdiet neque lacinia quis. Proin
-sit amet condimentum sem, sed pharetra lacus. Cras pellentesque laoreet sem sit amet auctor. Praesent
-efficitur a lacus a egestas. Vivamus rhoncus fermentum justo, vel consectetur odio suscipit vel. Sed
-tempus diam id massa ultricies ultrices.
+## Architecture
 
-[![Architecture][architecture]][architecture]
+Baseloop architecture is based on reactive programming and a few principles.
 
-[architecture]: https://raw.githubusercontent.com/baseloop/baseloop/master/resources/baseloop-architecture.png
-[releases]: https://github.com/showdownjs/showdown/releases
-[atx]: http://www.aaronsw.com/2002/atx/intro
-[setext]: https://en.wikipedia.org/wiki/Setext
+The architecture relies on a few existing libraries:
+- RxJS (reactive programming)
+- React (views)
+
+Example code uses Webpack for bundling, but it's not compulsory. The `@baseloop/dev` package uses Webpack.
+
+### Atoms
+
+Atoms are state containers. An Atom contains data, which can be updated and observed on. The point of Atoms is for
+views and controllers to *observe* them. Events occur whenever an Atom is updated. Atoms can be combined with other
+reactive utilities from RxJS.
+
+### Controllers
+
+Controllers are the what handle routing, user input and other high-level functionality.
+Controllers are also responsible for creating views.
+
+Controllers may listen to Atoms for their state changes as well as other generic state changes such as WebSocket message
+events and Ajax responses. 
+
+### Views
+
+Views are responsible for rendering a user interface. Views may only contain ui-related logic (not business logic!).
+Views may listen to Atoms for state changes.
+
+Views commonly cause events such as mouse clicks or key presses. These are listened to by the controller. 
+
+### Services
+
+To avoid fat controllers, all domain specific business logic should be implemented in domain specific services.
+An example could be ProfileService or AnalyticsService.
+
+Common utility functions should be placed in utility related classes and files. Mappers, data clients and others
+can be placed in their own files as well.
+
+### Data flow
+
+Baseloop architecture is based on the idea of a *unidirectional data flow*.
+This means that data always flows in one direction.
+
+A view can't call controller or service functionality. Views only emits events that others listen to.

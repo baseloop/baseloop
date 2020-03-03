@@ -148,11 +148,11 @@ export default function Home() {
 
             <div>
               <h2>
-                <Icon id="s-projectDiagram" /> Store-view-controller
+                <Icon id="s-projectDiagram" /> Atoms, views and controllers
               </h2>
               <p>
-                Baseloop is based on an architectural pattern called store-view-controller, which was built specifically
-                for unidirectional data flow and reactive programming in mind.
+                Baseloop is based on an architectural pattern that has atoms, views and controllers. This is built
+                specifically for unidirectional data flow and reactive programming in mind.
               </p>
               <p>
                 In SVC, every action is an observable and all the state changes are transformations rather than
