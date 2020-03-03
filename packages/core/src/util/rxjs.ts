@@ -41,7 +41,10 @@ export function awaiting(start: Observable<any>, end: Observable<any>): Observab
       catchError((e, obs) => obs),
       mapTo(false)
     )
-  ).pipe(startWith(false), shareReplay())
+  ).pipe(
+    startWith(false),
+    shareReplay()
+  )
 }
 
 export function filterBy<T>(observableFilter: Observable<boolean>): MonoTypeOperatorFunction<T> {
