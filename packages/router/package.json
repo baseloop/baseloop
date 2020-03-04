@@ -1,6 +1,6 @@
 {
   "name": "@baseloop/router",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "description": "A router for Baseloop applications.",
   "main": "dist/es2015/index.js",
   "module": "dist/es2015/index.js",
