@@ -145,7 +145,7 @@ export class Router {
       return null
     }
 
-    if (route.match(pathname, hostname)) {
+    if (route.match(pathname, hostname) && !this.matchNoRoute()) {
       const pathVariables = route.parse(pathname)
       const queryParameters = qs.parse(search.replace(/^\?/, ''))
       return { route, pathVariables, queryParameters }
