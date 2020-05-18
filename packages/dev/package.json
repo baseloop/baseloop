@@ -1,6 +1,6 @@
 {
   "name": "@baseloop/dev",
-  "version": "1.2.16",
+  "version": "1.2.17",
   "description": "Development tools such as baseloop-dev-server.",
   "bin": {
     "baseloop": "dist/bin/baseloop.js"

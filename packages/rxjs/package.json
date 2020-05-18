@@ -1,6 +1,6 @@
 {
   "name": "@baseloop/rxjs",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "RxJS toolbet",
   "main": "dist/es2015/index.js",
   "module": "dist/es2015/index.js",
@@ -39,7 +39,7 @@
     "@babel/preset-env": "^7.5.5",
     "@babel/preset-typescript": "^7.3.3",
     "@baseloop/atom": "^1.0.1",
-    "@baseloop/core": "^1.2.14",
+    "@baseloop/core": "^1.2.15",
     "@types/react": "^16.9.2",
     "@types/react-dom": "^16.9.0",
     "@types/styled-components": "^4.1.18",
