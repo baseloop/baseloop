@@ -16,6 +16,6 @@ test('flattens routes', () => {
   expect(flatRoutes(routes)).toEqual([
     { path: '/', name: 'home' },
     { path: '/foo', name: 'foo' },
-    { path: '/qux', name: 'qux' },
+    { path: '/qux', name: 'qux' }
   ])
 })

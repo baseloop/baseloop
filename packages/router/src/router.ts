@@ -191,6 +191,6 @@ function parseUrl(url: string): ParsedUrl {
   const obj = urlParse(url)
   return {
     ...obj,
-    search: obj.query as unknown as string,
+    search: (obj.query as unknown) as string
   }
 }
