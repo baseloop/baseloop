@@ -5,6 +5,8 @@ import { filter, map, sample } from 'rxjs/operators'
 import flatRoutes from './flat-routes'
 import * as qs from './query-string'
 import { Route } from './route'
+import urlParse from 'url-parse'
+import { ParsedUrl } from './parsed-url'
 
 export interface RouteDefinition {
   name: string
@@ -29,7 +31,7 @@ export class Router {
   /**
    * The current URL. This is static on the server-side.
    */
-  public url: Atom<URL>
+  public url: Atom<ParsedUrl>
 
   /**
    * The routes that are registered.
@@ -39,7 +41,7 @@ export class Router {
   /**
    * After navigation, this represents the previous URL. In the beginning its the same as `url`.
    */
-  public previousUrl: Atom<URL>
+  public previousUrl: Atom<ParsedUrl>
 
   public constructor(routeDefinitions: RouteDefinition[], settings: RouterSettings) {
     if ((settings == null || settings.initialUrl == null) && !isBrowser) {
@@ -49,12 +51,12 @@ export class Router {
     const initialRoutes = flatRoutes(routeDefinitions).map(def => new Route(def))
     this.routes = new Atom(initialRoutes)
     const url = settings!.initialUrl || window.location.href
-    this.url = new Atom(new URL(url))
-    this.previousUrl = new Atom(new URL(url))
+    this.url = new Atom(parseUrl(url))
+    this.previousUrl = new Atom(parseUrl(url))
 
     if (isBrowser) {
       window.addEventListener('popstate', e => {
-        this.url.set(new URL(window.location.href))
+        this.url.set(parseUrl(window.location.href))
         this.navigationAction.trigger()
         e.preventDefault()
       })
@@ -64,7 +66,7 @@ export class Router {
   private _on(triggerBy: Observable<any>, ...routeNames: string[]): Observable<RouteState> {
     return this.url.pipe(
       sample(triggerBy),
-      map<URL, RouteState | null>(() => {
+      map<ParsedUrl, RouteState | null>(() => {
         for (const routeName of routeNames) {
           const routeState = this.match(routeName)
           if (routeState != null) {
@@ -93,9 +95,9 @@ export class Router {
       if (resetScrollPosition) {
         window.scrollTo(0, 0)
       }
-      this.previousUrl.set(new URL(window.location.href))
+      this.previousUrl.set(parseUrl(window.location.href))
       history.pushState({}, document.title, href)
-      this.url.set(new URL(window.location.origin + href))
+      this.url.set(parseUrl(window.location.origin + href))
       this.navigationAction.trigger()
     }
   }
@@ -182,5 +184,13 @@ export class Router {
    */
   public onEnter(...routeNames: string[]): Observable<RouteState> {
     return this._on((this.navigationAction as unknown) as Observable<any>, ...routeNames)
+  }
+}
+
+function parseUrl(url: string): ParsedUrl {
+  const obj = urlParse(url)
+  return {
+    ...obj,
+    search: obj.query as unknown as string,
   }
 }
