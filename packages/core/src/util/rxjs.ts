@@ -1,4 +1,4 @@
-import { clone, init, last, reduce, tail } from 'ramda'
+import { init, last, reduce, tail } from 'ramda'
 import { combineLatest, merge, MonoTypeOperatorFunction, Observable, of } from 'rxjs'
 import { catchError, filter, map, mapTo, shareReplay, startWith, tap, withLatestFrom } from 'rxjs/operators'
 import { isBrowser } from '../index'
@@ -6,6 +6,10 @@ import isPlainObject from 'is-plain-object'
 
 export type ObservableRecord<T> = {
   [P in keyof T]: Observable<T[P]> | T[P] | ObservableRecord<T[P]>
+}
+
+export type WithoutObservables<T> = {
+  [P in keyof T]: T[P] extends Observable<infer U> ? U : T[P] extends Record<any, any> ? WithoutObservables<T[P]> : T[P]
 }
 
 export function log<T>(...args: any[]): MonoTypeOperatorFunction<T> {
@@ -41,10 +45,7 @@ export function awaiting(start: Observable<any>, end: Observable<any>): Observab
       catchError((e, obs) => obs),
       mapTo(false)
     )
-  ).pipe(
-    startWith(false),
-    shareReplay()
-  )
+  ).pipe(startWith(false), shareReplay())
 }
 
 export function filterBy<T>(observableFilter: Observable<boolean>): MonoTypeOperatorFunction<T> {
@@ -72,22 +73,22 @@ interface ObservableAndFullPath {
   fullPath: string
 }
 
-export function combineObject<T>(obj: ObservableRecord<T>): Observable<T> {
+export function combineObject<T>(obj: ObservableRecord<T>): Observable<WithoutObservables<T>> {
   const data = getObservableDataRecursivelyFromObject(obj)
 
   if (data.length === 0) {
-    return of(obj as T)
+    return of(obj as WithoutObservables<T>)
   }
 
   const observables = data.map((o: ObservableAndFullPath) => o.value)
   const fullPaths = data.map((o: ObservableAndFullPath) => o.fullPath)
 
-  const createObject = (values: any[]): T => {
-    const o = clone(obj as T)
+  const createObject = (values: any[]): WithoutObservables<T> => {
+    const o = { ...obj }
     values.forEach((value, i) => {
       setObjectValueBasedOnPath(o, fullPaths[i], value)
     })
-    return o
+    return (o as unknown) as WithoutObservables<T>
   }
 
   return combineLatest(observables).pipe(map(createObject))
