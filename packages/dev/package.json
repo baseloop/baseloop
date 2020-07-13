@@ -21,7 +21,7 @@
     "build:es2015": "tsc --module commonjs --target es5 --outDir dist/es2015",
     "build:bin": "tsc --build tsconfig-bin.json",
     "format": "prettier --write \"src/**/*.ts\" \"src/**/*.js\"",
-    "lint": "eslint ./ --ext .js,.jsx,.ts,.tsx",
+    "lint": "eslint ./ --ext .js,.jsx,.ts,.tsx & tsc",
     "prepare": "npm run build",
     "prepublishOnly": "npm run test",
     "tsc": "tsc"
