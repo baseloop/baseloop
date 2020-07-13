@@ -13,5 +13,5 @@ export function createReactiveElement<T>(
   element: Element<T>,
   propsAsObservables: ObservableRecord<T>
 ): Observable<ReactElement> {
-  return combineObject(propsAsObservables).pipe(map((props: T) => createElement(element, props)))
+  return combineObject(propsAsObservables).pipe(map((props: any) => createElement(element, props)))
 }

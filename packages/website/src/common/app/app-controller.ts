@@ -11,7 +11,10 @@ interface Params {
 
 export default function AppController({ initialUrl }: Params) {
   const router = new Router(
-    [{ path: '/', name: 'home' }, { path: '/docs/:page?', name: 'docs', defaults: { page: 'motivation' } }],
+    [
+      { path: '/', name: 'home' },
+      { path: '/docs/:page?', name: 'docs', defaults: { page: 'motivation' } }
+    ],
     { initialUrl }
   )
 

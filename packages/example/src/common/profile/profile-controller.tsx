@@ -19,7 +19,10 @@ export default function ProfileController() {
 
   return {
     view: createReactiveElement(ProfileView, {
-      genderOptions: [{ id: 'FEMALE', label: 'Female' }, { id: 'MALE', label: 'Male' }],
+      genderOptions: [
+        { id: 'FEMALE', label: 'Female' },
+        { id: 'MALE', label: 'Male' }
+      ],
       profile: of(profile)
     })
   }
